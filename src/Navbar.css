@@ -62,10 +62,10 @@ a {
 /* Style for the "Log in" link */
 .login-link {
   text-decoration: none;
-  font-size: 25px;
+  font-size: 20px;
   font-family: 'Clambo', Georgia, 'Times New Roman', Times, serif;
   position: relative; /* Create a stacking context for the shadow */
-  padding: 10px 20px; /* Add padding for a larger clickable area */
+  padding: 10px 15px; /* Add padding for a larger clickable area */
   background: linear-gradient(135deg, #FFD700, #FFA500); /* Gradient background */
   color: #040202; /* Text color */
   border-radius: 5px; /* Rounded corners */

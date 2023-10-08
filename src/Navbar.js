@@ -10,16 +10,15 @@ function Navbar() {
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
         <div className="navbar-brand">
-          <div className="logo1-container">
+        <Link to="/"><div className="logo1-container">
             <img src={WavingFlag} alt="WavingFlag" className="logo1" />
             <h2>Bajhang Digital Map</h2>
-          </div>
+          </div></Link>
+          
           <div className="logo2-container">
             <div className="horizontal-container">
-              <Link to="/Log-in" className="login-link">
-                Log in
-                <div className="login-shadow"></div>
-              </Link>
+              <Link to="/Log-in">Log in</Link>
+            
               <img src={logo} alt="Logo" className="logo2" />
             </div>
           </div>
