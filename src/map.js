@@ -5,20 +5,11 @@ import View from 'ol/View';
 import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import { fromLonLat } from 'ol/proj';
-import { Vector as VectorSource } from 'ol/source';
-import GeoJSON from 'ol/format/GeoJSON';
-import VectorLayer from 'ol/layer/Vector';
-import { Style, Fill } from 'ol/style';
-import TileWMS from 'ol/source/TileWMS'
-
+import TileWMS from 'ol/source/TileWMS';
 
 function OpenLayersMap() {
   useEffect(() => {
-    
-
-    
-
-    // Create a map object
+    // Create a map object without any default controls
     const map = new Map({
       target: 'map', // The ID of the HTML element where you want to render the map
       layers: [
@@ -28,25 +19,27 @@ function OpenLayersMap() {
       ],
       view: new View({
         center: fromLonLat([81.2519, 29.7767]), // Initial map center
-        zoom: 7
-        , // Initial zoom level
+        zoom: 7, // Initial zoom level
       }),
+      controls: [] // Specify an empty array to remove all default controls
     });
-// Define the Nepal layer
-const nepal = new TileLayer({
-  title: 'Nepal',
-  source: new TileWMS({
-    url: 'http://localhost:8080/geoserver/geoapp/wms',
-    params: {
-      'LAYERS': 'geoapp:Nepal_shp',
-      'TILED': true
-    },
-    serverType: 'geoserver',
-  }),
-  visible: true
-});
 
-map.addLayer(nepal);
+    // Define the Nepal layer
+    const nepal = new TileLayer({
+      title: 'Nepal',
+      source: new TileWMS({
+        url: 'http://localhost:8080/geoserver/geoapp/wms',
+        params: {
+          'LAYERS': 'geoapp:Nepal_shp',
+          'TILED': true
+        },
+        serverType: 'geoserver',
+      }),
+      visible: true
+    });
+
+    map.addLayer(nepal);
+
     // Clean up the map when the component unmounts
     return () => {
       map.dispose();

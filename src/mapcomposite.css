@@ -1,0 +1,7 @@
+/* CSS or SCSS code */
+.map-container {
+    position: relative; /* Set the parent container to relative positioning */
+    width: 100%;
+    height: calc(100vh - 70px); 
+}
+

@@ -4,6 +4,7 @@ import Navbar from './Navbar'
 import Filter from './Filter'
 import LoginForm from './LoginForm'
 import OpenLayersMap from './map'
+import MapComposite  from './mapcomposite';
 import {Routes, Route} from 'react-router-dom';
 function App() {
   return (
@@ -11,9 +12,10 @@ function App() {
       <Navbar />
           <Routes>
             <Route path="/Log-in" element = { <LoginForm/>} />   
+            <Route path="/" element = { <MapComposite/>} />  
           </Routes>
-          <OpenLayersMap/>
-      {/* <Filter/> */}
+      
+   
     </div>
   );
 }
