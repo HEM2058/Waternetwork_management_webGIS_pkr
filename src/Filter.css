@@ -1,0 +1,43 @@
+/* Filter.css */
+.filter-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 20px; /* Add spacing between filters */
+  }
+  
+  .filter {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+  }
+  
+  .filter label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .filter select {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 150px;
+  }
+  
+  .filter select:hover {
+    border-color: #007bff;
+  }
+  
+  .filter select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 4px rgba(0, 123, 255, 0.4);
+  }
+  

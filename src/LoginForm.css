@@ -1,0 +1,45 @@
+/* LoginForm.css */
+
+/* Overall login container */
+.login-container {
+    background: linear-gradient(135deg, #a1d908, #03b821); /* Premium gradient background */
+    height: calc(100vh - 70px); /* Subtract navbar height from viewport height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Login form container */
+  .login-form {
+    background: #ffffff; /* White background */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+  }
+  
+  /* Login form input fields */
+  .login-form input {
+    width: 95%;
+    padding: 12px; /* Increase padding for a more comfortable input field */
+    margin-bottom: 20px; /* More spacing between input fields */
+    border: 1px solid #ccc; /* Add a light border */
+    border-radius: 5px;
+  }
+  
+  /* Login form submit button */
+  .login-form button {
+    width: 100%;
+    padding: 12px;
+    background-color: #ff9f1a; /* Premium button color */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth background color transition */
+  }
+  
+  /* Hover effect for the submit button */
+  .login-form button:hover {
+    background-color: #ff7e00; /* Darker color on hover */
+  }
+  
