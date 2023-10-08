@@ -17,8 +17,10 @@ function Navbar() {
           
           <div className="logo2-container">
             <div className="horizontal-container">
-              <Link to="/Log-in">Log in</Link>
-            
+            <Link to="/Log-in" className="login-link">
+                Log in
+                <div className="login-shadow"></div>
+              </Link>
               <img src={logo} alt="Logo" className="logo2" />
             </div>
           </div>

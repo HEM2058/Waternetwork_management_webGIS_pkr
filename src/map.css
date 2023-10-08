@@ -1,0 +1,5 @@
+/* Styling for the map container */
+.map {
+    width: 100%; /* Set the desired width */
+    height: calc(100vh - 70px); 
+  }
