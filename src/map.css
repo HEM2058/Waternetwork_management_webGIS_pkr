@@ -12,15 +12,19 @@
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  max-width: 250px; /* Adjust the maximum width as needed */
+  width: 200px; /* Adjust the maximum width as needed */
   z-index: 1; /* Ensure the pop-up appears above the map */
 }
 
 .popup-content {
   font-size: 14px;
   line-height: 1.4;
+  
 }
 
 .popup strong {
   font-weight: bold;
+}
+.map-pointer-cursor{
+  cursor: pointer;
 }

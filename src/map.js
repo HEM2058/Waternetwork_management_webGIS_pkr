@@ -13,6 +13,7 @@ import Overlay from 'ol/Overlay'; // Import Overlay
 import { Style, Fill } from 'ol/style';
 
 function OpenLayersMap() {
+  
   useEffect(() => {
     // Create a map object without any default controls
     const map = new Map({
@@ -28,6 +29,9 @@ function OpenLayersMap() {
       }),
       controls: [], // Specify an empty array to remove all default controls
     });
+
+    // Add a CSS class to the map container to change the cursor
+    map.getViewport().classList.add('map-pointer-cursor');
     
     const vectorSource = new VectorSource({
       format: new GeoJSON(),
@@ -73,6 +77,7 @@ function OpenLayersMap() {
           // Create the pop-up content for Gaunpalika features
           const content = `
             <div class="popup-content">
+              <button class="close-button" onclick="closePopup()">X</button>
               <strong>${properties.LOCAL}</strong> (${properties.TYPE})
               <br>
               District: ${properties.DISTRICT}
@@ -90,6 +95,11 @@ function OpenLayersMap() {
         }
       });
     });
+
+    // Function to close the pop-up
+    function closePopup() {
+      popup.setPosition(undefined);
+    }
 
     // Clean up the map when the component unmounts
     return () => {
