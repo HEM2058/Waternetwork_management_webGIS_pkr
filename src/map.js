@@ -6,9 +6,15 @@ import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import { fromLonLat } from 'ol/proj';
 import TileWMS from 'ol/source/TileWMS';
+import GeoJSON from 'ol/format/GeoJSON';
+import VectorSource from 'ol/source/Vector';
+import VectorLayer from 'ol/layer/Vector';
+import { Style, Fill } from 'ol/style';
 
 function OpenLayersMap() {
   useEffect(() => {
+   
+
     // Create a map object without any default controls
     const map = new Map({
       target: 'map', // The ID of the HTML element where you want to render the map
@@ -19,27 +25,33 @@ function OpenLayersMap() {
       ],
       view: new View({
         center: fromLonLat([81.2519, 29.7767]), // Initial map center
-        zoom: 7, // Initial zoom level
+        zoom: 10, // Initial zoom level
       }),
       controls: [] // Specify an empty array to remove all default controls
     });
-
-    // Define the Nepal layer
-    const nepal = new TileLayer({
-      title: 'Nepal',
-      source: new TileWMS({
-        url: 'http://localhost:8080/geoserver/geoapp/wms',
-        params: {
-          'LAYERS': 'geoapp:Nepal_shp',
-          'TILED': true
-        },
-        serverType: 'geoserver',
-      }),
-      visible: true
+    const vectorSource = new VectorSource({
+      format: new GeoJSON(),
+      url: '/data/bajhanga.geojson', // Replace with the path to your GeoJSON file
+     
     });
 
-    map.addLayer(nepal);
+// Create a vector layer to display the GeoJSON data
+const vectorLayer = new VectorLayer({
+  source: vectorSource,
+  style: function (feature) {
+    // Generate a random color for each polygon
+    const randomColor = '#' + ((Math.random() * 0xffffff) << 0).toString(16);
+    
+    return new Style({
+      fill: new Fill({
+        color: randomColor,
+      }),
+    });
+  },
+});
 
+map.addLayer(vectorLayer)
+    
     // Clean up the map when the component unmounts
     return () => {
       map.dispose();
