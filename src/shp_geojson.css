@@ -1,0 +1,59 @@
+/* shp_geojson.css */
+
+.FormContainer {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+    min-height: calc(100vh-77px);
+  }
+  
+  .FormWrapper {
+    width: 100%;
+    max-width: 400px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .FormTitle {
+    text-align: center;
+    padding: 20px 0;
+  }
+  
+  .FormLabel {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  
+  .FormInput {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .SubmitButton {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+  
+    &:hover {
+      background-color: #0056b3;
+    }
+  }
+  
+  .WarningMessage {
+    text-align: center;
+    font-style: italic;
+    color: red;
+    margin-top: 20px;
+  }
+  

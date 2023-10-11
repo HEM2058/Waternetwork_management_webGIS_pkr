@@ -5,7 +5,9 @@ import Filter from './Filter'
 import LoginForm from './LoginForm'
 import OpenLayersMap from './map'
 import MapComposite  from './mapcomposite';
+import  LayerUploadForm from './shp_geojson'
 import {Routes, Route} from 'react-router-dom';
+
 function App() {
   return (
     <div className="App">
@@ -13,6 +15,7 @@ function App() {
           <Routes>
             <Route path="/Log-in" element = { <LoginForm/>} />   
             <Route path="/" element = { <MapComposite/>} />  
+            <Route path="/LayerUploadForm" element = { <LayerUploadForm/>} />  
           </Routes>
       
    
