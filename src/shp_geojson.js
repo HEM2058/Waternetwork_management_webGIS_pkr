@@ -16,24 +16,30 @@ const LayerUploadForm = () => {
   };
 
   const handleUpload = () => {
+    if (!layerName || !selectedFile) {
+      setErrorMessage('Both name and file are required fields.');
+      return;
+    }
+
     const formData = new FormData();
     formData.append('layerName', layerName);
-    formData.append('shpFile', selectedFile);
+    formData.append('zipFile', selectedFile);
 
     axios
-      .post('http://your-django-api-url/geojsonfile/', formData)
+      .post('http://127.0.0.1:8000/uploadgeojson/', formData)
       .then((response) => {
-        console.log('File uploaded successfully:', response.data);
+        console.log('Data uploaded successfully:', response.data);
+        // Handle the response data as needed
       })
       .catch((error) => {
-        setErrorMessage('Error uploading file: ' + error);
+        setErrorMessage('Error uploading data: ' + error);
       });
   };
 
   return (
     <div className="FormContainer">
       <div className="FormWrapper">
-        <h1 className="FormTitle">Layer Upload</h1>
+        <h1 className="FormTitle">Data Upload</h1>
         <form>
           <div>
             <label className="FormLabel" htmlFor="layerName">Name of the layer:</label>
@@ -48,12 +54,12 @@ const LayerUploadForm = () => {
             />
           </div>
           <div>
-            <label className="FormLabel" htmlFor="shpFile">ZIP file (Shapefile):</label>
+            <label className="FormLabel" htmlFor="zipFile">ZIP file (Shapefile):</label>
             <input
               className="FormInput"
               type="file"
-              id="shpFile"
-              name="shpFile"
+              id="zipFile"
+              name="zipFile"
               accept=".zip"
               onChange={handleFileChange}
               required
