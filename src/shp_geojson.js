@@ -22,9 +22,9 @@ const LayerUploadForm = () => {
     }
 
     const formData = new FormData();
-    formData.append('layerName', layerName);
-    formData.append('zipFile', selectedFile);
-
+    formData.append('name', layerName);
+    formData.append('zip_file', selectedFile);
+    console.log(formData)
     axios
       .post('http://127.0.0.1:8000/uploadgeojson/', formData)
       .then((response) => {
@@ -67,6 +67,7 @@ const LayerUploadForm = () => {
           </div>
           <div>
             <button className="SubmitButton" type="button" onClick={handleUpload}>
+
               Upload
             </button>
           </div>
