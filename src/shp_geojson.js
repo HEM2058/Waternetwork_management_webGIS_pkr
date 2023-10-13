@@ -26,7 +26,7 @@ const LayerUploadForm = () => {
     formData.append('zip_file', selectedFile);
     console.log(formData)
     axios
-      .post('http://127.0.0.1:8000/uploadgeojson/', formData)
+      .post('http://127.0.0.1:2500/uploadgeojson/', formData)
       .then((response) => {
         console.log('Data uploaded successfully:', response.data);
         // Handle the response data as needed
