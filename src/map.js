@@ -45,7 +45,7 @@ function OpenLayersMap() {
     const vectorLayer = new VectorLayer({
       source: vectorSource,
       style: function (feature) {
-        // Assign a unique color to each feature based on its properties
+        // Assign a unique color with 50% opacity to each feature based on its properties
         const properties = feature.getProperties();
         const local = properties.LOCAL;
         const color = getRandomColor(local); // Use a custom function to get a unique color
@@ -116,15 +116,17 @@ function OpenLayersMap() {
       });
     });
 
-    // Function to generate a unique color based on the feature's local property
+    // Function to generate a unique color with 50% opacity based on the feature's local property
     function getRandomColor(local) {
       // Check if the color is already assigned to this feature
       if (colorHash[local]) {
         return colorHash[local];
       }
 
-      // Generate a new random color
-      const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+      // Generate a new random color with 50% opacity (alpha: 0.5)
+      const randomColor = `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(
+        Math.random() * 256
+      )}, 0.6)`;
       colorHash[local] = randomColor;
 
       return randomColor;
