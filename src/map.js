@@ -14,8 +14,23 @@ import './map.css';
 
 function OpenLayersMap() {
   const [colorHash, setColorHash] = useState({});
+  const [initialZoom, setInitialZoom] = useState(10); // Set your initial zoom level here
 
+ 
+   
   useEffect(() => {
+
+     // Determine the initial zoom level based on screen width
+     const screenWidth = window.innerWidth;
+    console.log(screenWidth)
+     if (screenWidth <= 1024) {
+      console.log("Going inside 1024")
+       setInitialZoom(8); // Adjust the initial zoom level for smaller screens
+       console.log(initialZoom)
+     } else {
+      console.log("Going outside 1024")
+       setInitialZoom(10); // Set the default initial zoom level for larger screens
+     }
     // URL to the GeoJSON data
     const geoJSONUrl = '/data/bajhanga.geojson';
 
@@ -29,7 +44,7 @@ function OpenLayersMap() {
       ],
       view: new View({
         center: fromLonLat([81.2519, 29.7767]),
-        zoom: 10,
+        zoom: initialZoom,
       }),
       controls: [],
     });

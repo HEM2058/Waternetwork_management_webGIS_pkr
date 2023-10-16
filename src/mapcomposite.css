@@ -1,7 +1,28 @@
-/* CSS or SCSS code */
+/* MapComposite.css */
 .map-container {
-    position: relative; /* Set the parent container to relative positioning */
-    width: 100%;
-    height: calc(100vh - 70px); 
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 70px);
 }
 
+.filter-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 999; /* Ensure the button appears on top of the map */
+}
+
+.filter-toggle button {
+  background: #007bff; /* Button background color */
+  border: none;
+  border-radius: 50%; /* Make it round */
+  padding: 10px;
+  color: #fff; /* Text color */
+  font-size: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.filter-toggle.active button {
+  background: #ff9900; /* Change color when active */
+}
