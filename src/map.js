@@ -80,11 +80,23 @@ function OpenLayersMap() {
 
     map.addOverlay(popup);
 
+    // Function to zoom into a specific polygon
+    function zoomToFeature(feature) {
+      const extent = feature.getGeometry().getExtent();
+      map.getView().fit(extent, {
+        duration: 1000, // Animation duration in milliseconds
+        padding: [50, 50, 50, 50], // Padding around the extent
+      });
+    }
+
     map.on('click', function (event) {
       map.forEachFeatureAtPixel(event.pixel, function (feature) {
         const properties = feature.getProperties();
 
         if (properties.TYPE === 'Gaunpalika') {
+          // Zoom to the clicked polygon
+          zoomToFeature(feature);
+
           const content = `
             <div class="popup-content">
               <button class="close-button" onclick="closePopup()">X</button>
