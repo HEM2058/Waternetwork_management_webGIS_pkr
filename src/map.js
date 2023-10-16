@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import 'ol/ol.css';
 import Map from 'ol/Map';
 import View from 'ol/View';
@@ -13,6 +13,8 @@ import { Style, Text, Fill, Stroke } from 'ol/style';
 import './map.css';
 
 function OpenLayersMap() {
+  const [colorHash, setColorHash] = useState({});
+
   useEffect(() => {
     // URL to the GeoJSON data
     const geoJSONUrl = '/data/bajhanga.geojson';
@@ -102,20 +104,20 @@ function OpenLayersMap() {
       });
     });
 
-    return () => {
-      // Clean up code as needed
-    };
-  }, []);
+    // Function to generate a unique color based on the feature's local property
+    function getRandomColor(local) {
+      // Check if the color is already assigned to this feature
+      if (colorHash[local]) {
+        return colorHash[local];
+      }
 
-  // Function to generate a unique color based on the feature's local property
-  function getRandomColor(local) {
-    const colorHash = {};
-    const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
-    if (!colorHash[local]) {
+      // Generate a new random color
+      const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
       colorHash[local] = randomColor;
+
+      return randomColor;
     }
-    return colorHash[local];
-  }
+  }, []);
 
   return (
     <div>
