@@ -104,8 +104,8 @@ map.getView().on('change:rotation', function (event) {
       style: function (feature) {
         // Assign a unique color with 50% opacity to each feature based on its properties
         const properties = feature.getProperties();
-        const local = properties.LOCAL;
-        const color = getRandomColor(local); // Use a custom function to get a unique color
+        const name = properties.NEPALI_NAME;
+        const color = getRandomColor(name); // Use a custom function to get a unique color
 
         return new Style({
           fill: new Fill({
@@ -116,7 +116,7 @@ map.getView().on('change:rotation', function (event) {
             width: 2,
           }),
           text: new Text({
-            text: local,
+            text: name,
             fill: new Fill({
               color: 'black',
             }),
@@ -173,16 +173,19 @@ map.on('click', function (event) {
       feature.changed();
 
       const content = `
-        <div class="popup-content">
-          <button class="close-button" onclick="closePopup()">X</button>
-          <strong>${properties.LOCAL}</strong> (${properties.TYPE})
-          <br>
-          District: ${properties.DISTRICT}
-          <br>
-          Province: ${properties.PROVINCE} (${properties.PR_NAME})
+      <div class="map_popup">
+      <div class="map_popup__title">${properties.NEPALI_NAME}</div>
+      <div class="map_popup__content">
+        <button class="close-button" onclick="closePopup()">X</button>
+        <strong>${properties.LOCAL}</strong> (${properties.TYPE})
+        <div class="map_popup__btn-wrapper">
+          <a class="map_popup__btn" href="${properties.WEBSITE}" target="_blank">WEBSITE</a>
         </div>
-      `;
-
+      </div>
+    </div>
+  `;
+  
+  
       const coordinate = event.coordinate;
 
       popup.getElement().innerHTML = content;

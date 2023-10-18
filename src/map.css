@@ -5,28 +5,84 @@
     
   }
 
-
-  /* In your map.css file or inline CSS */
-.popup {
+/* Popup container */
+.map_popup {
   position: absolute;
+  width: 300px;
+  padding: 20px;
   background-color: white;
-  padding: 10px;
   border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  font: 400 14px Roboto, Arial, sans-serif;
+  z-index: 1;
+}
+
+/* Popup content */
+.map_popup-content {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* Popup title */
+.map_popup__title {
+  background: #663367;
+  color: #fff;
+  padding: 15px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+/* Popup content section */
+.map_popup__content {
+  padding: 15px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.6;
+}
+
+/* Button wrapper */
+.map_popup__btn-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+  border-radius: 5px;
+  padding: 10px 0;
+}
+
+/* Popup button */
+.map_popup__btn {
+  background: #0070c0;
+  color: #fff;
+  padding: 10px 20px;
+  text-decoration: none;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  width: 200px; /* Adjust the maximum width as needed */
-  z-index: 1; /* Ensure the pop-up appears above the map */
+  transition: background 0.3s;
 }
 
-.popup-content {
-  font-size: 14px;
-  line-height: 1.4;
+.map_popup__btn:hover {
+  background: #0050a0;
+}
+
+/* Close button */
+.close-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+  color: #000;
+}
+
+.close-button:hover {
+  color: #ff0000;
+}
+
+ 
   
-}
-
-.popup strong {
-  font-weight: bold;
-}
 .map-pointer-cursor{
   cursor: pointer;
 }
