@@ -10,6 +10,10 @@ import VectorSource from 'ol/source/Vector';
 import VectorLayer from 'ol/layer/Vector';
 import Overlay from 'ol/Overlay';
 import { Style, Text, Fill, Stroke } from 'ol/style';
+import ScaleLine from 'ol/control/ScaleLine';
+import { LineString, Polygon } from 'ol/geom';
+import { Draw } from 'ol/interaction';
+
 import './map.css';
 
 function OpenLayersMap() {
@@ -84,7 +88,8 @@ function OpenLayersMap() {
     });
 
     map.addLayer(vectorLayer);
-
+// Add ScaleLine control to the map
+map.addControl(new ScaleLine());
     const popup = new Overlay({
       element: document.getElementById('popup'),
       autoPan: true,
@@ -141,7 +146,7 @@ function OpenLayersMap() {
       // Generate a new random color with 50% opacity (alpha: 0.5)
       const randomColor = `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(
         Math.random() * 256
-      )}, 0.6)`;
+      )}, 0.5)`;
       colorHash[local] = randomColor;
 
       return randomColor;
