@@ -15,6 +15,7 @@ import { LineString, Polygon } from 'ol/geom';
 import { Draw } from 'ol/interaction';
 import {ZoomSlider} from 'ol/control.js';
 import {FullScreen, defaults as defaultControls} from 'ol/control.js';
+
 import './map.css';
 
 function OpenLayersMap() {
@@ -24,7 +25,13 @@ function OpenLayersMap() {
  
    
   useEffect(() => {
-
+    function rotateNorthArrow(rotation) {
+      const northArrow = document.getElementById('north-arrow');
+      if (northArrow) {
+        northArrow.style.transform = `rotate(${-rotation}rad)`;
+      }
+    }
+    
      // Determine the initial zoom level based on screen width
      const screenWidth = window.innerWidth;
     console.log(screenWidth)
@@ -55,6 +62,10 @@ function OpenLayersMap() {
     });
 
     map.getViewport().classList.add('map-pointer-cursor');
+// After creating the map
+map.getView().on('change:rotation', function (event) {
+  rotateNorthArrow(event.target.getRotation());
+});
 
     // Create a vector source with the GeoJSON URL
     const vectorSource = new VectorSource({
@@ -160,6 +171,10 @@ map.addControl(zoomslider);
     <div>
       <div id="map" className="map" />
       <div id="popup" className="popup" />
+      <div id="north-arrow" className="north-arrow">
+  <span className="north-arrow-text">N</span>
+</div>
+
     </div>
   );
 }
