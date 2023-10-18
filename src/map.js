@@ -186,13 +186,14 @@ map.on('click', function (event) {
       <div class="map_popup__content">
         <button class="close-button" onclick="closePopup()">X</button>
         <strong>${properties.LOCAL}</strong> (${properties.TYPE})
-        <div class="map_popup__btn-wrapper">
-          <a class="map_popup__btn" href="${properties.WEBSITE}" target="_blank">WEBSITE</a>
-        </div>
+        <div class="map_popup__btn-row">
+        <a class="map_popup__btn" href="${properties.WEBSITE}" target="_blank">WEBSITE</a>
+        <a class="map_popup__btn" href="${properties.WEBSITE}" target="_blank">Quick Aid</a>
+      </div>
       </div>
     </div>
   `;
-  
+
   
       const coordinate = event.coordinate;
 

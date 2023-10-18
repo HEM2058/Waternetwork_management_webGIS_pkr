@@ -19,7 +19,7 @@
 }
 
 /* Popup content */
-.map_popup-content {
+.map_popup__content {
   font-size: 16px;
   line-height: 1.6;
 }
@@ -33,23 +33,13 @@
   border-top-right-radius: 10px;
 }
 
-/* Popup content section */
-.map_popup__content {
-  padding: 15px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  line-height: 1.6;
-}
-
 /* Button wrapper */
-.map_popup__btn-wrapper {
+.map_popup__btn-row {
   display: flex;
-  justify-content: center;
+  justify-content: space-between; /* Adjust alignment between buttons */
   align-items: center;
   margin-top: 15px;
-  border-radius: 5px;
+  border-radius: 25px;
   padding: 10px 0;
 }
 
@@ -59,9 +49,10 @@
   color: #fff;
   padding: 10px 20px;
   text-decoration: none;
-  border-radius: 5px;
+  border-radius: 25px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   transition: background 0.3s;
+  flex: 1; /* Distribute available space evenly between buttons */
 }
 
 .map_popup__btn:hover {
@@ -80,34 +71,41 @@
 .close-button:hover {
   color: #ff0000;
 }
-/* Define base styles for the popup */
-.map_popup {
-  position: absolute;
-  width: 300px;
-  padding: 20px;
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  font: 400 14px Roboto, Arial, sans-serif;
-  z-index: 1;
-}
-
-.map_popup-content {
-  font-size: 16px;
-  line-height: 1.6;
-}
-
 
 /* Define styles for smaller screens (e.g., screens up to 768px) */
 @media screen and (max-width: 768px) {
   .map_popup {
     width: 200px; /* Adjust width for smaller screens */
   }
-  .map_popup__btn-wrapper {
+  .map_popup__btn-row {
     width: 200px; /* Adjust button wrapper width */
   }
+  /* Button wrapper */
+  .map_popup__btn-row {
+    display: flex;
+    justify-content: space-between; /* Adjust alignment between buttons */
+    align-items: center;
+    margin-top: 15px;
+    border-radius: 25px;
+    padding: 10px 0;
+   
+  }
+
+/* Popup button */
+.map_popup__btn {
+  background: #0070c0;
+  color: #fff;
+  padding: 5px 10px; /* Reduced button size */
+  text-decoration: none;
+  border-radius: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s;
+  font-size: 12px; /* Reduced text size */
+
 }
+
+}
+
 
  
   
