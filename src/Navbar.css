@@ -18,7 +18,7 @@ h2{
 
 .navbar-brand a {
   text-decoration: none;
-  font-size: 25px;
+  font-size: 18px;
   font-family: 'Clambo', sans-serif;
 }
 
@@ -109,8 +109,11 @@ h2{
     font-family: 'Clambo', sans-serif;
   }
   .navbar-brand a {
-    font-size: 20px; /* Adjust font size for smaller screens */
+    text-decoration: none;
+    font-size: 15px;
+    font-family: 'Clambo', sans-serif;
   }
+  
 
   .logo1 {
     width: 50px; /* Adjust logo size for smaller screens */
@@ -118,6 +121,12 @@ h2{
   .logo2 {
     width: 50px;
   }
+  .logo1-container {
+    display: flex;
+    align-items: center;
+    width: 300px;
+  }
+  
 }
 
 @media (max-width: 576px) {
@@ -130,8 +139,11 @@ h2{
     font-family: 'Clambo', sans-serif;
   }
   .navbar-brand a {
-    font-size: 18px; /* Adjust font size for mobile devices */
+    text-decoration: none;
+    font-size: 15px;
+    font-family: 'Clambo', sans-serif;
   }
+  
 
   .logo1 {
     width: 40px; /* Adjust logo size for mobile devices */
@@ -140,7 +152,7 @@ h2{
 
   /* Remove margin for Login div on mobile devices */
   .Login {
-    margin-right: 0;
+    margin-right: 10px;
   }
   .logo2 {
     width: 40px;

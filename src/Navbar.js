@@ -12,7 +12,7 @@ function Navbar() {
         <div className="navbar-brand">
         <Link to="/"><div className="logo1-container">
             <img src={WavingFlag} alt="WavingFlag" className="logo1" />
-            <h2>Bajhang Digital Map</h2>
+            <h2>Bajhang Digital Map and Emergency Assistance</h2>
           </div></Link>
           
           <div className="logo2-container">
