@@ -80,6 +80,34 @@
 .close-button:hover {
   color: #ff0000;
 }
+/* Define base styles for the popup */
+.map_popup {
+  position: absolute;
+  width: 300px;
+  padding: 20px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  font: 400 14px Roboto, Arial, sans-serif;
+  z-index: 1;
+}
+
+.map_popup-content {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+
+/* Define styles for smaller screens (e.g., screens up to 768px) */
+@media screen and (max-width: 768px) {
+  .map_popup {
+    width: 200px; /* Adjust width for smaller screens */
+  }
+  .map_popup__btn-wrapper {
+    width: 200px; /* Adjust button wrapper width */
+  }
+}
 
  
   
