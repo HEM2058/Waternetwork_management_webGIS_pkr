@@ -30,3 +30,38 @@
 .map-pointer-cursor{
   cursor: pointer;
 }
+
+#map .ol-zoomslider {
+  top: 96%;
+  left: auto;
+  right: 8px;
+  background-color: rgba(255, 255, 255, 0.7); /* Change background color */
+  width: 100px;
+  height: 15px;
+  padding: 0;
+  border: 1px solid rgba(0, 0, 0, 0.2); /* Add a subtle border */
+  border-radius: 7.5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4); /* Increase shadow */
+}
+
+#map .ol-zoomslider:hover {
+  background-color: rgba(255, 255, 255, 0.9); /* Lighten the background on hover */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.6); /* Enhance the shadow on hover */
+}
+
+#map .ol-zoomslider-thumb {
+  height: 15px;
+  width: 10px;
+  margin: 0;
+  filter: none;
+  background-color: rgba(255, 69, 0, 0.7); /* Adjust thumb color */
+  border-radius: 7.5px;
+}
+
+#map a.ol-zoomslider-handle:hover {
+  background-color: rgba(255, 69, 0, 0.8); /* Lighten the thumb color on hover */
+}
+.ol-zoom {
+  opacity: 0;
+}
+

@@ -13,7 +13,8 @@ import { Style, Text, Fill, Stroke } from 'ol/style';
 import ScaleLine from 'ol/control/ScaleLine';
 import { LineString, Polygon } from 'ol/geom';
 import { Draw } from 'ol/interaction';
-
+import {ZoomSlider} from 'ol/control.js';
+import {FullScreen, defaults as defaultControls} from 'ol/control.js';
 import './map.css';
 
 function OpenLayersMap() {
@@ -50,7 +51,7 @@ function OpenLayersMap() {
         center: fromLonLat([81.2519, 29.7767]),
         zoom: initialZoom,
       }),
-      controls: [],
+      controls: defaultControls().extend([new FullScreen()]),
     });
 
     map.getViewport().classList.add('map-pointer-cursor');
@@ -90,6 +91,8 @@ function OpenLayersMap() {
     map.addLayer(vectorLayer);
 // Add ScaleLine control to the map
 map.addControl(new ScaleLine());
+const zoomslider = new ZoomSlider();
+map.addControl(zoomslider);
     const popup = new Overlay({
       element: document.getElementById('popup'),
       autoPan: true,
