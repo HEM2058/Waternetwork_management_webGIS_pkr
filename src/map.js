@@ -15,7 +15,7 @@ import { LineString, Polygon } from 'ol/geom';
 import { Draw } from 'ol/interaction';
 import {ZoomSlider} from 'ol/control.js';
 import {FullScreen, defaults as defaultControls} from 'ol/control.js';
-
+import { max, createEmpty } from 'ol/extent';
 import './map.css';
 
 function OpenLayersMap() {
@@ -25,6 +25,10 @@ function OpenLayersMap() {
  
    
   useEffect(() => {
+    const minZoom = 9.3; // Define the minimum zoom level you want (e.g., 4)
+    const centerCoordinates = fromLonLat([81.2519, 29.7767]);
+   const extent = [centerCoordinates[0], centerCoordinates[1], centerCoordinates[0], centerCoordinates[1]];
+  const maxExtent = createEmpty();
     function rotateNorthArrow(rotation) {
       const northArrow = document.getElementById('north-arrow');
       if (northArrow) {
@@ -66,6 +70,19 @@ northArrow.addEventListener('click', resetMapToNorth);
       view: new View({
         center: fromLonLat([81.2519, 29.7767]),
         zoom: initialZoom,
+        minZoom: minZoom, // Set the minimum zoom level
+      
+        extent: [
+          8909115.173371011,  // Minimum longitude (west) in meters
+          3418850.109835052,   // Minimum latitude (south) in meters
+          9149115.173371011,  // Maximum longitude (east) in meters
+          3548989.6836373677  // Maximum latitude (north) in meters
+        ]
+        
+        
+        
+        
+
       }),
       controls: defaultControls().extend([new FullScreen()]),
     });
