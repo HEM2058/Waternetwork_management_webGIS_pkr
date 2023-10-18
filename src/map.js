@@ -149,18 +149,23 @@ map.addControl(zoomslider);
       });
     }
 
-    // Define a variable to track opacity
-let gaupalikaOpacity = 1.0;
+// Define a variable to track the previously clicked feature
+let previousClickedFeature = null;
 
 map.on('click', function (event) {
   map.forEachFeatureAtPixel(event.pixel, function (feature) {
     const properties = feature.getProperties();
 
-    if (properties.TYPE === 'Gaunpalika' || 'Nagarpalika' || 'National Park') {
+    if (properties.TYPE === 'Gaunpalika' || properties.TYPE === 'Nagarpalika' || properties.TYPE === 'National Park') {
       // Zoom to the clicked polygon
       zoomToFeature(feature);
 
-      // Update the layer style to remove the fill color (make it fully transparent)
+      // Reset the style of the previous clicked feature (if there is one)
+      if (previousClickedFeature) {
+        previousClickedFeature.setStyle(null); // Reset to the default style
+      }
+
+      // Update the layer style to highlight the newly clicked feature
       feature.setStyle(new Style({
         fill: new Fill({ color: 'rgba(0, 0, 0, 0)' }), // Fully transparent fill
         stroke: new Stroke({
@@ -168,6 +173,9 @@ map.on('click', function (event) {
           width: 2,
         }),
       }));
+
+      // Set the current feature as the previous clicked feature
+      previousClickedFeature = feature;
 
       // Restyle the feature to apply changes
       feature.changed();
