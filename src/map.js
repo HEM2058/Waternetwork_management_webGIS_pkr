@@ -31,7 +31,16 @@ function OpenLayersMap() {
         northArrow.style.transform = `rotate(${-rotation}rad)`;
       }
     }
-    
+    function resetMapToNorth() {
+      const view = map.getView();
+      view.setRotation(0);
+    }
+    // Get the North Arrow element
+const northArrow = document.getElementById('north-arrow');
+
+// Add a click event listener
+northArrow.addEventListener('click', resetMapToNorth);
+
      // Determine the initial zoom level based on screen width
      const screenWidth = window.innerWidth;
     console.log(screenWidth)
@@ -123,32 +132,52 @@ map.addControl(zoomslider);
       });
     }
 
-    map.on('click', function (event) {
-      map.forEachFeatureAtPixel(event.pixel, function (feature) {
-        const properties = feature.getProperties();
+    // Define a variable to track opacity
+let gaupalikaOpacity = 1.0;
 
-        if (properties.TYPE === 'Gaunpalika') {
-          // Zoom to the clicked polygon
-          zoomToFeature(feature);
+map.on('click', function (event) {
+  map.forEachFeatureAtPixel(event.pixel, function (feature) {
+    const properties = feature.getProperties();
 
-          const content = `
-            <div class="popup-content">
-              <button class="close-button" onclick="closePopup()">X</button>
-              <strong>${properties.LOCAL}</strong> (${properties.TYPE})
-              <br>
-              District: ${properties.DISTRICT}
-              <br>
-              Province: ${properties.PROVINCE} (${properties.PR_NAME})
-            </div>
-          `;
+    if (properties.TYPE === 'Gaunpalika' || 'Nagarpalika' || 'National Park') {
+      // Zoom to the clicked polygon
+      zoomToFeature(feature);
 
-          const coordinate = event.coordinate;
+      // Update the layer style to remove the fill color (make it fully transparent)
+      feature.setStyle(new Style({
+        fill: new Fill({ color: 'rgba(0, 0, 0, 0)' }), // Fully transparent fill
+        stroke: new Stroke({
+          color: 'blue',
+          width: 2,
+        }),
+      }));
 
-          popup.getElement().innerHTML = content;
-          popup.setPosition(coordinate);
-        }
-      });
-    });
+      // Restyle the feature to apply changes
+      feature.changed();
+
+      const content = `
+        <div class="popup-content">
+          <button class="close-button" onclick="closePopup()">X</button>
+          <strong>${properties.LOCAL}</strong> (${properties.TYPE})
+          <br>
+          District: ${properties.DISTRICT}
+          <br>
+          Province: ${properties.PROVINCE} (${properties.PR_NAME})
+        </div>
+      `;
+
+      const coordinate = event.coordinate;
+
+      popup.getElement().innerHTML = content;
+      popup.setPosition(coordinate);
+    }
+  });
+});
+
+
+
+
+
 
     // Function to generate a unique color with 50% opacity based on the feature's local property
     function getRandomColor(local) {

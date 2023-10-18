@@ -6,7 +6,7 @@ import OpenLayersMap from './map';
 import './mapcomposite.css'; // Import your CSS file for styling
 
 function MapComposite() {
-  const [showFilter, setShowFilter] = useState(true);
+  const [showFilter, setShowFilter] = useState(false);
 
   const toggleFilter = () => {
     setShowFilter(!showFilter);
