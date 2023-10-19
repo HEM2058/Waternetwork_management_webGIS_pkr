@@ -32,7 +32,7 @@ const QuickAid = () => {
             <option value="other">Other</option>
           </select>
         </div>
-        <div className="file-section-unique">
+        <div className="form-section-unique">
         <label htmlFor="file-unique">Upload File</label>
         <input type="file" id="file-unique" />
       </div>

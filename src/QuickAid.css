@@ -5,10 +5,11 @@
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   width: 95vw; /* Set the width to 95% of the viewport width */
-  height: calc(100vh - 70px); /* Set the height to 100% of the viewport height minus 77px */
+  height: calc(100vh - 100px); /* Set the height to 100% of the viewport height minus 77px */
   padding: 20px;
   flex-wrap: wrap; /* Allow columns to wrap to the next row on smaller screens */
   overflow-y: auto; /* Enable vertical scrolling if content exceeds the container's height */
+  overflow-x: hidden;
 }
 
 .column-unique {
@@ -24,20 +25,20 @@
 }
 
 .form-section-unique {
-  margin: 10px 0;
+  margin: 10px 10px;
   display: flex;
   flex-direction: column;
   gap: 10px; /* Add vertical spacing */
 }
 
-label-unique {
+label {
   font-weight: bold;
 }
 
 input[type="text"]-unique,
 input[type="tel"]-unique,
 input[type="file"]-unique,
-select-unique {
+select {
   width: 100%;
   padding: 5px;
   border: 1px solid #ccc;
@@ -79,10 +80,11 @@ input[type="file"]-unique {
 /* Media Query for screens smaller than 768px (adjust as needed) */
 @media (max-width: 768px) {
   .column-unique {
-    flex: 0 0 100%; /* Make columns full width on smaller screens */
+    flex: 0 0 83%; /* Make columns full width on smaller screens */
   }
 
   .submit-button-unique {
-    width: 100%; /* Make the submit button full width on smaller screens */
+    width: 30%; /* Make the submit button full width on smaller screens */
   }
+  
 }
