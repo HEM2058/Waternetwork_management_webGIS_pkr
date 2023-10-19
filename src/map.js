@@ -68,7 +68,7 @@ northArrow.addEventListener('click', resetMapToNorth);
       layers: [
         new TileLayer({
           source: new OSM(),
-          opacity: 0.5, 
+          opacity: 0.3, 
         }),
       ],
       view: new View({
@@ -227,7 +227,7 @@ map.on('click', function (event) {
       // Generate a new random color with 50% opacity (alpha: 0.5)
       const randomColor = `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(
         Math.random() * 256
-      )}, 0.5)`;
+      )}, 0.3)`;
       colorHash[local] = randomColor;
 
       return randomColor;

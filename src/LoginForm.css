@@ -2,44 +2,82 @@
 
 /* Overall login container */
 .login-container {
-    background: linear-gradient(135deg, #a1d908, #03b821); /* Premium gradient background */
-    height: calc(100vh - 70px); /* Subtract navbar height from viewport height */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  /* Login form container */
-  .login-form {
-    background: #ffffff; /* White background */
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
-  }
-  
-  /* Login form input fields */
-  .login-form input {
-    width: 95%;
-    padding: 12px; /* Increase padding for a more comfortable input field */
-    margin-bottom: 20px; /* More spacing between input fields */
-    border: 1px solid #ccc; /* Add a light border */
-    border-radius: 5px;
-  }
-  
-  /* Login form submit button */
-  .login-form button {
-    width: 100%;
-    padding: 12px;
-    background-color: #ff9f1a; /* Premium button color */
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease; /* Smooth background color transition */
-  }
-  
-  /* Hover effect for the submit button */
-  .login-form button:hover {
-    background-color: #ff7e00; /* Darker color on hover */
-  }
-  
+  background: linear-gradient(135deg, #e6e3d5, #FFA500); /* Yellow gradient background */
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, sans-serif;
+}
+
+/* Login form container */
+.login-form {
+  background: #fff; /* White background */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+  max-width: 400px;
+  width: 80%;
+  text-align: center;
+}
+
+/* Login form header */
+.login-header {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333; /* Yellow text color */
+  font-family: 'Your Heading Font', Arial, sans-serif; /* Specify your desired font */
+}
+
+/* Login form input fields */
+.login-form input {
+  width: 90%;
+  padding: 7px; /* Increase padding for a more comfortable input field */
+  margin-bottom: 20px; /* More spacing between input fields */
+  border: 1px solid #ccc; /* Add a light border */
+  border-radius: 5px;
+}
+
+/* Error message */
+.error-message {
+  color: #ff5555; /* Red text color for errors */
+  margin-bottom: 20px;
+  font-family: 'Your Warning Font', Arial, sans-serif; /* Specify your desired font */
+}
+
+/* Login form submit button */
+.login-form button {
+  width: 100%;
+  padding: 12px;
+  background-color: #FFD700; /* Yellow button color */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth background color transition */
+}
+
+/* Hover effect for the submit button */
+.login-form button:hover {
+  background-color: #FFA500; /* Darker yellow on hover */
+}
+
+/* Warning message at the bottom */
+.warning-message {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #120808; /* Red text color for warnings */
+  font-family: 'Your Warning Font', Arial, sans-serif; /* Specify your desired font */
+  display: flex;
+  align-items: center;
+}
+
+/* Warning icon style */
+.warning-message svg {
+  margin-right: 10px;
+  color: #b50f0f; /* Red color for the icon */
+  font-size: 24px;
+}
+

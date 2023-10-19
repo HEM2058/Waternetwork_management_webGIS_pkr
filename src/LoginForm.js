@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import './LoginForm.css'; // Import the CSS file
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // Import FontAwesome
+import { faBuilding } from '@fortawesome/free-solid-svg-icons'; // Import a building icon (you can choose a different icon if needed)
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 
 const LoginForm = () => {
   const [name, setName] = useState('');
@@ -28,10 +31,13 @@ const LoginForm = () => {
 
   return (
     <div className="login-container">
+      <h1 className="login-header">
+        <FontAwesomeIcon icon={faBuilding} /> Municipality Login
+      </h1>
       <form onSubmit={handleSubmit} className="login-form">
         <div>
-          <label>Name:</label>
-          <input type="text" value={name} onChange={handleNameChange} />
+          <label>ID:</label>
+          <input className="text" type="text" value={name} onChange={handleNameChange} />
         </div>
         <div>
           <label>Password:</label>
@@ -41,8 +47,12 @@ const LoginForm = () => {
           <button type="submit">Login</button>
         </div>
       </form>
+      <p className="warning-message">
+        <FontAwesomeIcon icon={faExclamationTriangle} /> If you are an unauthorized person, please leave this page.
+      </p>
     </div>
   );
+  
 };
 
 export default LoginForm;
