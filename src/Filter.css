@@ -1,7 +1,7 @@
 /* Filter.css */
 .filter-container {
   position: absolute; /* Position the container absolutely within its parent */
-  top: 20px; /* Adjust top position as needed */
+  top: 48px; /* Adjust top position as needed */
   left: 20px; /* Adjust right position as needed */
   background-color: transparent; /* Set a transparent background */
   z-index: 2; /* Ensure it's above the map */

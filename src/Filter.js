@@ -11,6 +11,7 @@ const localLevels = [
   'Kedarseu',
   'Khaptadchhanna',
   'Masta',
+  'Saipal',
   'Surma',
   'Talkot',
   'Thalara',

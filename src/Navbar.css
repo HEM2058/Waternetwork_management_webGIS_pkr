@@ -127,6 +127,11 @@ h2{
     align-items: center;
     width: 240px;
   }
+  .login-link {
+  
+    padding: 5px 10px; /* Add padding for a larger clickable area */
+   
+  }
   
 }
 
@@ -157,5 +162,10 @@ h2{
   }
   .logo2 {
     width: 40px;
+  }
+  .login-link {
+  
+    padding: 5px 10px; /* Add padding for a larger clickable area */
+   
   }
 }

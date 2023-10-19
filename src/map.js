@@ -68,7 +68,7 @@ northArrow.addEventListener('click', resetMapToNorth);
       layers: [
         new TileLayer({
           source: new OSM(),
-          opacity: 0.7, 
+          opacity: 0.5, 
         }),
       ],
       view: new View({
@@ -78,9 +78,9 @@ northArrow.addEventListener('click', resetMapToNorth);
       
         extent: [
           8909115.173371011,  // Minimum longitude (west) in meters
-          3418850.109835052,   // Minimum latitude (south) in meters
+          3318850.109835052,   // Minimum latitude (south) in meters
           9149115.173371011,  // Maximum longitude (east) in meters
-          3548989.6836373677  // Maximum latitude (north) in meters
+          3568989.6836373677  // Maximum latitude (north) in meters
         ]
         
         

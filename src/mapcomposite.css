@@ -26,3 +26,31 @@
 .filter-toggle.active button {
   background: #ff9900; /* Change color when active */
 }
+
+
+
+/* MapComposite.css */
+/* Existing styles for button-container and other elements */
+
+.relief-request-button  {
+  position: absolute;
+  top: 10px;
+  right:100px;
+  display: inline-block;
+  background: #007bff; /* Link background color */
+  padding: 10px 15px; /* Adjust padding for better visibility */
+  color: #fff; /* Link text color */
+  font-size: 16px;
+  border: none; /* Remove the border */
+  border-radius: 8px; /* Add a slight roundness to the link */
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+a{
+  color: white;
+  text-decoration: none;
+}
+.relief-request-button:hover {
+  background: #ff7700; /* Change link color on hover */
+}
