@@ -68,6 +68,7 @@ northArrow.addEventListener('click', resetMapToNorth);
       layers: [
         new TileLayer({
           source: new OSM(),
+          opacity: 0.7, 
         }),
       ],
       view: new View({

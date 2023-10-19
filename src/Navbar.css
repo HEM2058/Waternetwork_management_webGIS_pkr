@@ -6,7 +6,7 @@
   justify-content: space-between;
   align-items: center;
   height: 70px;
-  background: linear-gradient(135deg, #FFD700, #FFA500);
+  background-color:#333;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: relative;
   font-family: 'Clambo', sans-serif;
@@ -14,6 +14,7 @@
 h2{
   font-size: 25px;
   font-family: 'Clambo', sans-serif;
+  color: white;
 }
 
 .navbar-brand a {
