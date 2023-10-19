@@ -1,69 +1,88 @@
-/* Add these styles to your existing QuickAid.css or create a new CSS file */
+/* QuickAid.css */
 
-.quick-aid-container {
-    background-color: #f2f2f2;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    margin: 20px auto;
-    max-width: 100vw;
-    text-align: center;
-    height: calc(100vh - 70px);
-    overflow-y: auto;
-    display: flex;
-    justify-content: space-between;
+.quick-aid-form-unique {
+  display: flex;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  width: 95vw; /* Set the width to 95% of the viewport width */
+  height: calc(100vh - 70px); /* Set the height to 100% of the viewport height minus 77px */
+  padding: 20px;
+  flex-wrap: wrap; /* Allow columns to wrap to the next row on smaller screens */
+  overflow-y: auto; /* Enable vertical scrolling if content exceeds the container's height */
+}
+
+.column-unique {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  flex: 0 0 45%; /* Adjust the width for smaller screens */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow effect */
+}
+
+.form-section-unique {
+  margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Add vertical spacing */
+}
+
+label-unique {
+  font-weight: bold;
+}
+
+input[type="text"]-unique,
+input[type="tel"]-unique,
+input[type="file"]-unique,
+select-unique {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+input[type="file"]-unique {
+  width: 100%; /* Set the width to make it rectangular */
+}
+
+.map-section-unique {
+  margin: 10px;
+}
+
+.map-section-unique #map-unique {
+  width: 100%;
+  height: 300px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow effect */
+}
+
+.submit-button-unique {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  height: 40px;
+  margin-top: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow effect */
+}
+
+.submit-button-unique:hover {
+  background-color: #0056b3;
+}
+
+/* Media Query for screens smaller than 768px (adjust as needed) */
+@media (max-width: 768px) {
+  .column-unique {
+    flex: 0 0 100%; /* Make columns full width on smaller screens */
   }
-  
-  .form-column {
-    width: 48%;
+
+  .submit-button-unique {
+    width: 100%; /* Make the submit button full width on smaller screens */
   }
-  
-  .quick-aid-heading {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
-  
-  .quick-aid-form {
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-  }
-  
-  .form-group {
-    margin: 10px 0;
-  }
-  
-  .form-group label {
-    font-weight: bold;
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  .form-group input,
-  .form-group textarea,
-  .form-group select,
-  .form-group input[type="file"] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-  }
-  
-  .submit-button {
-    background-color: #0070c0;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 18px;
-    cursor: pointer;
-    transition: background 0.3s;
-    margin-top: 20px;
-  }
-  
-  .submit-button:hover {
-    background-color: #0050a0;
-  }
-  
+}
