@@ -192,9 +192,7 @@ map.on('click', function (event) {
           <strong>${properties.LOCAL}</strong> (${properties.TYPE})
           <div class="map_popup__btn-row">
             <a class="map_popup__btn" href="${properties.WEBSITE}" target="_blank">WEBSITE</a>
-            <Link to="/QuickAid" className="map-popup__btn">
-              Relief Request
-            </Link>
+            <a class="map_popup__btn" href="${properties.WEBSITE}" target="_blank">Relief Request</a>
           </div>
         </div>
       </div>
