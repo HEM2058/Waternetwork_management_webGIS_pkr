@@ -5,7 +5,7 @@
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   width: 95vw; /* Set the width to 95% of the viewport width */
-  height: calc(100vh - 100px); /* Set the height to 100% of the viewport height minus 77px */
+  height: calc(100vh - 140px); /* Set the height to 100% of the viewport height minus 77px */
   padding: 20px;
   flex-wrap: wrap; /* Allow columns to wrap to the next row on smaller screens */
   overflow-y: auto; /* Enable vertical scrolling if content exceeds the container's height */
@@ -35,25 +35,32 @@ label {
   font-weight: bold;
 }
 
-input[type="text"]-unique,
-input[type="tel"]-unique,
-input[type="file"]-unique,
+input[type="text"],
+input[type="tel"],
+input[type="file"],
 select {
   width: 100%;
   padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  border: 1px solid #2f65e2;
+  border-radius: 5px;
 }
 
 input[type="file"]-unique {
   width: 100%; /* Set the width to make it rectangular */
 }
+.note-text {
+  font-size: 16px;
+  color: #555; /* Text color */
+  margin-top: 10px; /* Add some top margin for separation */
+}
+
+/* You can add more styles as needed */
 
 .map-section-unique {
   margin: 10px;
 }
 
-.map-section-unique #map-unique {
+#map-unique .map  {
   width: 100%;
   height: 300px;
   border: 1px solid #ccc;
@@ -61,6 +68,13 @@ input[type="file"]-unique {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow effect */
 }
 
+#map-unique .north-arrow {
+ display: none;
+}
+
+#map-unique  .map_popup {
+display: none;
+}
 .submit-button-unique {
   background-color: #007bff;
   color: #fff;

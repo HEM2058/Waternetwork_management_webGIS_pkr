@@ -17,14 +17,17 @@ import {ZoomSlider} from 'ol/control.js';
 import {FullScreen, defaults as defaultControls} from 'ol/control.js';
 import { max, createEmpty } from 'ol/extent';
 import './map.css';
-
+import { Link } from 'react-router-dom'; // Import the Link component
 function OpenLayersMap() {
   const [colorHash, setColorHash] = useState({});
   const [initialZoom, setInitialZoom] = useState(10); // Set your initial zoom level here
-
+  const [popupVisible, setPopupVisible] = useState(false); // Add state for popup visibility
  
    
   useEffect(() => {
+
+
+
     const minZoom = 9.3; // Define the minimum zoom level you want (e.g., 4)
     const centerCoordinates = fromLonLat([81.2519, 29.7767]);
    const extent = [centerCoordinates[0], centerCoordinates[1], centerCoordinates[0], centerCoordinates[1]];
@@ -159,7 +162,8 @@ map.on('click', function (event) {
     if (properties.TYPE === 'Gaunpalika' || properties.TYPE === 'Nagarpalika' || properties.TYPE === 'National Park') {
       // Zoom to the clicked polygon
       zoomToFeature(feature);
-
+      // Set popup visibility to true
+      setPopupVisible(true);
       // Reset the style of the previous clicked feature (if there is one)
       if (previousClickedFeature) {
         previousClickedFeature.setStyle(null); // Reset to the default style
@@ -182,19 +186,25 @@ map.on('click', function (event) {
 
       const content = `
       <div class="map_popup">
-      <div class="map_popup__title">${properties.NEPALI_NAME}</div>
-      <div class="map_popup__content">
-        <button class="close-button" onclick="closePopup()">X</button>
-        <strong>${properties.LOCAL}</strong> (${properties.TYPE})
-        <div class="map_popup__btn-row">
-        <a class="map_popup__btn" href="${properties.WEBSITE}" target="_blank">WEBSITE</a>
-        <a class="map_popup__btn" href="${properties.WEBSITE}" target="_blank">Relief Request</a>
+        <div class="map_popup__title">${properties.NEPALI_NAME}</div>
+        <div class="map_popup__content">
+          <button class="close-button" onclick="closePopup()">X</button>
+          <strong>${properties.LOCAL}</strong> (${properties.TYPE})
+          <div class="map_popup__btn-row">
+            <a class="map_popup__btn" href="${properties.WEBSITE}" target="_blank">WEBSITE</a>
+            <Link to="/QuickAid" className="map-popup__btn">
+              Relief Request
+            </Link>
+          </div>
+        </div>
       </div>
-      </div>
-    </div>
-  `;
-
-  
+    `;
+    
+    // Define the closePopup function
+    function closePopup() {
+      setPopupVisible(false); // Hide the popup
+    }
+    
       const coordinate = event.coordinate;
 
       popup.getElement().innerHTML = content;

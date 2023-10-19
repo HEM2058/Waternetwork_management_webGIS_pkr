@@ -17,7 +17,6 @@ function App() {
             <Route path="/Log-in" element = { <LoginForm/>} />   
             <Route path="/" element = { <MapComposite/>} />  
             <Route path="/LayerUploadForm" element = { <LayerUploadForm/>} />  
-            
             <Route path="/QuickAid" element = { <QuickAid/>} /> 
           </Routes>
       
