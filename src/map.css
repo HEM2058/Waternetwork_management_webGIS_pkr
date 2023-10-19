@@ -114,7 +114,7 @@
 }
 
 #map .ol-zoomslider {
-  top: 96%;
+  top: 95%;
   left: auto;
   right: 8px;
   background-color: rgba(255, 255, 255, 0.7); /* Change background color */
@@ -149,15 +149,27 @@
 
 .north-arrow {
   position: absolute;
-  bottom: 28px;
+  bottom: 35px;
   right: 15px;
   background-color: rgba(255, 255, 255, 0.7);
   padding: 5px;
   border-radius: 5px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 .north-arrow-text {
   font-size: 20px;
   color: black;
+}
+@media (max-width: 768px)   {
+
+  #map .ol-zoomslider {
+  top: 90%;
+ 
+}
+.north-arrow {
+  bottom: 80px;
+
+}
 }
