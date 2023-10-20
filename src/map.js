@@ -23,13 +23,11 @@ function OpenLayersMap({ selectedPalika }) {
   const [colorHash, setColorHash] = useState({});
   const [initialZoom, setInitialZoom] = useState(10); // Set your initial zoom level here
   const [popupVisible, setPopupVisible] = useState(false); // Add state for popup visibility
-  const [getPalika, setgetPalika] = useState('');
  
  
-   
   useEffect(() => {
    
-    console.log(selectedPalika)
+ 
     const minZoom = 9.3; // Define the minimum zoom level you want (e.g., 4)
     const centerCoordinates = fromLonLat([81.2519, 29.7767]);
    const extent = [centerCoordinates[0], centerCoordinates[1], centerCoordinates[0], centerCoordinates[1]];
@@ -52,13 +50,13 @@ northArrow.addEventListener('click', resetMapToNorth);
 
      // Determine the initial zoom level based on screen width
      const screenWidth = window.innerWidth;
-    console.log(screenWidth)
+
      if (screenWidth <= 1024) {
       console.log("Going inside 1024")
        setInitialZoom(8); // Adjust the initial zoom level for smaller screens
-       console.log(initialZoom)
+       
      } else {
-      console.log("Going outside 1024")
+    
        setInitialZoom(10); // Set the default initial zoom level for larger screens
      }
     // URL to the GeoJSON data
@@ -148,6 +146,7 @@ map.addControl(zoomslider);
 
     // Function to zoom into a specific polygon
     function zoomToFeature(feature) {
+      console.log("called")
       const extent = feature.getGeometry().getExtent();
       map.getView().fit(extent, {
         duration: 1000, // Animation duration in milliseconds
@@ -155,6 +154,7 @@ map.addControl(zoomslider);
       });
     }
 
+ 
 // Define a variable to track the previously clicked feature
 let previousClickedFeature = null;
 
@@ -165,7 +165,7 @@ map.on('click', function (event) {
     if (properties.TYPE === 'Gaunpalika' || properties.TYPE === 'Nagarpalika' || properties.TYPE === 'National Park') {
       // Zoom to the clicked polygon
       zoomToFeature(feature);
-      // Set popup visibility to true
+      // Set popup visibility to true+
       setPopupVisible(true);
       // Reset the style of the previous clicked feature (if there is one)
       if (previousClickedFeature) {
@@ -181,12 +181,6 @@ map.on('click', function (event) {
         }),
       }));
   
-           // Check if selectedPalika matches properties.NAME
-           if (selectedPalika === properties.LOCAL) {
-            // Zoom to the selected feature
-            console.log("ok2")
-            zoomToFeature(feature);
-          }
       // Set the current feature as the previous clicked feature
       previousClickedFeature = feature;
 
@@ -220,7 +214,28 @@ map.on('click', function (event) {
   });
 });
 
+function zoomToFeatureByLocal(local) {
+  vectorSource.once('change', function() {
+    const features = vectorSource.getFeatures();
+    for (const feature of features) {
+      const featureProperties = feature.getProperties();
+      if (featureProperties.LOCAL === local) {
+        console.log('Matching LOCAL:', featureProperties.LOCAL);
+        const extent = feature.getGeometry().getExtent();
+        console.log('Extent:', extent); // Add this line for debugging
+        zoomToFeature(feature); // Call the existing zoomToFeature function
+        setPopupVisible(true);
+        break;
+      }
+    }
+  });
+}
 
+
+  // Check if selectedPalika matches a feature's LOCAL property
+  if (selectedPalika) {
+    zoomToFeatureByLocal(selectedPalika);
+  }
 
 
 
