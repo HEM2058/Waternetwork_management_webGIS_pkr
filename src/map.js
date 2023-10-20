@@ -18,16 +18,18 @@ import {FullScreen, defaults as defaultControls} from 'ol/control.js';
 import { max, createEmpty } from 'ol/extent';
 import './map.css';
 import { Link } from 'react-router-dom'; // Import the Link component
-function OpenLayersMap() {
+function OpenLayersMap({ selectedPalika }) {
+
   const [colorHash, setColorHash] = useState({});
   const [initialZoom, setInitialZoom] = useState(10); // Set your initial zoom level here
   const [popupVisible, setPopupVisible] = useState(false); // Add state for popup visibility
+  const [getPalika, setgetPalika] = useState('');
+ 
  
    
   useEffect(() => {
-
-
-
+   
+    console.log(selectedPalika)
     const minZoom = 9.3; // Define the minimum zoom level you want (e.g., 4)
     const centerCoordinates = fromLonLat([81.2519, 29.7767]);
    const extent = [centerCoordinates[0], centerCoordinates[1], centerCoordinates[0], centerCoordinates[1]];
@@ -178,7 +180,13 @@ map.on('click', function (event) {
           width: 2,
         }),
       }));
-
+  
+           // Check if selectedPalika matches properties.NAME
+           if (selectedPalika === properties.LOCAL) {
+            // Zoom to the selected feature
+            console.log("ok2")
+            zoomToFeature(feature);
+          }
       // Set the current feature as the previous clicked feature
       previousClickedFeature = feature;
 
@@ -232,7 +240,7 @@ map.on('click', function (event) {
 
       return randomColor;
     }
-  }, []);
+  }, [selectedPalika]);
 
   return (
     <div>
