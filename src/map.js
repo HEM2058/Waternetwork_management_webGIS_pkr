@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios'; // Import Axios
 import 'ol/ol.css';
 import Map from 'ol/Map';
 import View from 'ol/View';
@@ -27,7 +28,7 @@ function OpenLayersMap({ selectedPalika }) {
  
   useEffect(() => {
    
- 
+    
     const minZoom = 9.3; // Define the minimum zoom level you want (e.g., 4)
     const centerCoordinates = fromLonLat([81.2519, 29.7767]);
    const extent = [centerCoordinates[0], centerCoordinates[1], centerCoordinates[0], centerCoordinates[1]];
@@ -97,6 +98,71 @@ map.getView().on('change:rotation', function (event) {
   rotateNorthArrow(event.target.getRotation());
 });
 
+   // URL to the GeoJSON data
+   const geoJSONUrl1 = 'http://127.0.0.1:2500/geojson-features/';
+   // Create a vector source
+     // Create a vector source with the GeoJSON format
+const vectorSource1 = new VectorSource({
+  format: new GeoJSON(),
+});
+
+
+   // Load the data using Axios
+   axios
+     .get(geoJSONUrl1)
+     .then((response) => {
+       console.log('Received GeoJSON data from Axios:', response.data);
+          // Check the projection of the loaded GeoJSON data
+const geoJSONFormat = new GeoJSON();
+       const projection = geoJSONFormat.readProjection(response.data);
+       console.log('GeoJSON Projection:', projection);
+
+          // Access the "geojson" property in the response
+       const geojsonData = response.data[0].geojson;
+       // Check each feature's geometry type
+          // Read features from the "geojson" property
+const features = vectorSource1.getFormat().readFeatures(geojsonData);
+         // Assign an index-based ID to each feature
+features.forEach((feature, index) => {
+  feature.setId(index);
+});
+  // Add the features to the vector source
+  vectorSource1.addFeatures(features);
+       vectorSource1.getFeatures().forEach(function (feature) {
+         const geometryType = feature.getGeometry().getType();
+         console.log(`Feature ID: ${feature.getId()}, Geometry Type: ${geometryType}`);
+       });
+
+       // Create a VectorLayer with the custom style
+       const vectorLayer = new VectorLayer({
+         source: vectorSource1,
+         style: new Style({
+           fill: new Fill({
+             color: 'red',
+           }),
+           stroke: new Stroke({
+             color: 'white',
+             width: 10,
+           }),
+         }),
+           // Explicitly specify the projection as EPSG:4326 (WGS 84)
+         projection: 'EPSG:4326',
+
+       });
+       vectorLayer.on('error', function (event) {
+        console.error('Error adding the VectorLayer to the map:', event.error);
+      });
+      
+       // Add the VectorLayer to the map
+       map.addLayer(vectorLayer);
+       console.log('VectorLayer state after adding to the map:', vectorLayer.get('state'));
+       console.log('VectorLayer added to the map.');
+     })
+     .catch((error) => {
+       console.error('Error loading GeoJSON data using Axios:', error);
+     });
+
+
     // Create a vector source with the GeoJSON URL
     const vectorSource = new VectorSource({
       format: new GeoJSON(),
@@ -130,6 +196,9 @@ map.getView().on('change:rotation', function (event) {
     });
 
     map.addLayer(vectorLayer);
+
+ 
+    
 // Add ScaleLine control to the map
 map.addControl(new ScaleLine());
 const zoomslider = new ZoomSlider();
@@ -144,16 +213,38 @@ map.addControl(zoomslider);
 
     map.addOverlay(popup);
 
-    // Function to zoom into a specific polygon
-    function zoomToFeature(feature) {
-      console.log("called")
-      const extent = feature.getGeometry().getExtent();
-      map.getView().fit(extent, {
-        duration: 1000, // Animation duration in milliseconds
-        padding: [50, 50, 50, 50], // Padding around the extent
-      });
-    }
+// Function to zoom into a specific polygon
+function zoomToFeature(feature) {
+  const extent = feature.getGeometry().getExtent();
+  // console.log('Zooming to extent:', extent); // Add this for debugging
 
+  const mapView = map.getView();
+  // console.log('Map View:', mapView); // Add this for debugging
+
+  // console.log('Fitting to extent...');
+  mapView.fit(extent, {
+    duration: 1000, // Animation duration in milliseconds
+    padding: [50, 50, 50, 50], // Padding around the extent
+  });
+  // console.log('Fit completed.');
+}
+
+// Define a custom style function for polygons
+function polygonStyleFunction(feature, resolution) {
+  return new Style({
+    stroke: new Stroke({
+      color: 'blue',
+      width: 1,
+    }),
+    fill: new Fill({
+      color: 'rgba(0, 0, 255, 0.1)',
+    }),
+  });
+}
+
+
+
+   
  
 // Define a variable to track the previously clicked feature
 let previousClickedFeature = null;
@@ -223,13 +314,15 @@ function zoomToFeatureByLocal(local) {
         console.log('Matching LOCAL:', featureProperties.LOCAL);
         const extent = feature.getGeometry().getExtent();
         console.log('Extent:', extent); // Add this line for debugging
-        zoomToFeature(feature); // Call the existing zoomToFeature function
+        zoomToFeature(feature);
         setPopupVisible(true);
+        
         break;
       }
     }
   });
 }
+
 
 
   // Check if selectedPalika matches a feature's LOCAL property
@@ -250,7 +343,7 @@ function zoomToFeatureByLocal(local) {
       // Generate a new random color with 50% opacity (alpha: 0.5)
       const randomColor = `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(
         Math.random() * 256
-      )}, 0.3)`;
+      )}, 0.8)`;
       colorHash[local] = randomColor;
 
       return randomColor;
