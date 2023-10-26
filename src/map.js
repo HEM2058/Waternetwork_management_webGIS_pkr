@@ -27,7 +27,9 @@ function OpenLayersMap({ selectedPalika }) {
  
  
   useEffect(() => {
-   
+      
+
+
     
     const minZoom = 9.3; // Define the minimum zoom level you want (e.g., 4)
     const centerCoordinates = fromLonLat([81.2519, 29.7767]);
@@ -98,71 +100,10 @@ map.getView().on('change:rotation', function (event) {
   rotateNorthArrow(event.target.getRotation());
 });
 
-   // URL to the GeoJSON data
-   const geoJSONUrl1 = 'http://127.0.0.1:2500/geojson-features/';
-   // Create a vector source
-     // Create a vector source with the GeoJSON format
-const vectorSource1 = new VectorSource({
-  format: new GeoJSON(),
-});
 
 
-   // Load the data using Axios
-   axios
-     .get(geoJSONUrl1)
-     .then((response) => {
-       console.log('Received GeoJSON data from Axios:', response.data);
-          // Check the projection of the loaded GeoJSON data
-const geoJSONFormat = new GeoJSON();
-       const projection = geoJSONFormat.readProjection(response.data);
-       console.log('GeoJSON Projection:', projection);
 
-          // Access the "geojson" property in the response
-       const geojsonData = response.data[0].geojson;
-       // Check each feature's geometry type
-          // Read features from the "geojson" property
-const features = vectorSource1.getFormat().readFeatures(geojsonData);
-         // Assign an index-based ID to each feature
-features.forEach((feature, index) => {
-  feature.setId(index);
-});
-  // Add the features to the vector source
-  vectorSource1.addFeatures(features);
-       vectorSource1.getFeatures().forEach(function (feature) {
-         const geometryType = feature.getGeometry().getType();
-         console.log(`Feature ID: ${feature.getId()}, Geometry Type: ${geometryType}`);
-       });
-
-       // Create a VectorLayer with the custom style
-       const vectorLayer = new VectorLayer({
-         source: vectorSource1,
-         style: new Style({
-           fill: new Fill({
-             color: 'red',
-           }),
-           stroke: new Stroke({
-             color: 'white',
-             width: 10,
-           }),
-         }),
-           // Explicitly specify the projection as EPSG:4326 (WGS 84)
-         projection: 'EPSG:4326',
-
-       });
-       vectorLayer.on('error', function (event) {
-        console.error('Error adding the VectorLayer to the map:', event.error);
-      });
-      
-       // Add the VectorLayer to the map
-       map.addLayer(vectorLayer);
-       console.log('VectorLayer state after adding to the map:', vectorLayer.get('state'));
-       console.log('VectorLayer added to the map.');
-     })
-     .catch((error) => {
-       console.error('Error loading GeoJSON data using Axios:', error);
-     });
-
-
+    
     // Create a vector source with the GeoJSON URL
     const vectorSource = new VectorSource({
       format: new GeoJSON(),
@@ -176,7 +117,7 @@ features.forEach((feature, index) => {
         const properties = feature.getProperties();
         const name = properties.NEPALI_NAME;
         const color = getRandomColor(name); // Use a custom function to get a unique color
-
+        console.log(properties)
         return new Style({
           fill: new Fill({
             color: color,
@@ -194,7 +135,7 @@ features.forEach((feature, index) => {
         });
       },
     });
-
+    console.log(vectorLayer)
     map.addLayer(vectorLayer);
 
  
@@ -348,6 +289,55 @@ function zoomToFeatureByLocal(local) {
 
       return randomColor;
     }
+
+
+    // code for the geojson layer overlay coming from the restapi
+    const geoJSONUrl1 = 'http://127.0.0.1:2500/geojson-features/7';
+
+axios.get(geoJSONUrl1)
+  .then((response) => {
+    // Extract the GeoJSON from the "geojson" property
+    const geojsonData = response.data.geojson;
+  console.log(geojsonData)
+    // Create a vector source with the GeoJSON data
+    const vectorSource1 = new VectorSource({
+      format: new GeoJSON(),
+      features: new GeoJSON().readFeatures(geojsonData, { dataProjection: 'EPSG:4326', featureProjection: 'EPSG:4326' }),
+    });
+
+    const vectorLayer1 = new VectorLayer({
+      source: vectorSource1,
+      style: function (feature) {
+        const properties = feature.getProperties();
+        const name = properties.name;
+        const color = getRandomColor(name);
+          // Log the feature properties
+       console.log('Feature Properties:', properties);
+
+        return new Style({
+          fill: new Fill({
+            color: color,
+          }),
+          stroke: new Stroke({
+            color: 'red',
+            width: 2,
+          }),
+          text: new Text({
+            text: name,
+            fill: new Fill({
+              color: 'black',
+            }),
+          }),
+        });
+      },
+    });
+
+    map.addLayer(vectorLayer1);
+    console.log(vectorLayer1)
+  })
+  .catch((error) => {
+    console.error('Error fetching GeoJSON data:', error);
+  });
   }, [selectedPalika]);
 
   return (
