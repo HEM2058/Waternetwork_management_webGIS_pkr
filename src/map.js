@@ -203,6 +203,9 @@ const wmsLayer = new TileLayer({
 // Add the WMS layer to the map
 map.addLayer(wmsLayer);
 
+// Define the layer names for which you want to retrieve feature information
+const layerNames = ['digitalmap:puse', 'other_layer_name'];
+
 // Create a click event listener on the map
 map.on('click', function (evt) {
   // Get the coordinate and resolution of the click event
@@ -210,34 +213,33 @@ map.on('click', function (evt) {
 
   // Convert the coordinate to EPSG:4326
   const coordinate4326 = transform(coordinate, 'EPSG:3857', 'EPSG:4326');
-
+  console.log(coordinate4326)
   const resolution = map.getView().getResolution();
-  console.log(coordinate4326 )
-  // Define the WMS layer name and desired INFO_FORMAT
-  const layerName = 'digitalmap:puse';
+
+  // Define the desired INFO_FORMAT
   const infoFormat = 'application/json';
 
-  // Build the GetFeatureInfo URL
-  const url = wmsLayer.getSource().getFeatureInfoUrl(coordinate4326 , resolution, 'EPSG:4326', {
-    'INFO_FORMAT': infoFormat,
-    'propertyName': 'Name', // Customize the requested properties
-  });
-
-  console.log(url);
-  if (url) {
-    // Send a request to the URL
-    $.getJSON(url, function (data) {
-      if (data.features && data.features.length > 0) {
-        // Extract feature properties
-        const feature = data.features[0];
-        const props = feature.properties;
-        console.log('Feature Information:', props);
-
-        // You can handle the feature information as needed in the console
-      }
+  // Iterate through the layer names and send separate GetFeatureInfo requests for each layer
+  layerNames.forEach((layerName) => {
+    const url = wmsLayer.getSource().getFeatureInfoUrl(coordinate4326, resolution, 'EPSG:4326', {
+      'INFO_FORMAT': infoFormat,
+      'LAYERS': layerName,
+      'propertyName': 'Name', // Customize the requested properties
     });
-  }
+
+    if (url) {
+      // Send a request to the URL
+      $.getJSON(url, function (data) {
+        if (data.features && data.features.length > 0) {
+          // Extract feature properties
+          console.log(`Feature Information for layer ${layerName}:`, data.features);
+          // You can handle the feature information as needed in the console
+        }
+      });
+    }
+  });
 });
+
 
 
    
