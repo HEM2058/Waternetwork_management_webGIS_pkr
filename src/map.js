@@ -20,6 +20,9 @@ import { max, createEmpty } from 'ol/extent';
 import './map.css';
 import { Link } from 'react-router-dom'; // Import the Link component
 import TileWMS from 'ol/source/TileWMS';
+import { transform } from 'ol/proj';
+import $ from 'jquery';
+
 function OpenLayersMap({ selectedPalika }) {
 
   const [colorHash, setColorHash] = useState({});
@@ -65,26 +68,16 @@ northArrow.addEventListener('click', resetMapToNorth);
      }
     // URL to the GeoJSON data
     const geoJSONUrl = '/data/bajhanga.geojson';
-    const geoJSONUrlPublicuse ='/data/durgathali/publicuse.geojson';
+
     // Set up the map once the GeoJSON data is available
     const map = new Map({
       target: 'map',
       layers: [
         new TileLayer({
           source: new OSM(),
-          opacity:0.3,
+          opacity:0.1,
         }),
-        new TileLayer({
-          source: new TileWMS({
-            url: 'http://localhost:8080/geoserver/digitalmap/wms',
-            params: {
-              'LAYERS': 'digitalmap:puse',
-              'TILED': true,
-            },
-            serverType: 'geoserver',
-            visible:true
-          }),
-        }),
+  
         
       ],
       view: new View({
@@ -151,19 +144,7 @@ map.getView().on('change:rotation', function (event) {
   
     map.addLayer(vectorLayer);
   
-    //  // Create a vector source with the GeoJSON URL
-    //  const vectorSourcepu = new VectorSource({
-    //   format: new GeoJSON(),
-    //   url:geoJSONUrlPublicuse, // Use the URL to load GeoJSON data
-    // });
-
-    // const vectorLayerpu = new VectorLayer({
-    //   source: vectorSourcepu,
-
-    // });
   
-    // map.addLayer(vectorLayerpu);
-    
 // Add ScaleLine control to the map
 map.addControl(new ScaleLine());
 const zoomslider = new ZoomSlider();
@@ -206,7 +187,57 @@ function polygonStyleFunction(feature, resolution) {
     }),
   });
 }
+// Create a WMS layer with the specified properties
+const wmsLayer = new TileLayer({
+  source: new TileWMS({
+    url: 'http://localhost:8080/geoserver/digitalmap/wms',
+    params: {
+      'LAYERS': 'digitalmap:puse',
+      'TILED': true,
+    },
+    serverType: 'geoserver',
+    visible: true,
+  }),
+});
 
+// Add the WMS layer to the map
+map.addLayer(wmsLayer);
+
+// Create a click event listener on the map
+map.on('click', function (evt) {
+  // Get the coordinate and resolution of the click event
+  const coordinate = evt.coordinate;
+
+  // Convert the coordinate to EPSG:4326
+  const coordinate4326 = transform(coordinate, 'EPSG:3857', 'EPSG:4326');
+
+  const resolution = map.getView().getResolution();
+  console.log(coordinate4326 )
+  // Define the WMS layer name and desired INFO_FORMAT
+  const layerName = 'digitalmap:puse';
+  const infoFormat = 'application/json';
+
+  // Build the GetFeatureInfo URL
+  const url = wmsLayer.getSource().getFeatureInfoUrl(coordinate4326 , resolution, 'EPSG:4326', {
+    'INFO_FORMAT': infoFormat,
+    'propertyName': 'Name', // Customize the requested properties
+  });
+
+  console.log(url);
+  if (url) {
+    // Send a request to the URL
+    $.getJSON(url, function (data) {
+      if (data.features && data.features.length > 0) {
+        // Extract feature properties
+        const feature = data.features[0];
+        const props = feature.properties;
+        console.log('Feature Information:', props);
+
+        // You can handle the feature information as needed in the console
+      }
+    });
+  }
+});
 
 
    
@@ -251,7 +282,7 @@ map.on('click', function (event) {
           <strong>${properties.LOCAL}</strong> (${properties.TYPE})
           <div class="map_popup__btn-row">
             <a class="map_popup__btn" href="${properties.WEBSITE}" target="_blank">WEBSITE</a>
-            <a class="map_popup__btn" href="${properties.WEBSITE}" target="_blank">Relief Request</a>
+
           </div>
         </div>
       </div>
@@ -314,52 +345,52 @@ function zoomToFeatureByLocal(local) {
       return randomColor;
     }
 
-    const geoJSONUrl1 = 'http://127.0.0.1:2500/geojson-features/7';
+    // const geoJSONUrl1 = 'http://127.0.0.1:2500/geojson-features/7';
 
-    axios.get(geoJSONUrl1)
-      .then((response) => {
-        // Extract the GeoJSON from the "geojson" property
-        const geojsonData = response.data.geojson;
-        console.log(geojsonData);
+    // axios.get(geoJSONUrl1)
+    //   .then((response) => {
+    //     // Extract the GeoJSON from the "geojson" property
+    //     const geojsonData = response.data.geojson;
+    //     console.log(geojsonData);
     
-        // Create a vector source with the GeoJSON data
-        const vectorSource1 = new VectorSource({
-          format: new GeoJSON(),
-          projection: 'EPSG:4326',
-        });
+    //     // Create a vector source with the GeoJSON data
+    //     const vectorSource1 = new VectorSource({
+    //       format: new GeoJSON(),
+    //       projection: 'EPSG:4326',
+    //     });
     
-        const vectorLayer1 = new VectorLayer({
-          source: vectorSource1,
-          style: function (feature) {
-            const properties = feature.getProperties();
-            const name = properties.name;
-            const color = getRandomColor(name);
-            console.log(properties);
+    //     const vectorLayer1 = new VectorLayer({
+    //       source: vectorSource1,
+    //       style: function (feature) {
+    //         const properties = feature.getProperties();
+    //         const name = properties.name;
+    //         const color = getRandomColor(name);
+    //         console.log(properties);
     
-            return new Style({
-              fill: new Fill({
-                color: color,
-              }),
-              stroke: new Stroke({
-                color: 'red',
-                width: 2,
-              }),
-              text: new Text({
-                text: name,
-                fill: new Fill({
-                  color: 'black',
-                }),
-              }),
-            });
-          },
-        });
+    //         return new Style({
+    //           fill: new Fill({
+    //             color: color,
+    //           }),
+    //           stroke: new Stroke({
+    //             color: 'red',
+    //             width: 2,
+    //           }),
+    //           text: new Text({
+    //             text: name,
+    //             fill: new Fill({
+    //               color: 'black',
+    //             }),
+    //           }),
+    //         });
+    //       },
+    //     });
     
-        map.addLayer(vectorLayer1);
+    //     map.addLayer(vectorLayer1);
       
-      })
-      .catch((error) => {
-        console.error('Error fetching GeoJSON data:', error);
-      });
+    //   })
+    //   .catch((error) => {
+    //     console.error('Error fetching GeoJSON data:', error);
+    //   });
     
   }, [selectedPalika]);
 

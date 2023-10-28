@@ -35,9 +35,7 @@
 
 /* Button wrapper */
 .map_popup__btn-row {
-  display: flex;
-  justify-content: space-between; /* Adjust alignment between buttons */
-  align-items: center;
+
   margin-top: 15px;
   border-radius: 25px;
   padding: 10px 0;
@@ -45,6 +43,7 @@
 
 /* Popup button */
 .map_popup__btn {
+  align-items: center;
   background: #0070c0;
   color: #fff;
   padding: 10px 20px;
@@ -82,8 +81,6 @@
   }
   /* Button wrapper */
   .map_popup__btn-row {
-    display: flex;
-    justify-content: space-between; /* Adjust alignment between buttons */
     align-items: center;
     margin-top: 15px;
     border-radius: 25px;
