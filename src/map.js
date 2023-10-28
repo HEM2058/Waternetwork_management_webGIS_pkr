@@ -19,6 +19,7 @@ import {FullScreen, defaults as defaultControls} from 'ol/control.js';
 import { max, createEmpty } from 'ol/extent';
 import './map.css';
 import { Link } from 'react-router-dom'; // Import the Link component
+import TileWMS from 'ol/source/TileWMS';
 function OpenLayersMap({ selectedPalika }) {
 
   const [colorHash, setColorHash] = useState({});
@@ -64,15 +65,27 @@ northArrow.addEventListener('click', resetMapToNorth);
      }
     // URL to the GeoJSON data
     const geoJSONUrl = '/data/bajhanga.geojson';
-
+    const geoJSONUrlPublicuse ='/data/durgathali/publicuse.geojson';
     // Set up the map once the GeoJSON data is available
     const map = new Map({
       target: 'map',
       layers: [
         new TileLayer({
           source: new OSM(),
-          opacity: 0.3, 
+          opacity:0.3,
         }),
+        new TileLayer({
+          source: new TileWMS({
+            url: 'http://localhost:8080/geoserver/digitalmap/wms',
+            params: {
+              'LAYERS': 'digitalmap:puse',
+              'TILED': true,
+            },
+            serverType: 'geoserver',
+            visible:true
+          }),
+        }),
+        
       ],
       view: new View({
         center: fromLonLat([81.2519, 29.7767]),
@@ -117,7 +130,7 @@ map.getView().on('change:rotation', function (event) {
         const properties = feature.getProperties();
         const name = properties.NEPALI_NAME;
         const color = getRandomColor(name); // Use a custom function to get a unique color
-        console.log(properties)
+        
         return new Style({
           fill: new Fill({
             color: color,
@@ -135,10 +148,21 @@ map.getView().on('change:rotation', function (event) {
         });
       },
     });
-    console.log(vectorLayer)
+  
     map.addLayer(vectorLayer);
+  
+    //  // Create a vector source with the GeoJSON URL
+    //  const vectorSourcepu = new VectorSource({
+    //   format: new GeoJSON(),
+    //   url:geoJSONUrlPublicuse, // Use the URL to load GeoJSON data
+    // });
 
- 
+    // const vectorLayerpu = new VectorLayer({
+    //   source: vectorSourcepu,
+
+    // });
+  
+    // map.addLayer(vectorLayerpu);
     
 // Add ScaleLine control to the map
 map.addControl(new ScaleLine());
@@ -284,60 +308,59 @@ function zoomToFeatureByLocal(local) {
       // Generate a new random color with 50% opacity (alpha: 0.5)
       const randomColor = `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(
         Math.random() * 256
-      )}, 0.8)`;
+      )}, 0.4)`;
       colorHash[local] = randomColor;
 
       return randomColor;
     }
 
-
-    // code for the geojson layer overlay coming from the restapi
     const geoJSONUrl1 = 'http://127.0.0.1:2500/geojson-features/7';
 
-axios.get(geoJSONUrl1)
-  .then((response) => {
-    // Extract the GeoJSON from the "geojson" property
-    const geojsonData = response.data.geojson;
-  console.log(geojsonData)
-    // Create a vector source with the GeoJSON data
-    const vectorSource1 = new VectorSource({
-      format: new GeoJSON(),
-      features: new GeoJSON().readFeatures(geojsonData, { dataProjection: 'EPSG:4326', featureProjection: 'EPSG:4326' }),
-    });
-
-    const vectorLayer1 = new VectorLayer({
-      source: vectorSource1,
-      style: function (feature) {
-        const properties = feature.getProperties();
-        const name = properties.name;
-        const color = getRandomColor(name);
-          // Log the feature properties
-       console.log('Feature Properties:', properties);
-
-        return new Style({
-          fill: new Fill({
-            color: color,
-          }),
-          stroke: new Stroke({
-            color: 'red',
-            width: 2,
-          }),
-          text: new Text({
-            text: name,
-            fill: new Fill({
-              color: 'black',
-            }),
-          }),
+    axios.get(geoJSONUrl1)
+      .then((response) => {
+        // Extract the GeoJSON from the "geojson" property
+        const geojsonData = response.data.geojson;
+        console.log(geojsonData);
+    
+        // Create a vector source with the GeoJSON data
+        const vectorSource1 = new VectorSource({
+          format: new GeoJSON(),
+          projection: 'EPSG:4326',
         });
-      },
-    });
-
-    map.addLayer(vectorLayer1);
-    console.log(vectorLayer1)
-  })
-  .catch((error) => {
-    console.error('Error fetching GeoJSON data:', error);
-  });
+    
+        const vectorLayer1 = new VectorLayer({
+          source: vectorSource1,
+          style: function (feature) {
+            const properties = feature.getProperties();
+            const name = properties.name;
+            const color = getRandomColor(name);
+            console.log(properties);
+    
+            return new Style({
+              fill: new Fill({
+                color: color,
+              }),
+              stroke: new Stroke({
+                color: 'red',
+                width: 2,
+              }),
+              text: new Text({
+                text: name,
+                fill: new Fill({
+                  color: 'black',
+                }),
+              }),
+            });
+          },
+        });
+    
+        map.addLayer(vectorLayer1);
+      
+      })
+      .catch((error) => {
+        console.error('Error fetching GeoJSON data:', error);
+      });
+    
   }, [selectedPalika]);
 
   return (
