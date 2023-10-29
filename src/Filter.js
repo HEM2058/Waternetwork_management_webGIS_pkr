@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Filter.css';
-import OpenLayersMap from './map'
+import OpenLayersMap from './map';
+
 const localLevels = [
   'Bithadchir',
   'Bungal',
@@ -17,39 +18,26 @@ const localLevels = [
   'Thalara',
 ];
 
-const layers = ['Layer 1', 'Layer 2', 'Layer 3'];
+const layers = {
+  'Bithadchir': ['Layer 1', 'Layer 2', 'Layer 3'],
+  'Bungal': ['Layer 4', 'Layer 5', 'Layer 6'],
+  // Define layers for other municipalities here...
+};
 
 function Filter() {
   const [selectedPalika, setSelectedPalika] = useState('');
   const [selectedLayer, setSelectedLayer] = useState('Layer 1');
-  const [selectedAttribute, setSelectedAttribute] = useState('Attribute X');
-  const [fieldValue, setFieldValue] = useState('');
- 
+
   const handlePalikaChange = (event) => {
     setSelectedPalika(event.target.value);
-
+    // Reset the selected layer when the municipality changes
+    setSelectedLayer(layers[event.target.value][0]);
   };
 
   const handleLayerChange = (event) => {
     setSelectedLayer(event.target.value);
   };
 
-  const handleAttributeChange = (event) => {
-    setSelectedAttribute(event.target.value);
-  };
-
-  const handleFieldValueChange = (event) => {
-    setFieldValue(event.target.value);
-  };
-
-  const handleSubmit = () => {
-    // Handle submission logic here
-    console.log('Selected Palika:', selectedPalika);
-    console.log('Selected Layer:', selectedLayer);
-    console.log('Selected Attribute:', selectedAttribute);
-    console.log('Field Value:', fieldValue);
-  };
-  
   return (
     <>
       <div className="filter-container">
@@ -64,48 +52,28 @@ function Filter() {
             ))}
           </select>
         </div>
-  
+
         <div className="filter">
-          <label htmlFor="layerSelect">Select Layer</label>
-          <select id="layerSelect" value={selectedLayer} onChange={handleLayerChange}>
-            {layers.map((layer, index) => (
-              <option key={index} value={layer}>
-                {layer}
-              </option>
-            ))}
-          </select>
-        </div>
-  
-        <div className="filter">
-          <label htmlFor="attributesSelect">Select Field</label>
-          <select id="attributesSelect" value={selectedAttribute} onChange={handleAttributeChange}>
-            <option>Attribute X</option>
-            <option>Attribute Y</option>
-            <option>Attribute Z</option>
-          </select>
-        </div>
-  
-        <div className="filter">
-          <label htmlFor="fieldValueInput">Enter Value</label>
-          <input
-            type="text"
-            id="fieldValueInput"
-            value={fieldValue}
-            onChange={handleFieldValueChange}
-          />
-        </div>
-  
-        <div className="filter">
-          <button onClick={handleSubmit}>Run</button>
+          <label>Select Layer</label>
+          {layers[selectedPalika] && layers[selectedPalika].map((layer, index) => (
+            <label key={index}>
+              <input
+                type="radio"
+                name="layer"
+                value={layer}
+                checked={selectedLayer === layer}
+                onChange={handleLayerChange}
+              />
+              {layer}
+            </label>
+          ))}
         </div>
       </div>
-  
+
       {/* Include the OpenLayersMap component here */}
-      <OpenLayersMap selectedPalika={selectedPalika} />
+      <OpenLayersMap selectedPalika={selectedPalika} selectedLayer={selectedLayer} />
     </>
   );
-  
-  
 }
 
 export default Filter;
