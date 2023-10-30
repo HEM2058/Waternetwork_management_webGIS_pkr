@@ -23,49 +23,36 @@ import TileWMS from 'ol/source/TileWMS';
 import { transform } from 'ol/proj';
 import $ from 'jquery';
 
-function OpenLayersMap({ selectedPalika }) {
+function OpenLayersMap({ apiData }) {
 
   const [colorHash, setColorHash] = useState({});
   const [initialZoom, setInitialZoom] = useState(10); // Set your initial zoom level here
   const [popupVisible, setPopupVisible] = useState(false); // Add state for popup visibility
-  const [apiData, setApiData] = useState([
-    {
-      id: 10,
-      Palika: "Surma",
-      name: "pk"
-    },
-    {
-      id: 11,
-      Palika: "Durgathali",
-      name: "puse"
-    },
-    {
-      id: 12,
-      Palika: "Surma",
-      name: "mines"
-    }
-  ]);
-  
-
+  // const [apiData, setApiData] = useState( [
+  //   {
+  //     id: 10,
+  //     Palika: "Surma",
+  //     name: "pk"
+  //   },
+  //   {
+  //     id: 11,
+  //     Palika: "Durgathali",
+  //     name: "puse"
+  //   },
+  //   {
+  //     id: 12,
+  //     Palika: "Surma",
+  //     name: "mines"
+  //   }
+  // ]);
+  // const [isDataLoaded, setIsDataLoaded] = useState(false);
+  console.log(apiData)
  
   useEffect(() => {
       
-    const fetchData = async () => {
-      try {
-        const response = await fetch('http://127.0.0.1:2500/geoshp/');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setApiData(data);
-      
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchData(); // Make the API call when the component mounts
-    console.log(apiData)
+  
+     
+    
  
     const minZoom = 9.3; // Define the minimum zoom level you want (e.g., 4)
     const centerCoordinates = fromLonLat([81.2519, 29.7767]);
@@ -132,10 +119,12 @@ northArrow.addEventListener('click', resetMapToNorth);
   });
   map.addLayer(baseLayer);
 
+  
+    
   if (apiData) {
+   
     apiData.forEach((item) => {
       const { Palika, name } = item;
-     
       const wmsLayer = new TileLayer({
         source: new TileWMS({
           url: `http://localhost:8080/geoserver/${Palika}/wms`,
@@ -151,6 +140,7 @@ northArrow.addEventListener('click', resetMapToNorth);
       map.addLayer(wmsLayer);
     });
   }
+ 
     map.getViewport().classList.add('map-pointer-cursor');
 // After creating the map
 map.getView().on('change:rotation', function (event) {
@@ -331,30 +321,30 @@ map.on('click', function (event) {
   });
 });
 
-function zoomToFeatureByLocal(local) {
-  vectorSource.once('change', function() {
-    const features = vectorSource.getFeatures();
-    for (const feature of features) {
-      const featureProperties = feature.getProperties();
-      if (featureProperties.LOCAL === local) {
-        // console.log('Matching LOCAL:', featureProperties.LOCAL);
-        const extent = feature.getGeometry().getExtent();
-        // console.log('Extent:', extent); // Add this line for debugging
-        zoomToFeature(feature);
-        setPopupVisible(true);
+// function zoomToFeatureByLocal(local) {
+//   vectorSource.once('change', function() {
+//     const features = vectorSource.getFeatures();
+//     for (const feature of features) {
+//       const featureProperties = feature.getProperties();
+//       if (featureProperties.LOCAL === local) {
+//         // console.log('Matching LOCAL:', featureProperties.LOCAL);
+//         const extent = feature.getGeometry().getExtent();
+//         // console.log('Extent:', extent); // Add this line for debugging
+//         zoomToFeature(feature);
+//         setPopupVisible(true);
         
-        break;
-      }
-    }
-  });
-}
+//         break;
+//       }
+//     }
+//   });
+// }
 
 
 
   // Check if selectedPalika matches a feature's LOCAL property
-  if (selectedPalika) {
-    zoomToFeatureByLocal(selectedPalika);
-  }
+  // if (selectedPalika) {
+  //   zoomToFeatureByLocal(selectedPalika);
+  // }
 
 
 
@@ -422,7 +412,7 @@ function zoomToFeatureByLocal(local) {
     //     console.error('Error fetching GeoJSON data:', error);
     //   });
     
-  }, [selectedPalika]);
+  });
 
   return (
     <div>

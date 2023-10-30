@@ -4,10 +4,17 @@ import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import Filter from './Filter';
 import OpenLayersMap from './map';
 import './mapcomposite.css'; // Import your CSS file for styling
+import ApiDataFetcher from './ApiDataFetcher';
 import { Link } from 'react-router-dom';
 function MapComposite() {
   const [showFilter, setShowFilter] = useState(false);
+  const [apiData, setApiData] = useState([]);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
+  const handleDataFetched = (data) => {
+    setApiData(data); // Store the data in the state
+    setIsDataLoaded(true); // Set the data-loaded flag to true
+  };
   const toggleFilter = () => {
     setShowFilter(!showFilter);
   };
@@ -20,7 +27,11 @@ function MapComposite() {
         </button>
       </div>
       {showFilter && <Filter />}
-      <OpenLayersMap />
+      <ApiDataFetcher onDataFetched={handleDataFetched} />
+      {isDataLoaded ? ( // Conditional rendering of OpenLayersMap
+  <OpenLayersMap apiData={apiData} />
+) : null}
+
       
       {/* Relief Request Button */}
       <div className="relief-request-button">
