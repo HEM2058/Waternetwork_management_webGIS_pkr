@@ -23,18 +23,32 @@ import TileWMS from 'ol/source/TileWMS';
 import { transform } from 'ol/proj';
 import $ from 'jquery';
 
-function OpenLayersMap({ selectedPalika }) {
+function OpenLayersMap({ selectedPalika,selectedLayer }) {
 
   const [colorHash, setColorHash] = useState({});
   const [initialZoom, setInitialZoom] = useState(10); // Set your initial zoom level here
   const [popupVisible, setPopupVisible] = useState(false); // Add state for popup visibility
- 
+  const [apiData, setApiData] = useState([]);
+
  
   useEffect(() => {
       
+    // const fetchData = async () => {
+    //   try {
+    //     const response = await fetch('http://127.0.0.1:2500/geoshp/');
+    //     if (!response.ok) {
+    //       throw new Error('Network response was not ok');
+    //     }
+    //     const data = await response.json();
+    //     setApiData(data);
+    //   } catch (error) {
+    //     console.error('Error fetching data:', error);
+    //   }
+    // };
 
-
-    
+    // fetchData(); // Make the API call when the component mounts
+    // console.log(apiData)
+ 
     const minZoom = 9.3; // Define the minimum zoom level you want (e.g., 4)
     const centerCoordinates = fromLonLat([81.2519, 29.7767]);
    const extent = [centerCoordinates[0], centerCoordinates[1], centerCoordinates[0], centerCoordinates[1]];
@@ -72,14 +86,7 @@ northArrow.addEventListener('click', resetMapToNorth);
     // Set up the map once the GeoJSON data is available
     const map = new Map({
       target: 'map',
-      layers: [
-        new TileLayer({
-          source: new OSM(),
-          opacity:0.4,
-        }),
-  
-        
-      ],
+      layers: [],
       view: new View({
         center: fromLonLat([81.2519, 29.7767]),
         zoom: initialZoom,
@@ -99,7 +106,47 @@ northArrow.addEventListener('click', resetMapToNorth);
       }),
       controls: defaultControls().extend([new FullScreen()]),
     });
+  // Add a base layer (e.g., OpenStreetMap)
+  const baseLayer = new TileLayer({
+    source: new OSM(),
+    visible: true,
+    opacity:0.2,
+  });
+  map.addLayer(baseLayer);
+  // if (apiData) {
+  //   apiData.forEach((item) => {
+  //     const { Palika, name } = item;
 
+  //     const wmsLayer = new TileLayer({
+  //       source: new TileWMS({
+  //         url: `http://localhost:8080/geoserver/${Palika}/wms`,
+  //         params: {
+  //           'LAYERS': `${Palika}:${name}`,
+  //           'TILED': true,
+  //         },
+  //         serverType: 'geoserver',
+  //         visible: true,
+  //       }),
+  //     });
+
+  //     map.addLayer(wmsLayer);
+  //   });
+  // }
+       const wmsLayer = new TileLayer({
+        source: new TileWMS({
+          url: `http://localhost:8080/geoserver/${selectedPalika}/wms`,
+          params: {
+            'LAYERS': `${selectedPalika}:${selectedLayer}`,
+            'TILED': true,
+          },
+          serverType: 'geoserver',
+          visible: true,
+        }),
+      });
+
+      map.addLayer(wmsLayer);
+  console.log(selectedPalika)
+  console.log(selectedLayer)
     map.getViewport().classList.add('map-pointer-cursor');
 // After creating the map
 map.getView().on('change:rotation', function (event) {
@@ -188,73 +235,35 @@ function polygonStyleFunction(feature, resolution) {
   });
 }
 // Create a WMS layer with the specified properties
-const wmsLayer = new TileLayer({
-  source: new TileWMS({
-    url: 'http://localhost:8080/geoserver/Durgathali/wms',
-    params: {
-      'LAYERS': 'Durgathali:puse',
-      'TILED': true,
-    },
-    serverType: 'geoserver',
-    visible: true,
-  }),
-});
+// const wmsLayer = new TileLayer({
+//   source: new TileWMS({
+//     url: 'http://localhost:8080/geoserver/Durgathali/wms',
+//     params: {
+//       'LAYERS': 'Durgathali:puse',
+//       'TILED': true,
+//     },
+//     serverType: 'geoserver',
+//     visible: true,
+//   }),
+// });
 
 // Add the WMS layer to the map
-map.addLayer(wmsLayer);
-// Create a WMS layer with the specified properties
-const wmsLayer1 = new TileLayer({
-  source: new TileWMS({
-    url: 'http://localhost:8080/geoserver/Surma/wms',
-    params: {
-      'LAYERS': 'Surma:pk',
-      'TILED': true,
-    },
-    serverType: 'geoserver',
-    visible: true,
-  }),
-});
+// map.addLayer(wmsLayer);
+// // Create a WMS layer with the specified properties
+// const wmsLayer1 = new TileLayer({
+//   source: new TileWMS({
+//     url: 'http://localhost:8080/geoserver/Surma/wms',
+//     params: {
+//       'LAYERS': 'Surma:pk',
+//       'TILED': true,
+//     },
+//     serverType: 'geoserver',
+//     visible: true,
+//   }),
+// });
 
-// Add the WMS layer to the map
-map.addLayer(wmsLayer1);
-
-// Define the layer names for which you want to retrieve feature information
-const layerNames = ['digitalmap:puse', 'other_layer_name'];
-
-// Create a click event listener on the map
-map.on('click', function (evt) {
-  // Get the coordinate and resolution of the click event
-  const coordinate = evt.coordinate;
-
-  // Convert the coordinate to EPSG:4326
-  const coordinate4326 = transform(coordinate, 'EPSG:3857', 'EPSG:4326');
-  console.log(coordinate4326)
-  const resolution = map.getView().getResolution();
-
-  // Define the desired INFO_FORMAT
-  const infoFormat = 'application/json';
-
-  // Iterate through the layer names and send separate GetFeatureInfo requests for each layer
-  layerNames.forEach((layerName) => {
-    const url = wmsLayer.getSource().getFeatureInfoUrl(coordinate4326, resolution, 'EPSG:4326', {
-      'INFO_FORMAT': infoFormat,
-      'LAYERS': layerName,
-      'propertyName': 'Name', // Customize the requested properties
-    });
-
-    if (url) {
-      // Send a request to the URL
-      $.getJSON(url, function (data) {
-        if (data.features && data.features.length > 0) {
-          // Extract feature properties
-          console.log(`Feature Information for layer ${layerName}:`, data.features);
-          // You can handle the feature information as needed in the console
-        }
-      });
-    }
-  });
-});
-
+// // Add the WMS layer to the map
+// map.addLayer(wmsLayer1);
 
 
    
@@ -324,9 +333,9 @@ function zoomToFeatureByLocal(local) {
     for (const feature of features) {
       const featureProperties = feature.getProperties();
       if (featureProperties.LOCAL === local) {
-        console.log('Matching LOCAL:', featureProperties.LOCAL);
+        // console.log('Matching LOCAL:', featureProperties.LOCAL);
         const extent = feature.getGeometry().getExtent();
-        console.log('Extent:', extent); // Add this line for debugging
+        // console.log('Extent:', extent); // Add this line for debugging
         zoomToFeature(feature);
         setPopupVisible(true);
         
@@ -409,7 +418,7 @@ function zoomToFeatureByLocal(local) {
     //     console.error('Error fetching GeoJSON data:', error);
     //   });
     
-  }, [selectedPalika]);
+  }, [selectedPalika,selectedLayer]);
 
   return (
     <div>
