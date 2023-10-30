@@ -17,6 +17,7 @@ function MunicipalityInfo({ data }) {
         
         </div>
       </div>
+      
     </div>
   );
   

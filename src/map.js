@@ -28,7 +28,6 @@ function OpenLayersMap({ apiData }) {
 
   const [colorHash, setColorHash] = useState({});
   const [initialZoom, setInitialZoom] = useState(10); // Set your initial zoom level here
-  const [popupVisible, setPopupVisible] = useState(false); // Add state for popup visibility
   const [selectedData, setSelectedData] = useState(null);
  
   useEffect(() => {
@@ -211,36 +210,6 @@ function polygonStyleFunction(feature, resolution) {
     }),
   });
 }
-// Create a WMS layer with the specified properties
-// const wmsLayer = new TileLayer({
-//   source: new TileWMS({
-//     url: 'http://localhost:8080/geoserver/Durgathali/wms',
-//     params: {
-//       'LAYERS': 'Durgathali:puse',
-//       'TILED': true,
-//     },
-//     serverType: 'geoserver',
-//     visible: true,
-//   }),
-// });
-
-// // Add the WMS layer to the map
-// map.addLayer(wmsLayer);
-// // Create a WMS layer with the specified properties
-// const wmsLayer1 = new TileLayer({
-//   source: new TileWMS({
-//     url: 'http://localhost:8080/geoserver/Surma/wms',
-//     params: {
-//       'LAYERS': 'Surma:pk',
-//       'TILED': true,
-//     },
-//     serverType: 'geoserver',
-//     visible: true,
-//   }),
-// });
-
-// // Add the WMS layer to the map
-// map.addLayer(wmsLayer1);
 
 
    
@@ -257,8 +226,7 @@ map.on('click', function (event) {
       setSelectedData(properties); // Pass the selected data to the component
       zoomToFeature(feature);
       // Set popup visibility to true+
-      console.log("clicked")
-      setPopupVisible(true);
+      
       // Reset the style of the previous clicked feature (if there is one)
       if (previousClickedFeature) {
         previousClickedFeature.setStyle(null); // Reset to the default style
@@ -279,29 +247,11 @@ map.on('click', function (event) {
       // Restyle the feature to apply changes
       feature.changed();
 
-      const content = `
-      <div class="map_popup">
-        <div class="map_popup__title">${properties.NEPALI_NAME}</div>
-        <div class="map_popup__content">
-          <button class="close-button" onclick="closePopup()">X</button>
-          <strong>${properties.LOCAL}</strong> (${properties.TYPE})
-          <div class="map_popup__btn-row">
-            <a class="map_popup__btn" href="${properties.WEBSITE}" target="_blank">WEBSITE</a>
-
-          </div>
-        </div>
-      </div>
-    `;
+     
     
-    // Define the closePopup function
-    function closePopup() {
-      setPopupVisible(false); // Hide the popup
-    }
+   
     
-      const coordinate = event.coordinate;
-
-      popup.getElement().innerHTML = content;
-      popup.setPosition(coordinate);
+     
     }
   });
 });
@@ -331,7 +281,31 @@ map.on('click', function (event) {
   //   zoomToFeatureByLocal(selectedPalika);
   // }
 
+// Define an onClose function to close the popup and reset the map to its initial state
+const onClose = () => {
+  setSelectedData(null); // Close the popup by resetting the selectedData state to null
 
+  // // Reset the map to its initial state
+  // map.getView().setCenter(fromLonLat([81.2519, 29.7767]));
+  // map.getView().setZoom(initialZoom);
+
+  // Remove the highlight style from the previously clicked feature (if there is one)
+  if (previousClickedFeature) {
+    previousClickedFeature.setStyle(null);
+    previousClickedFeature = null;
+  }
+};
+
+  // Add an event listener to the map viewport to detect clicks outside features
+  map.getViewport().addEventListener('click', function (event) {
+    const pixel = map.getEventPixel(event);
+
+    // Check if the click was outside any features
+    if (!map.hasFeatureAtPixel(pixel)) {
+      // Close the popup and reset the map to its initial state
+      onClose();
+    }
+  });
 
 
     // Function to generate a unique color with 50% opacity based on the feature's local property
