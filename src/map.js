@@ -75,7 +75,7 @@ northArrow.addEventListener('click', resetMapToNorth);
       layers: [
         new TileLayer({
           source: new OSM(),
-          opacity:0.1,
+          opacity:0.4,
         }),
   
         
@@ -190,9 +190,9 @@ function polygonStyleFunction(feature, resolution) {
 // Create a WMS layer with the specified properties
 const wmsLayer = new TileLayer({
   source: new TileWMS({
-    url: 'http://localhost:8080/geoserver/digitalmap/wms',
+    url: 'http://localhost:8080/geoserver/Durgathali/wms',
     params: {
-      'LAYERS': 'digitalmap:puse',
+      'LAYERS': 'Durgathali:puse',
       'TILED': true,
     },
     serverType: 'geoserver',
@@ -202,6 +202,21 @@ const wmsLayer = new TileLayer({
 
 // Add the WMS layer to the map
 map.addLayer(wmsLayer);
+// Create a WMS layer with the specified properties
+const wmsLayer1 = new TileLayer({
+  source: new TileWMS({
+    url: 'http://localhost:8080/geoserver/Surma/wms',
+    params: {
+      'LAYERS': 'Surma:pk',
+      'TILED': true,
+    },
+    serverType: 'geoserver',
+    visible: true,
+  }),
+});
+
+// Add the WMS layer to the map
+map.addLayer(wmsLayer1);
 
 // Define the layer names for which you want to retrieve feature information
 const layerNames = ['digitalmap:puse', 'other_layer_name'];
