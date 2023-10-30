@@ -22,31 +22,14 @@ import { Link } from 'react-router-dom'; // Import the Link component
 import TileWMS from 'ol/source/TileWMS';
 import { transform } from 'ol/proj';
 import $ from 'jquery';
+import MunicipalityInfo from './MunicipalityInfo';
 
 function OpenLayersMap({ apiData }) {
 
   const [colorHash, setColorHash] = useState({});
   const [initialZoom, setInitialZoom] = useState(10); // Set your initial zoom level here
   const [popupVisible, setPopupVisible] = useState(false); // Add state for popup visibility
-  // const [apiData, setApiData] = useState( [
-  //   {
-  //     id: 10,
-  //     Palika: "Surma",
-  //     name: "pk"
-  //   },
-  //   {
-  //     id: 11,
-  //     Palika: "Durgathali",
-  //     name: "puse"
-  //   },
-  //   {
-  //     id: 12,
-  //     Palika: "Surma",
-  //     name: "mines"
-  //   }
-  // ]);
-  // const [isDataLoaded, setIsDataLoaded] = useState(false);
-  console.log(apiData)
+  const [selectedData, setSelectedData] = useState(null);
  
   useEffect(() => {
       
@@ -271,8 +254,10 @@ map.on('click', function (event) {
 
     if (properties.TYPE === 'Gaunpalika' || properties.TYPE === 'Nagarpalika' || properties.TYPE === 'National Park') {
       // Zoom to the clicked polygon
+      setSelectedData(properties); // Pass the selected data to the component
       zoomToFeature(feature);
       // Set popup visibility to true+
+      console.log("clicked")
       setPopupVisible(true);
       // Reset the style of the previous clicked feature (if there is one)
       if (previousClickedFeature) {
@@ -365,61 +350,19 @@ map.on('click', function (event) {
       return randomColor;
     }
 
-    // const geoJSONUrl1 = 'http://127.0.0.1:2500/geojson-features/7';
-
-    // axios.get(geoJSONUrl1)
-    //   .then((response) => {
-    //     // Extract the GeoJSON from the "geojson" property
-    //     const geojsonData = response.data.geojson;
-    //     console.log(geojsonData);
-    
-    //     // Create a vector source with the GeoJSON data
-    //     const vectorSource1 = new VectorSource({
-    //       format: new GeoJSON(),
-    //       projection: 'EPSG:4326',
-    //     });
-    
-    //     const vectorLayer1 = new VectorLayer({
-    //       source: vectorSource1,
-    //       style: function (feature) {
-    //         const properties = feature.getProperties();
-    //         const name = properties.name;
-    //         const color = getRandomColor(name);
-    //         console.log(properties);
-    
-    //         return new Style({
-    //           fill: new Fill({
-    //             color: color,
-    //           }),
-    //           stroke: new Stroke({
-    //             color: 'red',
-    //             width: 2,
-    //           }),
-    //           text: new Text({
-    //             text: name,
-    //             fill: new Fill({
-    //               color: 'black',
-    //             }),
-    //           }),
-    //         });
-    //       },
-    //     });
-    
-    //     map.addLayer(vectorLayer1);
-      
-    //   })
-    //   .catch((error) => {
-    //     console.error('Error fetching GeoJSON data:', error);
-    //   });
     
   });
 
   return (
     <div>
+        {selectedData && <MunicipalityInfo data={selectedData} />}
       <div id="map" className="map" />
       <div id="popup" className="popup" />
+      
       <div id="north-arrow" className="north-arrow">
   <span className="north-arrow-text">N</span>
+
+ 
 </div>
 
     </div>

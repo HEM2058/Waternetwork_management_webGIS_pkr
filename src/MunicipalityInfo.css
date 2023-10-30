@@ -1,0 +1,94 @@
+/* MunicipalityInfo.css */
+
+/* Popup container */
+.map_popup {
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    bottom: 50px;
+    max-width: 300px; /* Set a maximum width */
+    padding: 20px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    font: 400 14px Roboto, Arial, sans-serif;
+    z-index: 1;
+  }
+  
+  /* Popup content */
+  .map_popup__content {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  
+  /* Popup title */
+  .map_popup__title {
+    background: #663367;
+    color: #fff;
+    padding: 15px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+  
+  /* Button wrapper */
+  .map_popup__btn-row {
+    margin-top: 15px;
+    display: flex; /* Display buttons in a row */
+    justify-content: space-between; /* Space between buttons */
+    align-items: center; /* Center vertically */
+  }
+  
+  /* Popup button */
+  .map_popup__btn {
+    background: #0070c0;
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 25px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s;
+    flex: 1; /* Distribute available space evenly between buttons */
+    margin: 0 5px; /* Add space between buttons */
+  }
+  
+  .map_popup__btn:hover {
+    background: #0050a0;
+  }
+  
+  /* Close button */
+  .close-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    color: #000;
+  }
+  
+  .close-button:hover {
+    color: #ff0000;
+  }
+/* Add this CSS for the arrow animation */
+.arrow-animation {
+    margin-left: 5px; /* Adjust the spacing between text and arrow as needed */
+    animation: arrowSlide 1.5s infinite;
+  }
+  
+  @keyframes arrowSlide {
+    0% {
+      transform: translateX(0);
+    }
+    50% {
+      transform: translateX(25px); /* Adjust the distance the arrow moves */
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  
+  
+  
+  
+  
+  
