@@ -23,31 +23,49 @@ import TileWMS from 'ol/source/TileWMS';
 import { transform } from 'ol/proj';
 import $ from 'jquery';
 
-function OpenLayersMap({ selectedPalika,selectedLayer }) {
+function OpenLayersMap({ selectedPalika }) {
 
   const [colorHash, setColorHash] = useState({});
   const [initialZoom, setInitialZoom] = useState(10); // Set your initial zoom level here
   const [popupVisible, setPopupVisible] = useState(false); // Add state for popup visibility
-  const [apiData, setApiData] = useState([]);
+  const [apiData, setApiData] = useState([
+    {
+      id: 10,
+      Palika: "Surma",
+      name: "pk"
+    },
+    {
+      id: 11,
+      Palika: "Durgathali",
+      name: "puse"
+    },
+    {
+      id: 12,
+      Palika: "Surma",
+      name: "mines"
+    }
+  ]);
+  
 
  
   useEffect(() => {
       
-    // const fetchData = async () => {
-    //   try {
-    //     const response = await fetch('http://127.0.0.1:2500/geoshp/');
-    //     if (!response.ok) {
-    //       throw new Error('Network response was not ok');
-    //     }
-    //     const data = await response.json();
-    //     setApiData(data);
-    //   } catch (error) {
-    //     console.error('Error fetching data:', error);
-    //   }
-    // };
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:2500/geoshp/');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        setApiData(data);
+      
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
 
-    // fetchData(); // Make the API call when the component mounts
-    // console.log(apiData)
+    fetchData(); // Make the API call when the component mounts
+    console.log(apiData)
  
     const minZoom = 9.3; // Define the minimum zoom level you want (e.g., 4)
     const centerCoordinates = fromLonLat([81.2519, 29.7767]);
@@ -113,30 +131,16 @@ northArrow.addEventListener('click', resetMapToNorth);
     opacity:0.2,
   });
   map.addLayer(baseLayer);
-  // if (apiData) {
-  //   apiData.forEach((item) => {
-  //     const { Palika, name } = item;
 
-  //     const wmsLayer = new TileLayer({
-  //       source: new TileWMS({
-  //         url: `http://localhost:8080/geoserver/${Palika}/wms`,
-  //         params: {
-  //           'LAYERS': `${Palika}:${name}`,
-  //           'TILED': true,
-  //         },
-  //         serverType: 'geoserver',
-  //         visible: true,
-  //       }),
-  //     });
-
-  //     map.addLayer(wmsLayer);
-  //   });
-  // }
-       const wmsLayer = new TileLayer({
+  if (apiData) {
+    apiData.forEach((item) => {
+      const { Palika, name } = item;
+     
+      const wmsLayer = new TileLayer({
         source: new TileWMS({
-          url: `http://localhost:8080/geoserver/${selectedPalika}/wms`,
+          url: `http://localhost:8080/geoserver/${Palika}/wms`,
           params: {
-            'LAYERS': `${selectedPalika}:${selectedLayer}`,
+            'LAYERS': `${Palika}:${name}`,
             'TILED': true,
           },
           serverType: 'geoserver',
@@ -145,8 +149,8 @@ northArrow.addEventListener('click', resetMapToNorth);
       });
 
       map.addLayer(wmsLayer);
-  console.log(selectedPalika)
-  console.log(selectedLayer)
+    });
+  }
     map.getViewport().classList.add('map-pointer-cursor');
 // After creating the map
 map.getView().on('change:rotation', function (event) {
@@ -247,7 +251,7 @@ function polygonStyleFunction(feature, resolution) {
 //   }),
 // });
 
-// Add the WMS layer to the map
+// // Add the WMS layer to the map
 // map.addLayer(wmsLayer);
 // // Create a WMS layer with the specified properties
 // const wmsLayer1 = new TileLayer({
@@ -418,7 +422,7 @@ function zoomToFeatureByLocal(local) {
     //     console.error('Error fetching GeoJSON data:', error);
     //   });
     
-  }, [selectedPalika,selectedLayer]);
+  }, [selectedPalika]);
 
   return (
     <div>
