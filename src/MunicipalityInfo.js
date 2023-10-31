@@ -11,9 +11,11 @@ function MunicipalityInfo({ data }) {
         <strong>{data.LOCAL}</strong> ({data.TYPE})
         <div className="map_popup__btn-row">
         <a className="map_popup__btn" href={data.WEBSITE} target="_blank">
+            
         WEBSITE <i className="fas fa-arrow-right arrow-animation"></i>
           
           </a>
+          
         
         </div>
       </div>

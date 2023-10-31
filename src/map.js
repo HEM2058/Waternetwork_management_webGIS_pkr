@@ -23,13 +23,16 @@ import TileWMS from 'ol/source/TileWMS';
 import { transform } from 'ol/proj';
 import $ from 'jquery';
 import MunicipalityInfo from './MunicipalityInfo';
-
+import Filter from './Filter.js'
 function OpenLayersMap({ apiData }) {
 
   const [colorHash, setColorHash] = useState({});
   const [initialZoom, setInitialZoom] = useState(10); // Set your initial zoom level here
   const [selectedData, setSelectedData] = useState(null);
- 
+  const [selectedPalika, setSelectedPalika] = useState('');
+  const [selectedLayer, setSelectedLayer] = useState('Layer 1');
+  const [availableLayers, setAvailableLayers] = useState([]);
+  console.log(apiData)
   useEffect(() => {
       
   
@@ -101,7 +104,18 @@ northArrow.addEventListener('click', resetMapToNorth);
   });
   map.addLayer(baseLayer);
 
-  
+     // Add filtering functionality
+     if (apiData) {
+      const distinctPalikas = [...new Set(apiData.map((item) => item.Palika))];
+      setAvailableLayers(
+        distinctPalikas.map((palika) => {
+          const palikaLayers = apiData.filter((item) => item.Palika === palika);
+          return {
+            palika,
+            layers: palikaLayers.map((item) => item.name),
+          };
+        })
+      )};
     
   if (apiData) {
    
@@ -325,12 +339,38 @@ const onClose = () => {
     }
 
     
-  });
+  },[apiData, selectedPalika, selectedLayer]);
 
   return (
     <div>
         {selectedData && <MunicipalityInfo data={selectedData} />}
       <div id="map" className="map" />
+        {/* Filter controls */}
+        <div className="filter-container">
+        <div className="filter">
+          <label htmlFor="palikaSelect">Select Palika</label>
+          <select id="palikaSelect" value={selectedPalika} onChange={(e) => setSelectedPalika(e.target.value)}>
+            <option value="">Select a Palika</option>
+            {availableLayers.map((item, index) => (
+              <option key={index} value={item.palika}>
+                {item.palika}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="filter">
+          <label htmlFor="layerSelect">Select Layer</label>
+          <select id="layerSelect" value={selectedLayer} onChange={(e) => setSelectedLayer(e.target.value)}>
+            {availableLayers.find((layer) => layer.palika === selectedPalika)?.layers.map((layer, index) => (
+              <option key={index} value={layer}>
+                {layer}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
       <div id="popup" className="popup" />
       
       <div id="north-arrow" className="north-arrow">

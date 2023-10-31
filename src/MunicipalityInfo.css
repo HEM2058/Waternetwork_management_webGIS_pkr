@@ -50,6 +50,7 @@
     transition: background 0.3s;
     flex: 1; /* Distribute available space evenly between buttons */
     margin: 0 5px; /* Add space between buttons */
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   }
   
   .map_popup__btn:hover {
