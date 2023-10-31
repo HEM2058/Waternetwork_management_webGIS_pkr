@@ -383,14 +383,20 @@ const onClose = () => {
         </div>
 
         <div className="filter">
-          <label htmlFor="layerSelect">Select Layer</label>
-          <select id="layerSelect" value={selectedLayer} onChange={(e) => setSelectedLayer(e.target.value)}>
-            {availableLayers.find((layer) => layer.palika === selectedPalika)?.layers.map((layer, index) => (
-              <option key={index} value={layer}>
-                {layer}
-              </option>
-            ))}
-          </select>
+        <label>Toggle Layers:</label>
+        {availableLayers.find((layer) => layer.palika === selectedPalika)?.layers.map((layer, index) => (
+          <div key={index}>
+            <input
+              type="radio"
+              id={layer}
+              name="layerRadio"
+              value={layer}
+              checked={selectedLayer === layer}
+              onChange={() => setSelectedLayer(layer)}
+            />
+            <label htmlFor={layer}>{layer}</label>
+          </div>
+        ))}
         </div>
       </div>
 
