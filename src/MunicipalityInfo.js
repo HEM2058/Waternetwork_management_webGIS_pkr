@@ -3,7 +3,7 @@ import React from 'react';
 import './MunicipalityInfo.css'
 
 function MunicipalityInfo({ data }) {
-    console.log(data)
+   
   return (
     <div className="map_popup">
       <div className="map_popup__title">{data.NEPALI_NAME}</div>
@@ -16,7 +16,11 @@ function MunicipalityInfo({ data }) {
           
           </a>
           
-        
+          <a className="map_popup__btn" href={data.WEBSITE} target="_blank">
+            
+            PLACES <i className="fas fa-arrow-right arrow-animation"></i>
+              
+              </a>
         </div>
       </div>
       

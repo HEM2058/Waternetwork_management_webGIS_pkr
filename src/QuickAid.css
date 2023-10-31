@@ -115,3 +115,8 @@ display: none;
   overflow-x: hidden;
 }
 }
+
+#map-unique /* Filter.css */
+.filter-container {
+display: none;
+}

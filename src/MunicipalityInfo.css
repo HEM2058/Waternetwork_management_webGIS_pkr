@@ -43,7 +43,7 @@
   .map_popup__btn {
     background: #0070c0;
     color: #fff;
-    padding: 10px 20px;
+    padding: 10px 10px;
     text-decoration: none;
     border-radius: 25px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -80,7 +80,7 @@
       transform: translateX(0);
     }
     50% {
-      transform: translateX(25px); /* Adjust the distance the arrow moves */
+      transform: translateX(5px); /* Adjust the distance the arrow moves */
     }
     100% {
       transform: translateX(0);

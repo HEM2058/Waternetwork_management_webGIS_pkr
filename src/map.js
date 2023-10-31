@@ -228,7 +228,7 @@ function polygonStyleFunction(feature, resolution) {
 function zoomToFeatureByLocal(local) {
   vectorSource.once('change', function () {
     const features = vectorSource.getFeatures();
-    console.log(features)
+
     for (const feature of features) {
       const featureProperties = feature.getProperties();
       if (featureProperties.LOCAL === local) {
@@ -246,7 +246,7 @@ function zoomToFeatureByLocal(local) {
 
        // Check if selectedPalika matches a feature's LOCAL property
        if (selectedPalika) {
-        console.log("selected palika")
+  
         zoomToFeatureByLocal(selectedPalika);
       }
    

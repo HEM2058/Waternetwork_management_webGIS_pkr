@@ -20,11 +20,11 @@ function MapComposite() {
 
   return (
     <div className="map-container">
-      <div className={`filter-toggle ${showFilter ? 'active' : ''}`}>
+      {/* <div className={`filter-toggle ${showFilter ? 'active' : ''}`}>
         <button onClick={toggleFilter}>
           <FontAwesomeIcon icon={faFilter} />
         </button>
-      </div>
+      </div> */}
      
       <ApiDataFetcher onDataFetched={handleDataFetched} />
       {isDataLoaded ? ( // Conditional rendering of OpenLayersMap
@@ -35,7 +35,7 @@ function MapComposite() {
       {/* Relief Request Button */}
       <div className="relief-request-button">
        <Link to="/QuickAid" >
-              Relief Request
+             RELIEF REQUEST
              
               </Link>
       </div>
