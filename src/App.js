@@ -1,7 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
 import Navbar from './Navbar'
-import Filter from './Filter'
 import LoginForm from './LoginForm'
 import OpenLayersMap from './map'
 import MapComposite  from './mapcomposite';

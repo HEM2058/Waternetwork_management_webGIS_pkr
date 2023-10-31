@@ -23,7 +23,6 @@ import TileWMS from 'ol/source/TileWMS';
 import { transform } from 'ol/proj';
 import $ from 'jquery';
 import MunicipalityInfo from './MunicipalityInfo';
-import Filter from './Filter.js'
 function OpenLayersMap({ apiData }) {
 
   const [colorHash, setColorHash] = useState({});
@@ -32,12 +31,12 @@ function OpenLayersMap({ apiData }) {
   const [selectedPalika, setSelectedPalika] = useState('');
   const [selectedLayer, setSelectedLayer] = useState('Layer 1');
   const [availableLayers, setAvailableLayers] = useState([]);
-  console.log(apiData)
+  // console.log(apiData)
   useEffect(() => {
       
   
      
-    
+
  
     const minZoom = 9.3; // Define the minimum zoom level you want (e.g., 4)
     const centerCoordinates = fromLonLat([81.2519, 29.7767]);
@@ -200,7 +199,7 @@ map.addControl(zoomslider);
 function zoomToFeature(feature) {
   const extent = feature.getGeometry().getExtent();
   // console.log('Zooming to extent:', extent); // Add this for debugging
-
+  
   const mapView = map.getView();
   // console.log('Map View:', mapView); // Add this for debugging
 
@@ -225,7 +224,31 @@ function polygonStyleFunction(feature, resolution) {
   });
 }
 
+// Function to zoom into a specific polygon by matching the LOCAL property
+function zoomToFeatureByLocal(local) {
+  vectorSource.once('change', function () {
+    const features = vectorSource.getFeatures();
+    console.log(features)
+    for (const feature of features) {
+      const featureProperties = feature.getProperties();
+      if (featureProperties.LOCAL === local) {
 
+        setSelectedData(featureProperties);
+        zoomToFeature(feature);
+        
+        break;
+      }
+    }
+  });
+}
+
+
+
+       // Check if selectedPalika matches a feature's LOCAL property
+       if (selectedPalika) {
+        console.log("selected palika")
+        zoomToFeatureByLocal(selectedPalika);
+      }
    
  
 // Define a variable to track the previously clicked feature

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
-import Filter from './Filter';
 import OpenLayersMap from './map';
 import './mapcomposite.css'; // Import your CSS file for styling
 import ApiDataFetcher from './ApiDataFetcher';
@@ -26,7 +25,7 @@ function MapComposite() {
           <FontAwesomeIcon icon={faFilter} />
         </button>
       </div>
-      {showFilter && <Filter />}
+     
       <ApiDataFetcher onDataFetched={handleDataFetched} />
       {isDataLoaded ? ( // Conditional rendering of OpenLayersMap
   <OpenLayersMap apiData={apiData} />

@@ -2,7 +2,6 @@ import React from 'react';
 import './Navbar.css'; // You can create a CSS file for styling
 import WavingFlag from './assets/WavingFlag.gif';
 import logo from './assets/ddc-demo.png';
-import Filter from './Filter';
 import { Routes, Route, Link } from 'react-router-dom';
 
 function Navbar() {
