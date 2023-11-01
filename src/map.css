@@ -170,27 +170,26 @@
 
 }
 }
-
-/* css for the filter  */
-
 /* Filter.css */
 .filter-container {
-  position: absolute; /* Position the container absolutely within its parent */
-  top: 48px; /* Adjust top position as needed */
-  left: 20px; /* Adjust right position as needed */
-  background-color: transparent; /* Set a transparent background */
-  z-index: 2; /* Ensure it's above the map */
+  position: absolute;
+  top: 48px;
+  left: 20px;
+  background-color: transparent;
+  z-index: 2;
+  display: flex;
+  flex-direction: column; /* Display filters in a column layout */
+  width: 150px;
 }
 
-.filter {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 10px;
-  background-color: rgba(244, 236, 236, 0.7); /* Semi-transparent background */
-  border-radius: 6px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s ease;
+.filter-search {
+
+  margin-bottom: 10px; /* Add space between Search and Palika+Toggle */
+}
+
+.filter-palika-toggle {
+  width: 150px; /* Adjust the width as needed */
+  margin-bottom: 10px; /* Add space between Palika and Toggle */
 }
 
 .filter label {
@@ -204,7 +203,7 @@
   font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  width: 150px;
+  width: 100%; /* Make selects fill the available width */
 }
 
 .filter select:hover {
@@ -216,3 +215,4 @@
   border-color: #007bff;
   box-shadow: 0 0 4px rgba(0, 123, 255, 0.4);
 }
+

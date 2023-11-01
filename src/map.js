@@ -415,46 +415,50 @@ const onClose = () => {
       <div id="map" className="map" />
         {/* Filter controls */}
         <div className="filter-container">
-        <div className="filter">
-          <label htmlFor="attributeSearch">Search Attribute:</label>
-          <input
-           type="text"
-           id="attributeSearch"
-           placeholder="Search attributes"
-           value={searchText}
-           onChange={(e) => handleAttributeSearch(e.target.value)}
-            
-          />
-        </div>
-        <div className="filter">
-          <label htmlFor="palikaSelect">Select Palika</label>
-          <select id="palikaSelect" value={selectedPalika} onChange={(e) => setSelectedPalika(e.target.value)}>
-            <option value="">Select a Palika</option>
-            {availableLayers.map((item, index) => (
-              <option key={index} value={item.palika}>
-                {item.palika}
-              </option>
-            ))}
-          </select>
-        </div>
+  <div className="filter filter-search">
+    <label htmlFor="attributeSearch">Search Attribute:</label>
+    <input
+      type="text"
+      id="attributeSearch"
+      placeholder="Search attributes"
+      value={searchText}
+      onChange={(e) => handleAttributeSearch(e.target.value)}
+    />
+  </div>
 
-        <div className="filter">
-        <label>Toggle Layers:</label>
-        {availableLayers.find((layer) => layer.palika === selectedPalika)?.layers.map((layer, index) => (
-          <div key={index}>
-            <input
-              type="radio"
-              id={layer}
-              name="layerRadio"
-              value={layer}
-              checked={selectedLayer === layer}
-              onChange={() => setSelectedLayer(layer)}
-            />
-            <label htmlFor={layer}>{layer}</label>
-          </div>
-        ))}
-        </div>
+  <div className="filter filter-palika-toggle">
+    <label htmlFor="palikaSelect">Select Palika</label>
+    <select
+      id="palikaSelect"
+      value={selectedPalika}
+      onChange={(e) => setSelectedPalika(e.target.value)}
+    >
+      <option value="">Select a Palika</option>
+      {availableLayers.map((item, index) => (
+        <option key={index} value={item.palika}>
+          {item.palika}
+        </option>
+      ))}
+    </select>
+  </div>
+
+  <div className="filter filter-palika-toggle">
+    <label>Toggle Layers:</label>
+    {availableLayers.find((layer) => layer.palika === selectedPalika)?.layers.map((layer, index) => (
+      <div key={index}>
+        <input
+          type="radio"
+          id={layer}
+          name="layerRadio"
+          value={layer}
+          checked={selectedLayer === layer}
+          onChange={() => setSelectedLayer(layer)}
+        />
+        <label htmlFor={layer}>{layer}</label>
       </div>
+    ))}
+  </div>
+</div>
 
       <div id="popup" className="popup" />
       
