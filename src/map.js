@@ -116,44 +116,66 @@ northArrow.addEventListener('click', resetMapToNorth);
         })
       )};
     
-  if (apiData) {
-   
-    apiData.forEach((item) => {
-      const { Palika, name } = item;
-      const wmsLayer = new TileLayer({
-        source: new TileWMS({
-          url: `http://localhost:8080/geoserver/${Palika}/wms`,
-          params: {
-            'LAYERS': `${Palika}:${name}`,
-            'TILED': true,
-          },
-          serverType: 'geoserver',
-          visible: true,
-        }),
-      });
-    
-      // Fetch GeoJSON data for the same layer
-      fetch(`http://localhost:8080/geoserver/${Palika}/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=${Palika}:${name}&outputFormat=application/json`)
-        .then((response) => response.json())
-        .then((geojsonData) => {
-        
-          // Iterate through the features in the GeoJSON and use the first attribute for labeling
-          geojsonData.features.forEach((feature) => {
-            const firstAttribute = Object.keys(feature.properties)[0];
-            console.log(geojsonData)
-            // Now you can use 'firstAttribute' for labeling on the map.
-            const labelText = feature.properties[firstAttribute];
-          
-            // You can use 'labelText' for labeling the feature on the map.
-            // You'll need to position the label appropriately, depending on your map setup.
+      if (apiData) {
+        apiData.forEach((item) => {
+          const { Palika, name } = item;
+          const wmsLayer = new TileLayer({
+            source: new TileWMS({
+              url: `http://localhost:8080/geoserver/${Palika}/wms`,
+              params: {
+                'LAYERS': `${Palika}:${name}`,
+                'TILED': true,
+              },
+              serverType: 'geoserver',
+              visible: true,
+            })
+            });
+      
+            // Fetch GeoJSON data for the same layer
+            fetch(`http://localhost:8080/geoserver/${Palika}/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=${Palika}:${name}&outputFormat=application/json`)
+              .then((response) => response.json())
+              .then((geojsonData) => {
+                // Iterate through the features in the GeoJSON and use the first attribute for labeling
+                geojsonData.features.forEach((feature) => {
+                  const firstAttribute = Object.keys(feature.properties)[7]; // Adjust this index to get the desired attribute
+                  const labelText = feature.properties[firstAttribute];
+      
+                  // You can use 'labelText' for labeling the feature on the map.
+                  // You'll need to position the label appropriately, depending on your map setup.
+                  const coordinates = feature.geometry.coordinates;
+                  
+                  // Create an overlay for the label
+                  const labelOverlay = new Overlay({
+                    position: coordinates,
+                    element: createLabelElement(labelText),
+                    
+                  });
+               
+      
+                  // Add the overlay to the map
+                  map.addOverlay(labelOverlay);
+                });
+              });
+      
+            map.addLayer(wmsLayer);
           });
-        });
+        }
+      
+        function createLabelElement(labelText) {
+          const label = document.createElement('div');
+          label.className = 'map-label';
+          label.textContent = labelText;
+        
+          // Style the label element (you may need to adjust this according to your CSS)
+          label.style.position = 'relative';
+          label.style.backgroundColor = 'white';
+          label.style.border = '1px solid #000';
+          label.style.padding = '4px';
+        
+          return label;
+        }
     
-      map.addLayer(wmsLayer);
-    });
-    
-  }
- 
+      
     map.getViewport().classList.add('map-pointer-cursor');
 // After creating the map
 map.getView().on('change:rotation', function (event) {
