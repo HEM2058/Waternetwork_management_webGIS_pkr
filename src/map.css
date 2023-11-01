@@ -175,11 +175,12 @@
   position: absolute;
   top: 48px;
   left: 20px;
-  background-color: transparent;
+  background-color: rgb(241, 245, 246);
   z-index: 2;
   display: flex;
   flex-direction: column; /* Display filters in a column layout */
-  width: 150px;
+  width: 160px;
+  
 }
 
 .filter-search {
@@ -216,3 +217,9 @@
   box-shadow: 0 0 4px rgba(0, 123, 255, 0.4);
 }
 
+.filter-search input[type="text"], input[type="tel"], input[type="file"], select {
+  width: 90%;
+  padding: 5px;
+  border: 1px solid #2f65e2;
+  border-radius: 5px;
+}
