@@ -131,9 +131,27 @@ northArrow.addEventListener('click', resetMapToNorth);
           visible: true,
         }),
       });
-
+    
+      // Fetch GeoJSON data for the same layer
+      fetch(`http://localhost:8080/geoserver/${Palika}/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=${Palika}:${name}&outputFormat=application/json`)
+        .then((response) => response.json())
+        .then((geojsonData) => {
+        
+          // Iterate through the features in the GeoJSON and use the first attribute for labeling
+          geojsonData.features.forEach((feature) => {
+            const firstAttribute = Object.keys(feature.properties)[0];
+            console.log(geojsonData)
+            // Now you can use 'firstAttribute' for labeling on the map.
+            const labelText = feature.properties[firstAttribute];
+          
+            // You can use 'labelText' for labeling the feature on the map.
+            // You'll need to position the label appropriately, depending on your map setup.
+          });
+        });
+    
       map.addLayer(wmsLayer);
     });
+    
   }
  
     map.getViewport().classList.add('map-pointer-cursor');
@@ -293,30 +311,10 @@ map.on('click', function (event) {
   });
 });
 
-// function zoomToFeatureByLocal(local) {
-//   vectorSource.once('change', function() {
-//     const features = vectorSource.getFeatures();
-//     for (const feature of features) {
-//       const featureProperties = feature.getProperties();
-//       if (featureProperties.LOCAL === local) {
-//         // console.log('Matching LOCAL:', featureProperties.LOCAL);
-//         const extent = feature.getGeometry().getExtent();
-//         // console.log('Extent:', extent); // Add this line for debugging
-//         zoomToFeature(feature);
-//         setPopupVisible(true);
-        
-//         break;
-//       }
-//     }
-//   });
-// }
 
 
 
-  // Check if selectedPalika matches a feature's LOCAL property
-  // if (selectedPalika) {
-  //   zoomToFeatureByLocal(selectedPalika);
-  // }
+  
 
 // Define an onClose function to close the popup and reset the map to its initial state
 const onClose = () => {
