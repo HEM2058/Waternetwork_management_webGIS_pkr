@@ -171,38 +171,27 @@
 }
 }
 
-.search-container {
-  position: absolute;
-  top: 48px;
-  left: 20px;
-  background-color: rgb(241, 245, 246);
-  z-index: 2;
-  display: flex;
-  flex-direction: column; /* Display filters in a column layout */
-  width: 160px;
-  
-}
+
 /* Filter.css */
-.filter-container {
+/* .filter-container {
   position: absolute;
   top: 60px;
   right: 20px;
   background-color: rgb(241, 245, 246);
   z-index: 2;
   display: flex;
-  flex-direction: column; /* Display filters in a column layout */
+  flex-direction: column; 
   width: 160px;
   
 }
 
 .filter-search {
 
-  margin-bottom: 10px; /* Add space between Search and Palika+Toggle */
-}
+  margin-bottom: 10px; 
 
 .filter-palika-toggle {
-  width: 150px; /* Adjust the width as needed */
-  margin-bottom: 10px; /* Add space between Palika and Toggle */
+  width: 150px; 
+  margin-bottom: 10px; 
 }
 
 .filter label {
@@ -216,7 +205,7 @@
   font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  width: 100%; /* Make selects fill the available width */
+  width: 100%;
 }
 
 .filter select:hover {
@@ -234,4 +223,71 @@
   padding: 5px;
   border: 1px solid #2f65e2;
   border-radius: 5px;
+} */
+
+/* Styling for the search container */
+.search-container {
+  position: absolute;
+  top: 60px;
+  left: 20px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  padding: 10px;
+  background: #f1f5f6; /* Light background color */
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling for the search input container */
+.filter-search {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  padding: 10px;
+  background-color: #fff;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+/* Styling for the search input */
+.filter-search input[type="text"] {
+  width: 100%;
+  padding: 5px;
+  border: none;
+  font-size: 14px;
+  color: #333;
+  outline: none;
+}
+
+/* Styling for the search icon */
+.filter-search i {
+  color: #007bff; /* Icon color */
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+/* Styling for the search results */
+#search-results {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#search-results li {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-top: 10px;
+  padding: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: background-color 0.3s;
+  color: #333;
+}
+
+#search-results li:hover {
+  background-color: #f0f0f0;
 }

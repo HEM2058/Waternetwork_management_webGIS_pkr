@@ -23,8 +23,11 @@ import TileWMS from 'ol/source/TileWMS';
 import { transform } from 'ol/proj';
 import $ from 'jquery';
 import MunicipalityInfo from './MunicipalityInfo';
-function OpenLayersMap({ apiData }) {
+import Feature from 'ol/Feature';
+import Point from 'ol/geom/Point';
 
+function OpenLayersMap({ apiData }) {
+console.log(apiData)
   const [colorHash, setColorHash] = useState({});
   const [initialZoom, setInitialZoom] = useState(10); // Set your initial zoom level here
   const [selectedData, setSelectedData] = useState(null);
@@ -240,19 +243,25 @@ map.addControl(zoomslider);
 
 // Function to zoom into a specific polygon
 function zoomToFeature(feature) {
-  const extent = feature.getGeometry().getExtent();
-  // console.log('Zooming to extent:', extent); // Add this for debugging
-  
-  const mapView = map.getView();
-  // console.log('Map View:', mapView); // Add this for debugging
+  try {
+    const extent = feature.getGeometry().getExtent();
+    // console.log('Zooming to extent:', extent); // Add this for debugging
+    console.log(feature)
+    const mapView = map.getView();
+    // console.log('Map View:', mapView); // Add this for debugging
 
-  // console.log('Fitting to extent...');
-  mapView.fit(extent, {
-    duration: 1000, // Animation duration in milliseconds
-    padding: [50, 50, 50, 50], // Padding around the extent
-  });
-  // console.log('Fit completed.');
+    // console.log('Fitting to extent...');
+    mapView.fit(extent, {
+      duration: 1000, // Animation duration in milliseconds
+      padding: [50, 50, 50, 50], // Padding around the extent
+    });
+    // console.log('Fit completed.');
+    
+  } catch (error) {
+    console.error("Error in zoomToFeature:", error);
+  }
 }
+
 
 // Define a custom style function for polygons
 function polygonStyleFunction(feature, resolution) {
@@ -275,7 +284,7 @@ function zoomToFeatureByLocal(local) {
     for (const feature of features) {
       const featureProperties = feature.getProperties();
       if (featureProperties.LOCAL === local) {
-
+          console.log(featureProperties.LOCAL)
         setSelectedData(featureProperties);
         zoomToFeature(feature);
         
@@ -305,7 +314,7 @@ map.on('click', function (event) {
       // Zoom to the clicked polygon
       setSelectedData(properties); // Pass the selected data to the component
       zoomToFeature(feature);
-      // Set popup visibility to true+
+      // Set popup visibility to true7
       
       // Reset the style of the previous clicked feature (if there is one)
       if (previousClickedFeature) {
@@ -383,6 +392,30 @@ const onClose = () => {
 
       return randomColor;
     }
+// Function to handle the click event of a search result list item
+function handleSearchResultClick(geojsonFeature) {
+  // Create a new OpenLayers feature
+  const openLayersFeature = new Feature({
+    geometry: new Point(geojsonFeature.geometry.coordinates),
+  });
+
+  // Set properties from the GeoJSON feature
+  openLayersFeature.setProperties(geojsonFeature.properties);
+
+  // Access the map view
+  const mapView = map.getView();
+  
+  // Center the map on the point feature
+  mapView.setCenter(openLayersFeature.getGeometry().getCoordinates());
+
+  // Set the desired zoom level
+  const targetZoomLevel = 18; // Adjust the zoom level as needed
+  mapView.setZoom(targetZoomLevel);
+}
+
+
+
+  
      // Define a function to handle the WFS request with the latest search text
      function handleWFSRequest() {
       const searchResultsContainer = document.getElementById('search-results');
@@ -402,6 +435,8 @@ const onClose = () => {
                   console.log(labelText)
                   const listItem = document.createElement('li');
                   listItem.textContent = labelText;
+                  searchResultsContainer.appendChild(listItem);
+                  listItem.addEventListener('click', () => handleSearchResultClick(feature));
                   searchResultsContainer.appendChild(listItem);
                 }
               });
@@ -424,7 +459,7 @@ const onClose = () => {
         {/* Filter controls */}
         <div className="search-container">
   <div className="filter filter-search">
-    <label htmlFor="attributeSearch">Search Attribute:</label>
+    <i className="fas fa-search"></i>
     <input
       type="text"
       id="attributeSearch"
