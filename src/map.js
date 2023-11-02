@@ -385,6 +385,9 @@ const onClose = () => {
     }
      // Define a function to handle the WFS request with the latest search text
      function handleWFSRequest() {
+      const searchResultsContainer = document.getElementById('search-results');
+      searchResultsContainer.innerHTML = ''; // Clear previous results
+    
       if (apiData && searchText) {
         apiData.forEach((item) => {
           const { Palika, name } = item;
@@ -395,13 +398,18 @@ const onClose = () => {
                 const firstAttribute = Object.keys(feature.properties)[7];
                 const labelText = feature.properties[firstAttribute];
                 if (labelText && labelText.toLowerCase().includes(searchText.toLowerCase())) {
-                  console.log(labelText);
+                  // Create a list item and add it to the search results container
+                  console.log(labelText)
+                  const listItem = document.createElement('li');
+                  listItem.textContent = labelText;
+                  searchResultsContainer.appendChild(listItem);
                 }
               });
             });
         });
       }
     }
+    
 
     // Call the handleWFSRequest function whenever searchText changes
     handleWFSRequest();
@@ -414,7 +422,7 @@ const onClose = () => {
         {selectedData && <MunicipalityInfo data={selectedData} />}
       <div id="map" className="map" />
         {/* Filter controls */}
-        <div className="filter-container">
+        <div className="search-container">
   <div className="filter filter-search">
     <label htmlFor="attributeSearch">Search Attribute:</label>
     <input
@@ -425,7 +433,10 @@ const onClose = () => {
       onChange={(e) => handleAttributeSearch(e.target.value)}
     />
   </div>
+  <ul id="search-results"></ul> {/* Add an empty unordered list for search results */}
+</div>
 
+  <div className="filter-container">
   <div className="filter filter-palika-toggle">
     <label htmlFor="palikaSelect">Select Palika</label>
     <select
@@ -458,7 +469,7 @@ const onClose = () => {
       </div>
     ))}
   </div>
-</div>
+  </div>
 
       <div id="popup" className="popup" />
       

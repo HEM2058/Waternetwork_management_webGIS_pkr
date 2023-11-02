@@ -170,11 +170,23 @@
 
 }
 }
-/* Filter.css */
-.filter-container {
+
+.search-container {
   position: absolute;
   top: 48px;
   left: 20px;
+  background-color: rgb(241, 245, 246);
+  z-index: 2;
+  display: flex;
+  flex-direction: column; /* Display filters in a column layout */
+  width: 160px;
+  
+}
+/* Filter.css */
+.filter-container {
+  position: absolute;
+  top: 60px;
+  right: 20px;
   background-color: rgb(241, 245, 246);
   z-index: 2;
   display: flex;
