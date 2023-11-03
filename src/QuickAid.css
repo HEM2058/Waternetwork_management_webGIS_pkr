@@ -120,3 +120,8 @@ display: none;
 .filter-container {
 display: none;
 }
+
+
+#map-unique .search-container {
+ display: none;
+}

@@ -55,3 +55,21 @@ a{
 .relief-request-button:hover {
   background: #ff7700; /* Change link color on hover */
 }
+
+/* Media query for screens smaller than 768px */
+@media (max-width: 768px) {
+.relief-request-button  {
+  position: absolute;
+  top: 10px;
+  right:45px;
+  display: inline-block;
+  background: #0070c0;/* Link background color */
+  padding: 10px 15px; /* Adjust padding for better visibility */
+  color: #fff; /* Link text color */
+  font-size: 12px;
+  border: none; /* Remove the border */
+  border-radius: 25px; /* Add a slight roundness to the link */
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+}

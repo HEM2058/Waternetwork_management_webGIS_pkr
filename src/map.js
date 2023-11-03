@@ -108,7 +108,7 @@ northArrow.addEventListener('click', resetMapToNorth);
   const baseLayer = new TileLayer({
     source: new OSM(),
     visible: true,
-    opacity:0.2,
+    opacity:0.7,
   });
   map.addLayer(baseLayer);
 
