@@ -32,13 +32,7 @@ function MapComposite() {
 ) : null}
 
       
-      {/* Relief Request Button */}
-      <div className="relief-request-button">
-       <Link to="/QuickAid" >
-             RELIEF REQUEST
-             
-              </Link>
-      </div>
+    
     </div>
   );
 }

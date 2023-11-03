@@ -16,11 +16,23 @@ function Navbar() {
           
           <div className="logo2-container">
             <div className="horizontal-container">
-            <div class="more-button">
+                {/* Relief Request Button */}
+      <div className="relief-request-button">
+       <Link to="/QuickAid" >
+       <i class="fas fa-hand-holding-heart"></i>
+             
+              </Link>
+      </div>
+            {/* <div class="more-button">
       <i class="fas fa-bars"></i> 
-    </div>
+    </div> */}
             <Link to="/Log-in" className="login-link">
-                Log in
+            <i class="fas fa-user"></i>
+
+
+
+
+
                 <div className="login-shadow"></div>
               </Link>
               {/* <img src={logo} alt="Logo" className="logo2" /> */}

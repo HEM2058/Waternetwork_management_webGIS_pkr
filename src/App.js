@@ -4,8 +4,9 @@ import Navbar from './Navbar'
 import LoginForm from './LoginForm'
 import OpenLayersMap from './map'
 import MapComposite  from './mapcomposite';
-import  LayerUploadForm from './shp_geojson'
-import QuickAid from './QuickAid'
+import  LayerUploadForm from './shp_geojson';
+import QuickAid from './QuickAid';
+
 import {Routes, Route} from 'react-router-dom';
 
 

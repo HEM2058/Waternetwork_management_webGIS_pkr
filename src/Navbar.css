@@ -184,3 +184,36 @@ h2{
   font-size: 20px; /* Adjust the font size as needed */
   color: #f5f1f1; /* Adjust the color as needed */
 }
+
+
+.relief-request-button  {
+
+  text-decoration: none;
+
+  position: relative; /* Create a stacking context for the shadow */
+  padding: 10px 15px; /* Add padding for a larger clickable area */
+  background: linear-gradient(135deg, #FFD700, #FFA500); /* Gradient background */
+  color: #080202; /* Text color */
+  border-radius: 5px; /* Rounded corners */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+}
+
+a{
+  color: #080202; /* Text color */
+  font-size: 10px;
+  
+  font-family: 'Clambo', sans-serif;
+  text-decoration: none;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.relief-request-button:hover {
+  background: linear-gradient(135deg, #FFA500, #FFD700); /* Gradient background on hover */
+  transform: translateY(-2px); /* Lift the button slightly on hover */
+}
+
+/* Media query for the "Relief Request" button */
+@media (max-width: 768px) {
+  .relief-request-button {
+    padding: 5px 10px; /* Adjust padding for smaller screens */
+  }
+}
