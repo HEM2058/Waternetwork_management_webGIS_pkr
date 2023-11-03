@@ -11,16 +11,19 @@ function Navbar() {
         <div className="navbar-brand">
         <Link to="/"><div className="logo1-container">
             <img src={WavingFlag} alt="WavingFlag" className="logo1" />
-            <h2>Bajhang Digital Map and Disaster Response</h2>
+            <h2>Bajhang Digital Map</h2>
           </div></Link>
           
           <div className="logo2-container">
             <div className="horizontal-container">
+            <div class="more-button">
+      <i class="fas fa-bars"></i> 
+    </div>
             <Link to="/Log-in" className="login-link">
                 Log in
                 <div className="login-shadow"></div>
               </Link>
-              <img src={logo} alt="Logo" className="logo2" />
+              {/* <img src={logo} alt="Logo" className="logo2" /> */}
             </div>
           </div>
         </div>

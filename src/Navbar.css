@@ -43,12 +43,12 @@ h2{
 
 .logo2-container {
   position: fixed;
-  right: 0;
+  right: 10px;
 }
 
-.logo2 {
+/* .logo2 {
   width: 70px;
-}
+} */
 /* Navbar.css */
 
 /* ... (previous CSS rules) ... */
@@ -119,9 +119,9 @@ h2{
   .logo1 {
     width: 50px; /* Adjust logo size for smaller screens */
   }
-  .logo2 {
+  /* .logo2 {
     width: 50px;
-  }
+  } */
   .logo1-container {
     display: flex;
     align-items: center;
@@ -160,12 +160,27 @@ h2{
   .Login {
     margin-right: 10px;
   }
-  .logo2 {
+  /* .logo2 {
     width: 40px;
-  }
+  } */
   .login-link {
   
     padding: 5px 10px; /* Add padding for a larger clickable area */
    
   }
+}
+
+
+/* Styling for the "More" button */
+.more-button {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-right: 10px; /* Adjust the margin as needed */
+}
+
+/* Styling for the 9-dotted icon (Font Awesome) */
+.more-button i {
+  font-size: 20px; /* Adjust the font size as needed */
+  color: #f5f1f1; /* Adjust the color as needed */
 }
