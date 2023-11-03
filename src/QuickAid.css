@@ -125,3 +125,8 @@ display: none;
 #map-unique .search-container {
  display: none;
 }
+
+
+#map-unique .button-container {
+ display: none;
+}

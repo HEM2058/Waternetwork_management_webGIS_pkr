@@ -323,8 +323,8 @@
 /* Styling for the base layer switching buttons */
 .button-container {
   position: absolute;
-  top: 40px;
-  right: 20px;
+  top: 45px;
+  right: 10px;
   z-index: 1000; /* Ensure it's above the map */
   background: rgba(255, 255, 255, 0.7);
   padding: 10px;

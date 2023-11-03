@@ -2,11 +2,6 @@ import React, { useEffect, useState } from 'react';
 
 function ApiDataFetcher({ onDataFetched }) {
   const [apiData, setApiData] = useState([]);
-  const [selectedBaseLayer, setSelectedBaseLayer] = useState('googleSatellite'); // Default to OpenStreetMap
-
-  const handleBaseLayerChange = (layer) => {
-    setSelectedBaseLayer(layer);
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,6 +12,7 @@ function ApiDataFetcher({ onDataFetched }) {
         }
         const data = await response.json();
         setApiData(data);
+        onDataFetched(data); // Forward the data to the parent component
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -25,17 +21,7 @@ function ApiDataFetcher({ onDataFetched }) {
     fetchData();
   }, []);
 
-  // Pass the selectedBaseLayer and apiData to the parent component
-  useEffect(() => {
-    onDataFetched(apiData, selectedBaseLayer);
-  }, [onDataFetched, apiData, selectedBaseLayer]);
-
-  return (
-    <div className="button-container">
-      <button onClick={() => handleBaseLayerChange('osm')}>Switch to OpenStreetMap</button>
-      <button onClick={() => handleBaseLayerChange('googleSatellite')}>Switch to Google Satellite</button>
-    </div>
-  );
+  return null; // This component doesn't render anything to the DOM
 }
 
 export default ApiDataFetcher;

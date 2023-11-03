@@ -118,7 +118,7 @@
   .navbar {
     height: 60px; /* Reduce height for smaller screens */
   }
-  h2 {
+  .logo1-container h2 {
     font-size: 20px;
     font-family: 'Clambo', sans-serif;
   }
@@ -149,8 +149,8 @@
   .navbar {
     height: 50px; /* Further reduce height for mobile devices */
   }
-  h2 {
-    font-size: 15px;
+  .logo1-container h2 {
+    font-size: 18px;
     font-family: 'Clambo', sans-serif;
   }
   .navbar-brand a {
