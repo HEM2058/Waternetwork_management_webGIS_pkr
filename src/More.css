@@ -1,0 +1,32 @@
+.more-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .more-options {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: rgb(52, 10, 10)040;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .more-options button {
+    border: none;
+    background: transparent;
+    padding: 5px 0;
+    cursor: pointer;
+    color: blue;
+  }
+  
+  /* Style the ellipsis icon as needed */
+  .more-container i {
+    cursor: pointer;
+  }
+  

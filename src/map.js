@@ -51,21 +51,21 @@ console.log(apiData)
     const centerCoordinates = fromLonLat([81.2519, 29.7767]);
    const extent = [centerCoordinates[0], centerCoordinates[1], centerCoordinates[0], centerCoordinates[1]];
   const maxExtent = createEmpty();
-    function rotateNorthArrow(rotation) {
-      const northArrow = document.getElementById('north-arrow');
-      if (northArrow) {
-        northArrow.style.transform = `rotate(${-rotation}rad)`;
-      }
-    }
-    function resetMapToNorth() {
-      const view = map.getView();
-      view.setRotation(0);
-    }
+    // function rotateNorthArrow(rotation) {
+    //   const northArrow = document.getElementById('north-arrow');
+    //   if (northArrow) {
+    //     northArrow.style.transform = `rotate(${-rotation}rad)`;
+    //   }
+    // }
+    // function resetMapToNorth() {
+    //   const view = map.getView();
+    //   view.setRotation(0);
+    // }
     // Get the North Arrow element
-const northArrow = document.getElementById('north-arrow');
+// const northArrow = document.getElementById('north-arrow');
 
 // Add a click event listener
-northArrow.addEventListener('click', resetMapToNorth);
+// northArrow.addEventListener('click', resetMapToNorth);
 
      // Determine the initial zoom level based on screen width
      const screenWidth = window.innerWidth;
@@ -184,9 +184,9 @@ northArrow.addEventListener('click', resetMapToNorth);
   
     map.getViewport().classList.add('map-pointer-cursor');
 // After creating the map
-map.getView().on('change:rotation', function (event) {
-  rotateNorthArrow(event.target.getRotation());
-});
+// map.getView().on('change:rotation', function (event) {
+//   rotateNorthArrow(event.target.getRotation());
+// });
 
 
 
@@ -508,11 +508,11 @@ function handleSearchResultClick(geojsonFeature) {
 
       <div id="popup" className="popup" />
       
-      <div id="north-arrow" className="north-arrow">
+      {/* <div id="north-arrow" className="north-arrow">
   <span className="north-arrow-text">N</span>
 
  
-</div>
+</div> */}
 
     </div>
   );

@@ -9,7 +9,7 @@
   background: linear-gradient(135deg, #857e19, #4B0082); /* Initial gradient background */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Increased shadow for more effect */
   position: relative;
-  font-family: 'Clambo', sans-serif;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   transition: background 1s linear, box-shadow 0.3s ease; /* Smooth transitions for background and shadow */
   animation: colorChange 10s infinite alternate; /* Animation for color change */
 }
@@ -26,11 +26,22 @@
 
 /* Rest of your CSS remains the same... */
 
-h2 {
-  font-size: 25px;
-  font-family: 'Clambo', sans-serif;
+.logo1-container h2 {
+  font-size: 30px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   color: white;
+  animation: headerAnimation 5s linear infinite alternate;
 }
+
+@keyframes headerAnimation {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.05);
+  }
+}
+
 
 .navbar-brand a {
   text-decoration: none;
@@ -184,13 +195,9 @@ h2 {
   transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
 }
 
-a{
+.relief-request-button  a{
   color: #080202; /* Text color */
-  font-size: 10px;
-  
-  font-family: 'Clambo', sans-serif;
-  text-decoration: none;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
 }
 .relief-request-button:hover {
   background: linear-gradient(135deg, #FFA500, #FFD700); /* Gradient background on hover */
