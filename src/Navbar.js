@@ -9,33 +9,30 @@ function Navbar() {
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
         <div className="navbar-brand">
-        <Link to="/"><div className="logo1-container">
-            <img src={WavingFlag} alt="WavingFlag" className="logo1" />
-            <h2>Bajhang Digital Map</h2>
-          </div></Link>
-          
+          <Link to="/">
+            <div className="logo1-container">
+              <img src={WavingFlag} alt="WavingFlag" className="logo1" />
+              <h2>Bajhang Digital Map</h2>
+            </div>
+          </Link>
+
           <div className="logo2-container">
             <div className="horizontal-container">
-                {/* Relief Request Button */}
-      <div className="relief-request-button">
-       <Link to="/QuickAid" >
-       <i class="fas fa-hand-holding-heart"></i>
-             
-              </Link>
-      </div>
-            {/* <div class="more-button">
-      <i class="fas fa-bars"></i> 
-    </div> */}
-            <Link to="/Log-in" className="login-link">
-            <i class="fas fa-user"></i>
+              {/* Relief Request Button */}
+              <div className="icon-container" data-tooltip="Relief Request">
+              <div className="relief-request-button">
+                <Link to="/QuickAid" >
+                  <i className="fas fa-hand-holding-heart"></i>
+                </Link>
+                </div>
+              </div>
 
-
-
-
-
-                <div className="login-shadow"></div>
-              </Link>
-              {/* <img src={logo} alt="Logo" className="logo2" /> */}
+              {/* Municipality Login Button */}
+              <div className="icon-container" data-tooltip="Municipality Login">
+                <Link to="/Log-in" className="login-link">
+                  <i className="fas fa-user"></i>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
