@@ -320,3 +320,30 @@
     margin-right: 5px;
   }
 }
+/* Styling for the base layer switching buttons */
+.button-container {
+  position: absolute;
+  top: 40px;
+  right: 20px;
+  z-index: 1000; /* Ensure it's above the map */
+  background: rgba(255, 255, 255, 0.7);
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.button-container button {
+  display: block;
+  margin-bottom: 10px;
+  background: #007BFF;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.button-container button:hover {
+  background: #0056b3;
+}

@@ -5,6 +5,7 @@ import Map from 'ol/Map';
 import View from 'ol/View';
 import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
+import { XYZ } from 'ol/source';
 import { fromLonLat } from 'ol/proj';
 import GeoJSON from 'ol/format/GeoJSON';
 import VectorSource from 'ol/source/Vector';
@@ -26,7 +27,7 @@ import MunicipalityInfo from './MunicipalityInfo';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
 
-function OpenLayersMap({ apiData }) {
+function OpenLayersMap({ apiData, selectedBaseLayer }) {
 console.log(apiData)
   const [colorHash, setColorHash] = useState({});
   const [initialZoom, setInitialZoom] = useState(10); // Set your initial zoom level here
@@ -35,6 +36,15 @@ console.log(apiData)
   const [selectedLayer, setSelectedLayer] = useState('Layer 1');
   const [availableLayers, setAvailableLayers] = useState([]);
   const [searchText, setSearchText] = useState(null); // Store the latest search text
+    // Use state to store the selected base layer
+  // Use state to store the selected base layer
+  // const [baseLayerName, setBaseLayerName] = useState(''); // Default to OpenStreetMap
+  
+  // // Define a function to update the selected base layer
+  // function handleBaseLayerChange(layer) {
+  //   console.log(layer)
+  //   setBaseLayerName(layer);
+  // }
  // Define the handleAttributeSearch function
  function handleAttributeSearch(input) {
   setSearchText(input); // Update the latest search text
@@ -44,7 +54,7 @@ console.log(apiData)
   useEffect(() => {
       
   
-     
+     console.log(selectedBaseLayer)
 
  
     const minZoom = 9.3; // Define the minimum zoom level you want (e.g., 4)
@@ -104,14 +114,37 @@ console.log(apiData)
       }),
       controls: defaultControls().extend([new FullScreen()]),
     });
-  // Add a base layer (e.g., OpenStreetMap)
-  const baseLayer = new TileLayer({
-    source: new OSM(),
-    visible: true,
-    opacity:0.2,
-  });
-  map.addLayer(baseLayer);
+  // // Add a base layer (e.g., OpenStreetMap)
+  // const baseLayer = new TileLayer({
+  //   source: new OSM(),
+  //   visible: true,
+  //   opacity:0.2,
+  // });
+  // map.addLayer(baseLayer);
+// Create OpenStreetMap layer as a base layer
 
+    // Create OpenStreetMap layer as a base layer
+   
+      
+    const osmLayer = new TileLayer({
+      source: new OSM(),
+      opacity: 1,
+      visible:selectedBaseLayer === 'osm', // Check if it's the selected base layer
+    });
+    map.addLayer(osmLayer);
+ 
+    // Create Google Satellite layer as a base layer
+    const googleSatelliteLayer = new TileLayer({
+      source: new XYZ({
+        url: 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
+        maxZoom: 21,
+      }),
+      opacity: 1,
+      visible: selectedBaseLayer === 'googleSatellite', // Check if it's the selected base layer
+    });
+
+   
+    map.addLayer(googleSatelliteLayer);
      // Add filtering functionality
      if (apiData) {
       const distinctPalikas = [...new Set(apiData.map((item) => item.Palika))];
@@ -449,8 +482,9 @@ function handleSearchResultClick(geojsonFeature) {
     // Call the handleWFSRequest function whenever searchText changes
     handleWFSRequest();
 
+
     
-  },[apiData, selectedPalika, selectedLayer,searchText]);
+  },[apiData, selectedPalika, selectedLayer,searchText,selectedBaseLayer]);
 
   return (
     <div>
@@ -505,9 +539,12 @@ function handleSearchResultClick(geojsonFeature) {
     ))}
   </div>
   </div>
+  <div>
 
-      <div id="popup" className="popup" />
-      
+  
+</div>
+
+    
       {/* <div id="north-arrow" className="north-arrow">
   <span className="north-arrow-text">N</span>
 

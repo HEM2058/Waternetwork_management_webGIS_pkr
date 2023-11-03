@@ -5,41 +5,31 @@ import OpenLayersMap from './map';
 import './mapcomposite.css'; // Import your CSS file for styling
 import ApiDataFetcher from './ApiDataFetcher';
 import { Link } from 'react-router-dom';
+
 function MapComposite() {
   const [showFilter, setShowFilter] = useState(false);
   const [apiData, setApiData] = useState([]);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const [selectedBaseLayer, setSelectedBaseLayer] = useState('osm'); // Default base layer
 
-  const handleDataFetched = (data) => {
+  const handleDataFetched = (data, selectedLayer) => {
     setApiData(data); // Store the data in the state
     setIsDataLoaded(true); // Set the data-loaded flag to true
+    setSelectedBaseLayer(selectedLayer); // Set the selected base layer
   };
+
   const toggleFilter = () => {
     setShowFilter(!showFilter);
   };
 
   return (
     <div className="map-container">
-      {/* <div className={`filter-toggle ${showFilter ? 'active' : ''}`}>
-        <button onClick={toggleFilter}>
-          <FontAwesomeIcon icon={faFilter} />
-        </button>
-      </div> */}
-     
       <ApiDataFetcher onDataFetched={handleDataFetched} />
-      {isDataLoaded ? ( // Conditional rendering of OpenLayersMap
-  <OpenLayersMap apiData={apiData} />
-) : null}
-
-      
-    
+      {isDataLoaded ? (
+        <OpenLayersMap apiData={apiData} selectedBaseLayer={selectedBaseLayer} />
+      ) : null}
     </div>
   );
-}
-
-function handleReliefRequestClick() {
-  // Implement the logic for handling the relief request here
-  // For example, you can open a modal or navigate to a relief request page.
 }
 
 export default MapComposite;
