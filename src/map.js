@@ -39,7 +39,7 @@ function OpenLayersMap({ apiData }) {
   const [baseLayerName, setBaseLayerName] = useState(''); // stores latest baselayer selection from baselayer lists
   const [showFilter, setShowFilter] = useState(false); //stores filter button activate state
   const [showBaseLayerPopup, setShowBaseLayerPopup] = useState(false); //stores baselayer button activate state 
-
+  const [Reset, setReset] = useState(false);
 // this updates BaseLayerName with latest click on baselayers list
 function handleBaseLayerChange(layer) {
   console.log(layer)
@@ -74,6 +74,12 @@ if(showBaseLayerPopup){
  }
 };
 
+//reset initial map view state switcher
+const resetFunction=()=>
+{  
+  console.log("clicked reset")
+  setReset(!Reset)
+}
 console.log(apiData)
 
  
@@ -416,9 +422,8 @@ map.on('click', function (event) {
 const onClose = () => {
   setSelectedData(null); // Close the popup by resetting the selectedData state to null
 
-  // // Reset the map to its initial state
-  // map.getView().setCenter(fromLonLat([81.2519, 29.7767]));
-  // map.getView().setZoom(initialZoom);
+
+
 
   // Remove the highlight style from the previously clicked feature (if there is one)
   if (previousClickedFeature) {
@@ -510,10 +515,16 @@ function handleSearchResultClick(geojsonFeature) {
 
     // Call the handleWFSRequest function whenever searchText changes
     handleWFSRequest();
-
+if(Reset){
+  console.log("inside reset")
+    // Reset the map to its initial state
+  map.getView().setCenter(fromLonLat([81.2519, 29.7767]));
+  map.getView().setZoom(initialZoom);
+  setReset(!Reset)
+}
 
     
-  },[apiData, selectedPalika, selectedLayer,searchText,baseLayerName]);
+  },[apiData, selectedPalika, selectedLayer,searchText,baseLayerName,Reset]);
 
   return (
     <div>
@@ -570,6 +581,7 @@ function handleSearchResultClick(geojsonFeature) {
 )}
   <div>
   <div className="button-container">
+  <button id="reset-button" onClick={()=>resetFunction()} ><i class="fas fa-undo"></i></button>
   <button onClick={() => exportMapImage()}><i class="fa fa-print"></i></button>
   <button className={showBaseLayerPopup ? 'active' : ''} onClick={() => toggleBaseLayerPopup()}><i className="fas fa-globe "></i></button>
   {showBaseLayerPopup && (<div className={`base-layer-popup `}>
