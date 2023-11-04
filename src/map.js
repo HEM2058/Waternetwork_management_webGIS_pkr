@@ -36,6 +36,7 @@ function OpenLayersMap({ apiData }) {
   const [selectedLayer, setSelectedLayer] = useState('Layer 1');
   const [availableLayers, setAvailableLayers] = useState([]);
   const [searchText, setSearchText] = useState(null); // Store the latest search text
+  const [showFilter, setShowFilter] = useState(false);
     // Use state to store the selected base layer
   // Use state to store the selected base layer
   const [baseLayerName, setBaseLayerName] = useState(''); // Default to OpenStreetMap
@@ -59,6 +60,15 @@ function exportMapImage(){
     window.print();
 
 }
+function toggleBaseLayerPopup() {
+  const baseLayerPopup = document.getElementById('baseLayerPopup');
+  if (baseLayerPopup.style.display === 'none') {
+    baseLayerPopup.style.display = 'block';
+  } else {
+    baseLayerPopup.style.display = 'none';
+  }
+}
+
 console.log(apiData)
 
  
@@ -518,10 +528,9 @@ function handleSearchResultClick(geojsonFeature) {
   </div>
   <ul id="search-results"></ul> {/* Add an empty unordered list for search results */}
 </div>
-
+{showFilter && (
   <div className="filter-container">
   <div className="filter filter-palika-toggle">
-    <label htmlFor="palikaSelect">Select Palika</label>
     <select
       id="palikaSelect"
       value={selectedPalika}
@@ -553,14 +562,19 @@ function handleSearchResultClick(geojsonFeature) {
     ))}
   </div>
   </div>
+)}
   <div>
-  <div className="button-container"> {/* Wrap the buttons with a div and apply the class */}
-  <button onClick={() => handleBaseLayerChange('osm')}>OSM</button>
-  <button onClick={() => handleBaseLayerChange('googleSatellite')}>Google</button>
-  
-  <button onClick={() => exportMapImage()}>Export Map</button>
+  <div className="button-container">
+  <button onClick={() => exportMapImage()}><i class="fa fa-print"></i></button>
+  <button onClick={() => toggleBaseLayerPopup()}><i class="fas fa-globe"></i></button>
+  <div id="baseLayerPopup" class="base-layer-popup">
+  <button onClick={() => handleBaseLayerChange('googleSatellite')}>googleSatellite</button>
+    <button onClick={() => handleBaseLayerChange('osm ')}>OSM</button>
+    
+  </div>
+  <button onClick={() => setShowFilter(!showFilter)}><i class="fas fa-filter"></i></button>
+</div>
 
-      </div>
   
 </div>
 

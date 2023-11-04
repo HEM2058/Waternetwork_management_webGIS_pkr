@@ -173,11 +173,12 @@
 
 
 /* Filter.css */
-/* .filter-container {
+.filter-container {
   position: absolute;
   top: 60px;
-  right: 20px;
-  background-color: rgb(241, 245, 246);
+  right: 70px;
+  background: #007BFF;
+  color: #fff;
   z-index: 2;
   display: flex;
   flex-direction: column; 
@@ -218,12 +219,14 @@
   box-shadow: 0 0 4px rgba(0, 123, 255, 0.4);
 }
 
-.filter-search input[type="text"], input[type="tel"], input[type="file"], select {
+.filter-container .filter-search input[type="text"], input[type="tel"], input[type="file"], select {
   width: 90%;
   padding: 5px;
-  border: 1px solid #2f65e2;
+  background:  #007BFF;
+  color:  #FFF;
+
   border-radius: 5px;
-} */
+}
 
 /* Styling for the search container */
 
@@ -347,3 +350,15 @@
 .button-container button:hover {
   background: #0056b3;
 }
+
+
+.base-layer-popup {
+  display: none;
+  position: absolute;
+  top: 40px; /* Adjust the top position as needed */
+  right: 60px;
+  padding: 5px;
+  
+}
+
+
