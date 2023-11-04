@@ -483,43 +483,45 @@ function handleSearchResultClick(geojsonFeature) {
 
 
   
-     // Define a function to handle the WFS request with the latest search text
-     function handleWFSRequest() {
-      const searchResultsContainer = document.getElementById('search-results');
-      searchResultsContainer.innerHTML = ''; // Clear previous results
-    
-      if (apiData && searchText) {
-        apiData.forEach((item) => {
-          const { Palika, name } = item;
-          fetch(`http://localhost:8080/geoserver/${Palika}/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=${Palika}:${name}&outputFormat=application/json`)
-            .then((response) => response.json())
-            .then((geojsonData) => {
-              geojsonData.features.forEach((feature) => {
-                const firstAttribute = Object.keys(feature.properties)[7];
-                const labelText = feature.properties[firstAttribute];
-                if (labelText && labelText.toLowerCase().includes(searchText.toLowerCase())) {
-                  // Create a list item and add it to the search results container
-                  console.log(labelText)
-                  const listItem = document.createElement('li');
+   // Define a function to handle the WFS request with the latest search text
+function handleWFSRequest() {
+  const searchResultsContainer = document.getElementById('search-results');
+  searchResultsContainer.innerHTML = ''; // Clear previous results
 
-                  // Create a checkmark icon element
-                  const checkmarkIcon = document.createElement('i');
-                  checkmarkIcon.className = 'fas fa-search';
-                  checkmarkIcon.style.marginRight = '5px'; // Add spacing to the right of the checkmark icon
-                  listItem.appendChild(checkmarkIcon);
+  if (apiData && searchText) {
+    apiData.forEach((item) => {
+      const { Palika, name } = item;
+      fetch(`http://localhost:8080/geoserver/${Palika}/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=${Palika}:${name}&outputFormat=application/json`)
+        .then((response) => response.json())
+        .then((geojsonData) => {
+          geojsonData.features.forEach((feature) => {
+            // Iterate through all properties
+            for (const property in feature.properties) {
+              const propertyValue = feature.properties[property];
+              if (propertyValue && propertyValue.toString().toLowerCase().includes(searchText.toLowerCase())) {
+                // Create a list item and add it to the search results container
+                const listItem = document.createElement('li');
 
-                 // Add the result text
-          const textNode = document.createTextNode(labelText);
-          listItem.appendChild(textNode);
+                // Create a checkmark icon element
+                const checkmarkIcon = document.createElement('i');
+                checkmarkIcon.className = 'fas fa-search';
+                checkmarkIcon.style.marginRight = '5px'; // Add spacing to the right of the checkmark icon
+                listItem.appendChild(checkmarkIcon);
 
-                  listItem.addEventListener('click', () => handleSearchResultClick(feature));
-                  searchResultsContainer.appendChild(listItem);
-                }
-              });
-            });
+                // Add the result text
+                const textNode = document.createTextNode(propertyValue);
+                listItem.appendChild(textNode);
+
+                listItem.addEventListener('click', () => handleSearchResultClick(feature));
+                searchResultsContainer.appendChild(listItem);
+              }
+            }
+          });
         });
-      }
-    }
+    });
+  }
+}
+
     
 
     // Call the handleWFSRequest function whenever searchText changes
