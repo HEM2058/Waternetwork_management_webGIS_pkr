@@ -68,6 +68,9 @@ function toggleBaseLayerPopup() {
     baseLayerPopup.style.display = 'none';
   }
 }
+const toggleFilter = () => {
+  setShowFilter(!showFilter);
+};
 
 console.log(apiData)
 
@@ -572,7 +575,12 @@ function handleSearchResultClick(geojsonFeature) {
     <button onClick={() => handleBaseLayerChange('osm ')}>OSM</button>
     
   </div>
-  <button onClick={() => setShowFilter(!showFilter)}><i class="fas fa-filter"></i></button>
+  <button
+        onClick={toggleFilter}
+        className={showFilter ? 'active' : ''}
+      >
+        <i className="fas fa-filter"></i>
+      </button>
 </div>
 
   

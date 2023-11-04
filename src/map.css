@@ -173,59 +173,79 @@
 
 
 /* Filter.css */
+/* Filter.css */
 .filter-container {
   position: absolute;
-  top: 60px;
-  right: 70px;
+  top: 130px;
+  right: 80px;
   background: #007BFF;
   color: #fff;
   z-index: 2;
   display: flex;
-  flex-direction: column; 
-  width: 160px;
-  
+  flex-direction: column;
+  width: 150px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
+/* Style for the search input */
 .filter-search {
-
-  margin-bottom: 10px; 
+  margin: 10px;
 }
+
+.filter-search input {
+  width: 100%;
+  padding: 10px;
+  background: #fff;
+  border: 1px solid #007BFF;
+  border-radius: 5px;
+  color: #007BFF;
+}
+
+/* Style for the filter controls */
 .filter-palika-toggle {
-  width: 150px; 
-  margin-bottom: 10px; 
+  width: 100%;
+  margin: 10px;
 }
 
-.filter label {
+.filter-container label {
   font-size: 16px;
   font-weight: bold;
-  margin-bottom: 5px;
+  font-size: 12px;
 }
 
-.filter select {
-  padding: 8px;
+.filter-container .filter select {
+  padding: 10px;
   font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  width: 100%;
+  width: 90%;
 }
 
-.filter select:hover {
-  border-color: #007bff;
+.filter-container .filter select:hover {
+  border-color: #007BFF;
 }
 
-.filter select:focus {
+.filter-container .filter select:focus {
   outline: none;
-  border-color: #007bff;
+  border-color: #007BFF;
   box-shadow: 0 0 4px rgba(0, 123, 255, 0.4);
 }
 
-.filter-container .filter-search input[type="text"], input[type="tel"], input[type="file"], select {
-  width: 90%;
-  padding: 5px;
-  background:  #007BFF;
-  color:  #FFF;
-
+/* Style for the "Apply" button */
+.filter-container .filter-apply-button {
+  background: #007BFF;
+  color: #fff;
+  border: none;
   border-radius: 5px;
+  padding: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.filter-container .filter-apply-button:hover {
+  background: #0056b3;
 }
 
 /* Styling for the search container */
@@ -355,10 +375,21 @@
 .base-layer-popup {
   display: none;
   position: absolute;
-  top: 40px; /* Adjust the top position as needed */
+  top: 50px; /* Adjust the top position as needed */
   right: 60px;
   padding: 5px;
   
 }
 
 
+.button-container button.active {
+   display: block;
+  margin-bottom: 10px;
+  background: #114b8e;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
