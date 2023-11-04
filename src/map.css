@@ -176,7 +176,7 @@
 /* Filter.css */
 .filter-container {
   position: absolute;
-  top: 130px;
+  top: 250px;
   right: 80px;
   background: #007BFF;
   color: #fff;
@@ -318,7 +318,7 @@
   .search-container {
     top: 5px;
     left: 10px;
-    max-width: 45%;
+    max-width: 50%;
   }
   
   .filter-search {
@@ -375,13 +375,7 @@
 }
 
 
-.base-layer-popup {
-  position: absolute;
-  top: 50px; /* Adjust the top position as needed */
-  right: 60px;
-  padding: 5px;
-  
-}
+
 
 
 .button-container button.active {
@@ -404,3 +398,23 @@
 
 }
 
+/* Add this CSS to style the tooltips */
+/* Default tooltip styling */
+button[data-tooltip]:hover:after {
+  content: attr(data-tooltip);
+  position: relative;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  z-index: 1;
+  pointer-events: none;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+/* Media query for smaller screens (adjust max-width as needed) */
+@media (max-width: 768px) {
+  button[data-tooltip]:hover:after {
+    display: none; /* Hide the tooltip on smaller screens */
+  }
+}

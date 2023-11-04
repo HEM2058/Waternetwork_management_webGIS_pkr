@@ -581,20 +581,20 @@ if(Reset){
 )}
   <div>
   <div className="button-container">
-  <button id="reset-button" onClick={()=>resetFunction()} ><i class="fas fa-undo"></i></button>
-  <button onClick={() => exportMapImage()}><i class="fa fa-print"></i></button>
-  <button className={showBaseLayerPopup ? 'active' : ''} onClick={() => toggleBaseLayerPopup()}><i className="fas fa-globe "></i></button>
-  {showBaseLayerPopup && (<div className={`base-layer-popup `}>
-        <button onClick={() => handleBaseLayerChange('googleSatellite')}>googleSatellite</button>
-        <button onClick={() => handleBaseLayerChange('osm ')}>OSM</button>
-      </div>)}
-  <button
-        onClick={toggleFilter}
-        className={showFilter ? 'active' : ''}
-      >
-        <i className="fas fa-filter"></i>
-      </button>
+  <button id="reset-button" onClick={() => resetFunction()} data-tooltip="Reset"><i className="fas fa-undo"></i></button>
+  <button onClick={() => exportMapImage()} data-tooltip="Export Map"><i className="fa fa-print"></i></button>
+  <button className={showBaseLayerPopup ? 'active' : ''} onClick={() => toggleBaseLayerPopup()} data-tooltip="Toggle Base Layer"><i className="fas fa-globe"></i></button>
+  {showBaseLayerPopup && (
+    <div className={`base-layer-popup`}>
+      <button onClick={() => handleBaseLayerChange('googleSatellite')}>googleSatellite</button>
+      <button onClick={() => handleBaseLayerChange('osm')} >OSM</button>
+    </div>
+  )}
+  <button onClick={toggleFilter} className={showFilter ? 'active' : ''} data-tooltip="Toggle Filter">
+    <i className="fas fa-filter"></i>
+  </button>
 </div>
+
 
   
 </div>
