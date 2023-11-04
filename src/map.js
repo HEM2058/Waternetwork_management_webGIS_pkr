@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import ReactDOM from 'react-dom';
 import axios from 'axios'; // Import Axios
 import 'ol/ol.css';
 import Map from 'ol/Map';
@@ -26,6 +27,7 @@ import $ from 'jquery';
 import MunicipalityInfo from './MunicipalityInfo';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
+import PropertyViewer from './PropertyViewer'; // Import the PropertyViewer component
 
 function OpenLayersMap({ apiData }) {
 
@@ -40,6 +42,7 @@ function OpenLayersMap({ apiData }) {
   const [showFilter, setShowFilter] = useState(false); //stores filter button activate state
   const [showBaseLayerPopup, setShowBaseLayerPopup] = useState(false); //stores baselayer button activate state 
   const [Reset, setReset] = useState(false);
+  const [Property, setProperty] = useState('');
 // this updates BaseLayerName with latest click on baselayers list
 function handleBaseLayerChange(layer) {
   console.log(layer)
@@ -459,26 +462,16 @@ const onClose = () => {
 
       return randomColor;
     }
-// Function to handle the click event of a search result list item
-function handleSearchResultClick(geojsonFeature) {
-  // Create a new OpenLayers feature
-  const openLayersFeature = new Feature({
-    geometry: new Point(geojsonFeature.geometry.coordinates),
-  });
+    function handleSearchResultClick(geojsonFeature) {
+      // Assuming you have the properties data in the 'properties' variable
+      const properties = geojsonFeature.properties;
+    
+      // Render the PropertyViewer component and pass the properties data as a prop
+    setProperty(properties)
+    }
+    
 
-  // Set properties from the GeoJSON feature
-  openLayersFeature.setProperties(geojsonFeature.properties);
 
-  // Access the map view
-  const mapView = map.getView();
-  
-  // Center the map on the point feature
-  mapView.setCenter(openLayersFeature.getGeometry().getCoordinates());
-
-  // Set the desired zoom level
-  const targetZoomLevel = 18; // Adjust the zoom level as needed
-  mapView.setZoom(targetZoomLevel);
-}
 
 
 
@@ -607,10 +600,13 @@ if(Reset){
 </div>
 
 
+
+
+
   
 </div>
 
-    
+<PropertyViewer properties={Property} />
       {/* <div id="north-arrow" className="north-arrow">
   <span className="north-arrow-text">N</span>
 
