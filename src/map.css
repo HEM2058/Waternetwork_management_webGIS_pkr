@@ -373,7 +373,6 @@
 
 
 .base-layer-popup {
-  display: none;
   position: absolute;
   top: 50px; /* Adjust the top position as needed */
   right: 60px;

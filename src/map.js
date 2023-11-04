@@ -36,40 +36,42 @@ function OpenLayersMap({ apiData }) {
   const [selectedLayer, setSelectedLayer] = useState('Layer 1');
   const [availableLayers, setAvailableLayers] = useState([]);
   const [searchText, setSearchText] = useState(null); // Store the latest search text
-  const [showFilter, setShowFilter] = useState(false);
-    // Use state to store the selected base layer
-  // Use state to store the selected base layer
-  const [baseLayerName, setBaseLayerName] = useState(''); // Default to OpenStreetMap
+  const [baseLayerName, setBaseLayerName] = useState(''); // stores latest baselayer selection from baselayer lists
+  const [showFilter, setShowFilter] = useState(false); //stores filter button activate state
+  const [showBaseLayerPopup, setShowBaseLayerPopup] = useState(false); //stores baselayer button activate state 
+
+// this updates BaseLayerName with latest click on baselayers list
+function handleBaseLayerChange(layer) {
+  console.log(layer)
+  setBaseLayerName(layer);
   
-  // Define a function to update the selected base layer
-  function handleBaseLayerChange(layer) {
-    console.log(layer)
-    setBaseLayerName(layer);
-    
-  // Call a function to reload all the map components or fetch new layers based on the selected base layer
-  
-  }
- // Define the handleAttributeSearch function
- function handleAttributeSearch(input) {
-  setSearchText(input); // Update the latest search text
+
+}
+// this updates SearchText useState variable with latest search input
+function handleAttributeSearch(input) {
+setSearchText(input); // Update the latest search text
 }
 
-
+//button for the brower print when click on it
 function exportMapImage(){
-    // Trigger the browser's print dialog
-    window.print();
+  // Trigger the browser's print dialog
+  window.print();
 
 }
-function toggleBaseLayerPopup() {
-  const baseLayerPopup = document.getElementById('baseLayerPopup');
-  if (baseLayerPopup.style.display === 'none') {
-    baseLayerPopup.style.display = 'block';
-  } else {
-    baseLayerPopup.style.display = 'none';
-  }
-}
+
+//button for baselayer button toggler
+
+const toggleBaseLayerPopup = () => {
+setShowBaseLayerPopup(!showBaseLayerPopup);
+if(showFilter){
+ setShowFilter(!showFilter)
+}}
+//button for palika layer filter coming from the api
 const toggleFilter = () => {
-  setShowFilter(!showFilter);
+setShowFilter(!showFilter);
+if(showBaseLayerPopup){
+  setShowBaseLayerPopup(!showBaseLayerPopup)
+ }
 };
 
 console.log(apiData)
@@ -569,12 +571,11 @@ function handleSearchResultClick(geojsonFeature) {
   <div>
   <div className="button-container">
   <button onClick={() => exportMapImage()}><i class="fa fa-print"></i></button>
-  <button onClick={() => toggleBaseLayerPopup()}><i class="fas fa-globe"></i></button>
-  <div id="baseLayerPopup" class="base-layer-popup">
-  <button onClick={() => handleBaseLayerChange('googleSatellite')}>googleSatellite</button>
-    <button onClick={() => handleBaseLayerChange('osm ')}>OSM</button>
-    
-  </div>
+  <button className={showBaseLayerPopup ? 'active' : ''} onClick={() => toggleBaseLayerPopup()}><i className="fas fa-globe "></i></button>
+  {showBaseLayerPopup && (<div className={`base-layer-popup `}>
+        <button onClick={() => handleBaseLayerChange('googleSatellite')}>googleSatellite</button>
+        <button onClick={() => handleBaseLayerChange('osm ')}>OSM</button>
+      </div>)}
   <button
         onClick={toggleFilter}
         className={showFilter ? 'active' : ''}
