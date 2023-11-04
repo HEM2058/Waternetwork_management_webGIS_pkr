@@ -28,7 +28,7 @@ import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
 
 function OpenLayersMap({ apiData }) {
-console.log(apiData)
+
   const [colorHash, setColorHash] = useState({});
   const [initialZoom, setInitialZoom] = useState(10); // Set your initial zoom level here
   const [selectedData, setSelectedData] = useState(null);
@@ -54,11 +54,17 @@ console.log(apiData)
 }
 
 
+function exportMapImage(){
+    // Trigger the browser's print dialog
+    window.print();
 
-  // console.log(apiData)
+}
+console.log(apiData)
+
+ 
   useEffect(() => {
-      
-  
+    
+  console.log("Re executed")
      
 
  
@@ -129,30 +135,30 @@ console.log(apiData)
 // Create OpenStreetMap layer as a base layer
 
     // Create OpenStreetMap layer as a base layer
-    // Define a function to add a base layer to the map based on the selected base layer
-    function addBaseLayer(baseLayerName) {
-       // Clear existing layers from the map
-    map.getLayers().clear();
-      if (baseLayerName === 'osm') {
+ 
+   
+     
+   
+        
         const osmLayer = new TileLayer({
           source: new OSM(),
           opacity: 1,
-          visible: true,
+          visible: baseLayerName === 'osm', // Check if it's the selected base layer
         });
         map.addLayer(osmLayer);
-      } else if (baseLayerName === 'googleSatellite') {
+      
         const googleSatelliteLayer = new TileLayer({
           source: new XYZ({
             url: 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
             maxZoom: 21,
           }),
           opacity: 1,
-          visible: true,
+          visible: baseLayerName === 'googleSatellite', // Check if it's the selected base layer
         });
         map.addLayer(googleSatelliteLayer);
-      }
+      
       // Add other layers as needed based on baseLayerName
-    }
+
      // Add filtering functionality
      if (apiData) {
       const distinctPalikas = [...new Set(apiData.map((item) => item.Palika))];
@@ -551,6 +557,9 @@ function handleSearchResultClick(geojsonFeature) {
   <div className="button-container"> {/* Wrap the buttons with a div and apply the class */}
   <button onClick={() => handleBaseLayerChange('osm')}>OSM</button>
   <button onClick={() => handleBaseLayerChange('googleSatellite')}>Google</button>
+  
+  <button onClick={() => exportMapImage()}>Export Map</button>
+
       </div>
   
 </div>
