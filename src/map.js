@@ -36,7 +36,7 @@ function OpenLayersMap({ apiData }) {
   const [selectedLayer, setSelectedLayer] = useState('Layer 1');
   const [availableLayers, setAvailableLayers] = useState([]);
   const [searchText, setSearchText] = useState(null); // Store the latest search text
-  const [baseLayerName, setBaseLayerName] = useState(''); // stores latest baselayer selection from baselayer lists
+  const [baseLayerName, setBaseLayerName] = useState('osm'); // stores latest baselayer selection from baselayer lists
   const [showFilter, setShowFilter] = useState(false); //stores filter button activate state
   const [showBaseLayerPopup, setShowBaseLayerPopup] = useState(false); //stores baselayer button activate state 
   const [Reset, setReset] = useState(false);
@@ -501,8 +501,17 @@ function handleSearchResultClick(geojsonFeature) {
                   // Create a list item and add it to the search results container
                   console.log(labelText)
                   const listItem = document.createElement('li');
-                  listItem.textContent = labelText;
-                  searchResultsContainer.appendChild(listItem);
+
+                  // Create a checkmark icon element
+                  const checkmarkIcon = document.createElement('i');
+                  checkmarkIcon.className = 'fas fa-search';
+                  checkmarkIcon.style.marginRight = '5px'; // Add spacing to the right of the checkmark icon
+                  listItem.appendChild(checkmarkIcon);
+
+                 // Add the result text
+          const textNode = document.createTextNode(labelText);
+          listItem.appendChild(textNode);
+
                   listItem.addEventListener('click', () => handleSearchResultClick(feature));
                   searchResultsContainer.appendChild(listItem);
                 }
@@ -583,14 +592,14 @@ if(Reset){
   <div className="button-container">
   <button id="reset-button" onClick={() => resetFunction()} data-tooltip="Reset Map View"><i className="fas fa-undo"></i></button>
   <button onClick={() => exportMapImage()} data-tooltip="Export Map"><i className="fa fa-print"></i></button>
-  <button className={showBaseLayerPopup ? 'active' : ''} onClick={() => toggleBaseLayerPopup()} data-tooltip="Toggle Base Layer"><i className="fas fa-globe"></i></button>
+  <button className={showBaseLayerPopup ? 'active' : ''} onClick={() => toggleBaseLayerPopup()} data-tooltip="Base Layers"><i className="fas fa-globe"></i></button>
   {showBaseLayerPopup && (
     <div className={`base-layer-popup`}>
       <button onClick={() => handleBaseLayerChange('googleSatellite')}>googleSatellite</button>
       <button onClick={() => handleBaseLayerChange('osm')} >OSM</button>
     </div>
   )}
-  <button onClick={toggleFilter} className={showFilter ? 'active' : ''} data-tooltip="Toggle Filter">
+  <button onClick={toggleFilter} className={showFilter ? 'active' : ''} data-tooltip="Filter">
     <i className="fas fa-filter"></i>
   </button>
 </div>

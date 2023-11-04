@@ -22,7 +22,8 @@ function Navbar() {
               <div className="icon-container" data-tooltip="Relief Request">
               <div className="relief-request-button">
                 <Link to="/QuickAid" >
-                  <i className="fas fa-hand-holding-heart"></i>
+                <i class="fas fa-paper-plane"></i>
+
                 </Link>
                 </div>
               </div>
@@ -30,7 +31,8 @@ function Navbar() {
               {/* Municipality Login Button */}
               <div className="icon-container" data-tooltip="Municipality Login">
                 <Link to="/Log-in" className="login-link">
-                  <i className="fas fa-user"></i>
+                <i class="fas fa-sign-in-alt"></i>
+
                 </Link>
               </div>
             </div>

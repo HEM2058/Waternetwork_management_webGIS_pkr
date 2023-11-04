@@ -292,25 +292,27 @@
 }
 
 /* Default styling for search results */
+/* Styling for Search Results */
 #search-results {
   list-style-type: none;
   padding: 0;
-  margin: 10px 0; /* Adjust the top margin here to control the gap */
-  background-color: #fff;
+  margin: 12px 0; /* Adjusted top margin */
+  background-color: #fff; /* Keep the background white */
   border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
 }
 
+/* Styling for Search Result Items */
 #search-results li {
- 
-  padding: 5px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  padding: 10px;
   cursor: pointer;
   transition: background-color 0.3s;
   color: #333;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 #search-results li:hover {
-  background-color: #f0f0f0;
+  background-color: #E3F2FD; /* Highlight background color on hover */
 }
 
 /* Media query for screens smaller than 768px */
