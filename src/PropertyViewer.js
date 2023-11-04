@@ -1,15 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './PropertyViewer.css';
 
-function PropertyViewer({ properties, closePopup }) {
-  if (!properties || Object.keys(properties).length === 0) {
-    return null; // Don't render anything if properties are not provided or empty
+function PropertyViewer({ properties }) {
+  const [isOpen, setIsOpen] = useState(properties && Object.keys(properties).length > 0);
+
+  useEffect(() => {
+    setIsOpen(properties && Object.keys(properties).length > 0);
+  }, [properties]);
+
+  const handlePopupClose = () => {
+    setIsOpen(false);
+  };
+
+  if (!isOpen) {
+    return null;
   }
 
   return (
     <div className="popup-container">
       <div className="popup-content">
-        <span className="close-button" onClick={closePopup}>&times;</span>
+        <span className="close-button" onClick={handlePopupClose}>&times;</span>
         <h2>Property Viewer</h2>
         <ul>
           {Object.keys(properties).map((propertyName) => {

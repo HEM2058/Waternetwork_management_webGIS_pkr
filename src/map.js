@@ -43,6 +43,7 @@ function OpenLayersMap({ apiData }) {
   const [showBaseLayerPopup, setShowBaseLayerPopup] = useState(false); //stores baselayer button activate state 
   const [Reset, setReset] = useState(false);
   const [Property, setProperty] = useState('');
+  const [Popup, setPopup] = useState('');
 // this updates BaseLayerName with latest click on baselayers list
 function handleBaseLayerChange(layer) {
   console.log(layer)
