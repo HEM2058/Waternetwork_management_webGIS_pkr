@@ -88,9 +88,10 @@ const resetFunction=()=>
 }
 console.log(apiData)
 
-   // Callback function to handle closing the popup
+   // Callback function to handle closing the popup, this is passing as prop to PropertyViewer component and will call back once popup is closed
    const handlePopupClose = () => {
     setClosePopup(false); // Set ClosePopup to false when closing the popup
+
   };
   useEffect(() => {
     
@@ -504,7 +505,7 @@ const onClose = () => {
           // Add a click event listener to the close icon
           closeIcon.addEventListener('click', () => {
             // Clear the value in the search input
-            setSearchText(propertyValue);
+            setSearchText('');
     
             // Close the popup by triggering setClosePopup(true)
             setClosePopup(true)
