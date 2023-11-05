@@ -300,6 +300,8 @@
   background-color: #fff; /* Keep the background white */
   border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+  max-height: 390px;
+  overflow-y: hidden;
 }
 
 /* Styling for Search Result Items */
