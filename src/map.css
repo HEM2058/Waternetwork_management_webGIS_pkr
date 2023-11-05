@@ -450,6 +450,33 @@ button[data-tooltip]:hover:after {
   }
 }
 
+.loading::after {
+  content: '';
+  position: relative;
+  top: 50%;
+  right: 10px; /* Adjust the distance from the input field */
+  transform: translateY(-50%);
+  width: 25px;
+  height: 25px;
+  border: 3px solid transparent;
+  border-top-color: #007bff; /* Initial color before 180 degrees */
+  border-radius: 50%;
+  color: black;
+  animation: rotate 1s linear infinite;
+}
 
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+    border-top-color: red; /* Change color at 180 degrees */
+  }
+  100% {
+    transform: rotate(360deg);
+    border-top-color: red; /* Keep the color red after 180 degrees */
+  }
+}
 
 

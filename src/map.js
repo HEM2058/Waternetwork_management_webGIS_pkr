@@ -467,9 +467,19 @@ const onClose = () => {
       // Assuming you have the properties data in the 'properties' variable
       const properties = geojsonFeature.properties;
     
+      // Add a loading class to the input container
+      const inputContainer = document.querySelector('.filter-search');
+      inputContainer.classList.add('loading');
+    
       // Render the PropertyViewer component and pass the properties data as a prop
-    setProperty(properties)
+      setProperty(properties);
+    
+      // Remove the loading class after a delay (adjust the delay as needed)
+      setTimeout(() => {
+        inputContainer.classList.remove('loading');
+      }, 3000); // Adjust the delay (in milliseconds) as needed
     }
+    
     
 
 
