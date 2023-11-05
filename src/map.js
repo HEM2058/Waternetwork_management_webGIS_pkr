@@ -38,7 +38,7 @@ function OpenLayersMap({ apiData }) {
   const [selectedLayer, setSelectedLayer] = useState('Layer 1');
   const [availableLayers, setAvailableLayers] = useState([]);
   const [searchText, setSearchText] = useState(null); // Store the latest search text
-  const [baseLayerName, setBaseLayerName] = useState('osm'); // stores latest baselayer selection from baselayer lists
+  const [baseLayerName, setBaseLayerName] = useState('googleSatellite'); // stores latest baselayer selection from baselayer lists
   const [showFilter, setShowFilter] = useState(false); //stores filter button activate state
   const [showBaseLayerPopup, setShowBaseLayerPopup] = useState(false); //stores baselayer button activate state 
   const [Reset, setReset] = useState(false);
@@ -46,7 +46,7 @@ function OpenLayersMap({ apiData }) {
   const [Popup, setPopup] = useState('');
   const [ClosePopup, setClosePopup] = useState(false)
 // this updates BaseLayerName with latest click on baselayers list
-function handleBaseLayerChange(layer) {
+function handleBaseLayerChange(layer) { 
   console.log(layer)
   setBaseLayerName(layer);
   
@@ -472,12 +472,16 @@ const onClose = () => {
     function handleSearchResultClick(geojsonFeature, propertyValue) {
       // Assuming you have the properties data in the 'properties' variable
       const properties = geojsonFeature.properties;
+       // get the searchResults by id and setting style to none when displaying the popup
+const searchResults = document.getElementById("search-results");
+
+// Check if the element exists
+if (searchResults) {
+  // Set the value to an empty string to clear it
+  searchResults.style.display = 'none';
+}
+
     
-      // Get the search input element
-      const searchInput = document.getElementById('attributeSearch');
-    
-      // Set the value of the input field to the propertyValue
-      searchInput.value = propertyValue;
       setSearchText(propertyValue);
       // Add a loading class to the input container
       const inputContainer = document.querySelector('.filter-search');
@@ -490,7 +494,7 @@ const onClose = () => {
       setTimeout(() => {
         // Remove the loading class
         inputContainer.classList.remove('loading');
-    
+        
         // Create and add the close icon
         const closeIcon = document.createElement('i');
         closeIcon.className = 'fas fa-times-circle'; // Replace with the appropriate FontAwesome class for a close icon
@@ -506,7 +510,12 @@ const onClose = () => {
           closeIcon.addEventListener('click', () => {
             // Clear the value in the search input
             setSearchText('');
-    
+  // setting style to block when click on the close icon
+// Check if the element exists
+if (searchResults) {
+  // Set the value to an empty string to clear it
+  searchResults.style.display = 'block';
+}
             // Close the popup by triggering setClosePopup(true)
             setClosePopup(true)
             // Remove the close icon from the container

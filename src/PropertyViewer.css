@@ -13,7 +13,7 @@
     left: 10px;
     height: 60%;
     background: #fff;
-    width: 240px;
+    width: 245px;
     color: black;
     border-radius: 10px;
     padding: 20px;
@@ -55,7 +55,15 @@
   @media (max-width: 768px) {
     .popup-content {
       top: 130px;
-      width: 180px;
+      width: 240px;
+      height: 50%;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .popup-content {
+      top: 120px;
+      width: 200px;
       height: 50%;
     }
   }
