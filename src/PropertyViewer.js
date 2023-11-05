@@ -3,7 +3,6 @@ import './PropertyViewer.css';
 
 function PropertyViewer({ properties, setClosePopup, onClosePopup }) {
   const [isOpen, setIsOpen] = useState(properties && Object.keys(properties).length > 0);
-console.log(setClosePopup)
   useEffect(() => {
     setIsOpen(properties && Object.keys(properties).length > 0);
   }, [properties]);
@@ -12,7 +11,7 @@ console.log(setClosePopup)
   useEffect(() => {
     if (setClosePopup === true) {
       handlePopupClose();
-      onClosePopup(); // Call the onClosePopup function in the parent component
+      onClosePopup(); // Call the onClosePopup function in the parent component Map.js
     }
   }, [setClosePopup]);
 

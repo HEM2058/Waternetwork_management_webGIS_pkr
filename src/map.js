@@ -28,7 +28,7 @@ import MunicipalityInfo from './MunicipalityInfo';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
 import PropertyViewer from './PropertyViewer'; // Import the PropertyViewer component
-
+import Circle from 'ol/style/Circle';
 function OpenLayersMap({ apiData }) {
 
   const [colorHash, setColorHash] = useState({});
@@ -38,13 +38,16 @@ function OpenLayersMap({ apiData }) {
   const [selectedLayer, setSelectedLayer] = useState('Layer 1');
   const [availableLayers, setAvailableLayers] = useState([]);
   const [searchText, setSearchText] = useState(null); // Store the latest search text
-  const [baseLayerName, setBaseLayerName] = useState('googleSatellite'); // stores latest baselayer selection from baselayer lists
+  const [baseLayerName, setBaseLayerName] = useState('osm'); // stores latest baselayer selection from baselayer lists
   const [showFilter, setShowFilter] = useState(false); //stores filter button activate state
   const [showBaseLayerPopup, setShowBaseLayerPopup] = useState(false); //stores baselayer button activate state 
   const [Reset, setReset] = useState(false);
   const [Property, setProperty] = useState('');
   const [Popup, setPopup] = useState('');
   const [ClosePopup, setClosePopup] = useState(false)
+
+  // const [latitude, setLatitude] = useState("");
+  // const [longitude, setLongitude] = useState("");
 // this updates BaseLayerName with latest click on baselayers list
 function handleBaseLayerChange(layer) { 
   console.log(layer)
@@ -469,12 +472,71 @@ const onClose = () => {
 
       return randomColor;
     }
+
+
+    const addMarker = (lat, lon) => {
+      console.log(lat)
+      console.log(lon)
+      if (map) {
+        console.log("ok")
+        // Create a style for the marker
+        const markerStyle = new Style({
+          image: new Circle({
+            radius: 10, // Increase the size as needed
+            fill: new Fill({
+              color: 'blue', // Change the color to blue
+            }),
+            stroke: new Stroke({
+              color: 'black', // You can change the border color
+              width: 2, // Adjust the border width
+            }),
+          }),
+        });
+    
+        const markerLayer = new VectorLayer({
+          source: new VectorSource({
+            features: [
+              new Feature({
+                geometry: new Point(fromLonLat([lon, lat])),
+              }),
+            ],
+          }),
+          style: markerStyle, // Apply the custom style to the marker
+        });
+    
+        map.addLayer(markerLayer);
+      }
+    };
+    
+    
+      // Create a function to handle setting latitude and longitude
+ 
+      
+    
+        
+    
+        // Call addMarker to add the marker to the map
+     
+   
+    
+
+
+
     function handleSearchResultClick(geojsonFeature, propertyValue) {
       // Assuming you have the properties data in the 'properties' variable
       const properties = geojsonFeature.properties;
+      const coordinates = geojsonFeature.geometry.coordinates
+      const newLatitude = coordinates[1];
+      const newLongitude = coordinates[0];
+      // setLatitude(newLatitude);
+      // setLongitude(newLongitude);
+      //  console.log(newLatitude)
+        // console.log(latitude)
+        // console.log(longitude)
+        addMarker(newLatitude, newLongitude);
        // get the searchResults by id and setting style to none when displaying the popup
 const searchResults = document.getElementById("search-results");
-
+ 
 // Check if the element exists
 if (searchResults) {
   // Set the value to an empty string to clear it
@@ -609,7 +671,6 @@ if(Reset){
   setReset(!Reset)
 }
 
-    
   },[apiData, selectedPalika, selectedLayer,searchText,baseLayerName,Reset]);
 
   return (
