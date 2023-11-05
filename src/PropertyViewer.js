@@ -21,18 +21,20 @@ function PropertyViewer({ properties }) {
       <div className="popup-content">
         <span className="close-button" onClick={handlePopupClose}>&times;</span>
         <h2>Attributes</h2>
-        <ul>
-          {Object.keys(properties).map((propertyName) => {
-            if (properties[propertyName] !== null) {
-              return (
-                <li key={propertyName}>
-                  <strong>{propertyName}:</strong> {properties[propertyName]}
-                </li>
-              );
-            }
-            return null;
-          })}
-        </ul>
+        <div className="content-scroll">
+          <ul>
+            {Object.keys(properties).map((propertyName) => {
+              if (properties[propertyName] !== null) {
+                return (
+                  <li key={propertyName}>
+                    <strong>{propertyName}:</strong> {properties[propertyName]}
+                  </li>
+                );
+              }
+              return null;
+            })}
+          </ul>
+        </div>
       </div>
     </div>
   );
