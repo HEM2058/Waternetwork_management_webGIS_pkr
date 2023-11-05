@@ -51,6 +51,7 @@ function handleBaseLayerChange(layer) {
   setBaseLayerName(layer);
   
 
+
 }
 // this updates SearchText useState variable with latest search input
 function handleAttributeSearch(input) {
@@ -87,7 +88,10 @@ const resetFunction=()=>
 }
 console.log(apiData)
 
- 
+   // Callback function to handle closing the popup
+   const handlePopupClose = () => {
+    setClosePopup(false); // Set ClosePopup to false when closing the popup
+  };
   useEffect(() => {
     
   console.log("Re executed")
@@ -674,7 +678,7 @@ if(Reset){
   
 </div>
 
-<PropertyViewer properties={Property} setClosePopup={ClosePopup} />
+<PropertyViewer properties={Property} setClosePopup={ClosePopup} onClosePopup={handlePopupClose} />
 
       {/* <div id="north-arrow" className="north-arrow">
   <span className="north-arrow-text">N</span>

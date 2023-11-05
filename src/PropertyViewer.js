@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './PropertyViewer.css';
 
-function PropertyViewer({ properties, setClosePopup }) {
+function PropertyViewer({ properties, setClosePopup, onClosePopup }) {
   const [isOpen, setIsOpen] = useState(properties && Object.keys(properties).length > 0);
 console.log(setClosePopup)
   useEffect(() => {
@@ -12,6 +12,7 @@ console.log(setClosePopup)
   useEffect(() => {
     if (setClosePopup === true) {
       handlePopupClose();
+      onClosePopup(); // Call the onClosePopup function in the parent component
     }
   }, [setClosePopup]);
 
