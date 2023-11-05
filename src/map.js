@@ -477,7 +477,7 @@ const onClose = () => {
       // Remove the loading class after a delay (adjust the delay as needed)
       setTimeout(() => {
         inputContainer.classList.remove('loading');
-      }, 3000); // Adjust the delay (in milliseconds) as needed
+      }, 2000); // Adjust the delay (in milliseconds) as needed
     }
     
     

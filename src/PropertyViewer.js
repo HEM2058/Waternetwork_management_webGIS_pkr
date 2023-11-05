@@ -20,7 +20,7 @@ function PropertyViewer({ properties }) {
     <div className="popup-container">
       <div className="popup-content">
         <span className="close-button" onClick={handlePopupClose}>&times;</span>
-        <h2>Property Viewer</h2>
+        <h2>Attributes</h2>
         <ul>
           {Object.keys(properties).map((propertyName) => {
             if (properties[propertyName] !== null) {
