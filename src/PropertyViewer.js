@@ -1,25 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import './PropertyViewer.css';
 
-function PropertyViewer({ properties }) {
+function PropertyViewer({ properties, setClosePopup }) {
   const [isOpen, setIsOpen] = useState(properties && Object.keys(properties).length > 0);
-
+console.log(setClosePopup)
   useEffect(() => {
     setIsOpen(properties && Object.keys(properties).length > 0);
   }, [properties]);
 
-  const handlePopupClose = () => {
-    setIsOpen(false);
-  };
+  // Check if setClosePopup has a true value, and trigger the handlePopupClose function if it does
+  useEffect(() => {
+    if (setClosePopup === true) {
+      handlePopupClose();
+    }
+  }, [setClosePopup]);
 
   if (!isOpen) {
     return null;
   }
 
+  const handlePopupClose = () => {
+    setIsOpen(false);
+  };
+
   return (
     <div className="popup-container">
       <div className="popup-content">
-        <span className="close-button" onClick={handlePopupClose}>&times;</span>
         <h2>Attributes</h2>
         <div className="content-scroll">
           <ul>

@@ -44,6 +44,7 @@ function OpenLayersMap({ apiData }) {
   const [Reset, setReset] = useState(false);
   const [Property, setProperty] = useState('');
   const [Popup, setPopup] = useState('');
+  const [ClosePopup, setClosePopup] = useState(false)
 // this updates BaseLayerName with latest click on baselayers list
 function handleBaseLayerChange(layer) {
   console.log(layer)
@@ -463,10 +464,16 @@ const onClose = () => {
 
       return randomColor;
     }
-    function handleSearchResultClick(geojsonFeature) {
+    function handleSearchResultClick(geojsonFeature, propertyValue) {
       // Assuming you have the properties data in the 'properties' variable
       const properties = geojsonFeature.properties;
     
+      // Get the search input element
+      const searchInput = document.getElementById('attributeSearch');
+    
+      // Set the value of the input field to the propertyValue
+      searchInput.value = propertyValue;
+      setSearchText(propertyValue);
       // Add a loading class to the input container
       const inputContainer = document.querySelector('.filter-search');
       inputContainer.classList.add('loading');
@@ -474,11 +481,46 @@ const onClose = () => {
       // Render the PropertyViewer component and pass the properties data as a prop
       setProperty(properties);
     
-      // Remove the loading class after a delay (adjust the delay as needed)
+      // After 2 seconds, add the close icon to the loading class
       setTimeout(() => {
+        // Remove the loading class
         inputContainer.classList.remove('loading');
-      }, 2000); // Adjust the delay (in milliseconds) as needed
+    
+        // Create and add the close icon
+        const closeIcon = document.createElement('i');
+        closeIcon.className = 'fas fa-times-circle'; // Replace with the appropriate FontAwesome class for a close icon
+        closeIcon.style.marginLeft = '5px'; // Adjust the spacing
+        closeIcon.style.cursor = 'pointer';
+    
+        // Append the close icon to the input container
+        const searchContainer = document.querySelector('.filter-search');
+        if (searchContainer) {
+          searchContainer.appendChild(closeIcon);
+    
+          // Add a click event listener to the close icon
+          closeIcon.addEventListener('click', () => {
+            // Clear the value in the search input
+            setSearchText(propertyValue);
+    
+            // Close the popup by triggering setClosePopup(true)
+            setClosePopup(true)
+            // Remove the close icon from the container
+            if (searchContainer.contains(closeIcon)) {
+              searchContainer.removeChild(closeIcon);
+            }
+          });
+        }
+      }, 1000); // Adjust the delay (in milliseconds) as needed
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
 
@@ -487,44 +529,59 @@ const onClose = () => {
 
 
   
-   // Define a function to handle the WFS request with the latest search text
-function handleWFSRequest() {
-  const searchResultsContainer = document.getElementById('search-results');
-  searchResultsContainer.innerHTML = ''; // Clear previous results
-
-  if (apiData && searchText) {
-    apiData.forEach((item) => {
-      const { Palika, name } = item;
-      fetch(`http://localhost:8080/geoserver/${Palika}/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=${Palika}:${name}&outputFormat=application/json`)
-        .then((response) => response.json())
-        .then((geojsonData) => {
-          geojsonData.features.forEach((feature) => {
-            // Iterate through all properties
-            for (const property in feature.properties) {
-              const propertyValue = feature.properties[property];
-              if (propertyValue && propertyValue.toString().toLowerCase().includes(searchText.toLowerCase())) {
-                // Create a list item and add it to the search results container
-                const listItem = document.createElement('li');
-
-                // Create a checkmark icon element
-                const checkmarkIcon = document.createElement('i');
-                checkmarkIcon.className = 'fas fa-search';
-                checkmarkIcon.style.marginRight = '5px'; // Add spacing to the right of the checkmark icon
-                listItem.appendChild(checkmarkIcon);
-
-                // Add the result text
-                const textNode = document.createTextNode(propertyValue);
-                listItem.appendChild(textNode);
-
-                listItem.addEventListener('click', () => handleSearchResultClick(feature));
-                searchResultsContainer.appendChild(listItem);
-              }
-            }
-          });
+    function handleWFSRequest() {
+      const searchResultsContainer = document.getElementById('search-results');
+      searchResultsContainer.innerHTML = ''; // Clear previous results
+    
+      if (apiData && searchText) {
+        apiData.forEach((item) => {
+          const { Palika, name } = item;
+          fetch(`http://localhost:8080/geoserver/${Palika}/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=${Palika}:${name}&outputFormat=application/json`)
+            .then((response) => response.json())
+            .then((geojsonData) => {
+              geojsonData.features.forEach((feature) => {
+                // Iterate through all properties
+                for (const property in feature.properties) {
+                  const propertyValue = feature.properties[property];
+                  if (propertyValue && propertyValue.toString().toLowerCase().includes(searchText.toLowerCase())) {
+                    // Create a list item and add it to the search results container
+                    const listItem = document.createElement('li');
+    
+                    // Create a checkmark icon element
+                    const checkmarkIcon = document.createElement('i');
+                    checkmarkIcon.className = 'fas fa-search';
+                    checkmarkIcon.style.marginRight = '5px'; // Add spacing to the right of the checkmark icon
+                    listItem.appendChild(checkmarkIcon);
+    
+                    // Add the result text
+                    const textNode = document.createTextNode(propertyValue);
+                    listItem.appendChild(textNode);
+                    
+                    listItem.addEventListener('click', () => handleSearchResultClick(feature,propertyValue));
+                    searchResultsContainer.appendChild(listItem);
+                  }
+                }
+              });
+            });
         });
-    });
+      } else {
+        // If searchText is empty, clear the search results container and hide the search result tab
+        searchResultsContainer.innerHTML = '';
+      }
+    }
+
+
+    // Add an event listener to the document click event
+document.addEventListener('click', (event) => {
+  const searchResultsContainer = document.getElementById('search-results');
+
+  // Check if the click event target is outside the search result area
+  if (!searchResultsContainer.contains(event.target)) {
+    searchResultsContainer.innerHTML = ''; // Clear the search results
   }
-}
+});
+
+    
 
     
 
@@ -617,7 +674,8 @@ if(Reset){
   
 </div>
 
-<PropertyViewer properties={Property} />
+<PropertyViewer properties={Property} setClosePopup={ClosePopup} />
+
       {/* <div id="north-arrow" className="north-arrow">
   <span className="north-arrow-text">N</span>
 
