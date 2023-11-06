@@ -435,7 +435,8 @@ map.on('click', function (event) {
 const onClose = () => {
   setSelectedData(null); // Close the popup by resetting the selectedData state to null
 
-
+  map.getView().setCenter(fromLonLat([81.2519, 29.7767]));
+  map.getView().setZoom(initialZoom);
 
 
   // Remove the highlight style from the previously clicked feature (if there is one)
@@ -664,7 +665,7 @@ document.addEventListener('click', (event) => {
     // Call the handleWFSRequest function whenever searchText changes
     handleWFSRequest();
 if(Reset){
-  console.log("inside reset")
+  console.log(Reset)
     // Reset the map to its initial state
   map.getView().setCenter(fromLonLat([81.2519, 29.7767]));
   map.getView().setZoom(initialZoom);
