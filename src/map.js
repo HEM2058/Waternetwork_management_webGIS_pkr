@@ -176,7 +176,7 @@ console.log(apiData)
         
         const osmLayer = new TileLayer({
           source: new OSM(),
-          opacity: 1,
+          opacity: 0.2,
           visible: baseLayerName === 'osm', // Check if it's the selected base layer
         });
         map.addLayer(osmLayer);
@@ -587,7 +587,7 @@ if (searchResults) {
             }
           });
         }
-      }, 1000); // Adjust the delay (in milliseconds) as needed
+      }, 500); // Adjust the delay (in milliseconds) as needed
     }
     
     
@@ -664,7 +664,7 @@ document.addEventListener('click', (event) => {
 
     // Call the handleWFSRequest function whenever searchText changes
     handleWFSRequest();
-if(Reset){
+if(Reset==true){
   console.log(Reset)
     // Reset the map to its initial state
   map.getView().setCenter(fromLonLat([81.2519, 29.7767]));
