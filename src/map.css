@@ -379,35 +379,6 @@
 }
 
 
-.base-layer-popup {
-  position: absolute;
-  top: 185px;
-  right: 4px;
-  background: #007BFF;
-  color: #fff;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  width: 145px;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-}
-
-.base-layer-popup button {
-  font-size: 15px;
-  padding: 10px;
-  background-color: transparent;
-  color: #fff;
-  border: none;
-  border-bottom: 1px solid #fff;
-  transition: background-color 0.3s ease;
-}
-
-.base-layer-popup button:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
 
 .button-container button.active {
    display: block;
@@ -479,31 +450,61 @@ button[data-tooltip]:hover:after {
   }
 }
 
+.base-layer-popup {
+  position: absolute;
+  top: 185px;
+  right: 4px;
+  background: #007BFF;
+  color: #fff;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  width: 145px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.base-layer-popup button {
+  font-size: 15px;
+  padding: 10px;
+  background-color: transparent;
+  color: #fff;
+  border: none;
+  border-bottom: 1px solid #fff;
+  transition: background-color 0.3s ease;
+}
+
+.base-layer-popup button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
 /* Style for the radio buttons */
-input[type="radio"] {
+.base-layer-popup input[type="radio"] {
   margin-right: 5px; /* Add some spacing between the radio button and the text */
   cursor: pointer;
   font-size: 11px;
 }
 
 /* Style for the custom radio indicator */
-input[type="radio"] + label {
+.base-layer-popup input[type="radio"] + label {
 /* Hide the labels */
   position: relative;
-  padding-left: 30px; /* Space for the custom radio indicator */
+  padding-left: 5px; /* Space for the custom radio indicator */
   cursor: pointer;
   font-size: 11px;
+  place-self: center;
 }
 
 
 
 /* Style for the custom radio indicator when selected */
-input[type="radio"]:checked + label::before {
+.base-layer-popup input[type="radio"]:checked + label::before {
   background-color: #0074e4; /* Background color when selected */
 }
 
 /* Optional hover effect for labels */
-input[type="radio"] + label:hover::before {
+.base-layer-popup input[type="radio"] + label:hover::before {
   border-color: #005aaf; /* Adjust the border color on hover */
 }
 

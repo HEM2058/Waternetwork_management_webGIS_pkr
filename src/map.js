@@ -244,41 +244,11 @@ console.log(apiData)
         }),
       });
     
-      // Fetch GeoJSON data for the same layer
-      fetch(`http://localhost:8080/geoserver/${Palika}/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=${Palika}:${name}&outputFormat=application/json`)
-        .then((response) => response.json())
-        .then((geojsonData) => {
-         // Create a VectorSource for vector features
-         const vectorSource = new VectorSource({
-          format: new GeoJSON(),
-          features: new GeoJSON().readFeatures(geojsonData),
-        });
-       
-       
-          // Filter the features based on searchText
-          vectorSource.clear(); // Clear existing features
-          geojsonData.features.forEach((feature) => {
-            const firstAttribute = Object.keys(feature.properties)[7];
-            const labelText = feature.properties[firstAttribute];
-             
-   
-          });
-        
-          // Iterate through the features in the GeoJSON and use the first attribute for labeling
-          geojsonData.features.forEach((feature) => {
-            const firstAttribute = Object.keys(feature.properties)[7];
-           
-            // Now you can use 'firstAttribute' for labeling on the map.
-            const labelText = feature.properties[firstAttribute];
-            
-            // console.log(labelText)
-            // You can use 'labelText' for labeling the feature on the map.
-            // You'll need to position the label appropriately, depending on your map setup.
-          });
+      // map.addLayer(wmsLayer);
         });
     
-      map.addLayer(wmsLayer);
-    });
+    
+   
     
   }}
  
@@ -309,24 +279,30 @@ console.log(apiData)
         const properties = feature.getProperties();
         const name = properties.NEPALI_NAME;
         const color = getRandomColor(name); // Use a custom function to get a unique color
-        
+    
         return new Style({
           fill: new Fill({
             color: color,
           }),
           stroke: new Stroke({
-            color: 'white',
+            color: 'black',
             width: 2,
           }),
           text: new Text({
             text: name,
             fill: new Fill({
-              color: 'black',
+              color: 'blue',
             }),
+            
+              // Add zIndex and make the text bold
+       
+        font: 'bold 12px sans-serif', // Adjust the font size and weight as needed
+      
           }),
         });
       },
     });
+    
   
     if(map){
     map.addLayer(vectorLayer);
@@ -495,7 +471,7 @@ const onClose = () => {
       // Generate a new random color with 50% opacity (alpha: 0.5)
       const randomColor = `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(
         Math.random() * 256
-      )}, 0.5)`;
+      )}, 0)`;
       colorHash[local] = randomColor;
 
       return randomColor;
@@ -674,7 +650,12 @@ if (searchResults) {
 }
             // Close the popup by triggering setClosePopup(true)
             setClosePopup(true)
+            //clear the previous marker from the map
             markerLayerRef.current.getSource().clear();
+            //Reset the map view to initial state
+              // Reset the map to its initial state
+  map.getView().setCenter(fromLonLat([81.2519, 29.7767]));
+  map.getView().setZoom(initialZoom);
             // Remove the close icon from the container
             if (searchContainer.contains(closeIcon)) {
               searchContainer.removeChild(closeIcon);
@@ -789,6 +770,14 @@ if (searchResults) {
 
 <div className={`base-layer-popup`}>
   <>
+  <input
+      type="radio"
+      id="DefaultMapToggle"
+      name="baseLayer"
+      checked={baseLayerName === ''}
+      onChange={() => handleBaseLayerChange('')}
+    />
+    <label htmlFor="googleSatelliteToggle">Default BaseMap</label>
     <input
       type="radio"
       id="googleSatelliteToggle"
