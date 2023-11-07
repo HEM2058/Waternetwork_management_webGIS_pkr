@@ -55,7 +55,7 @@
   @media (max-width: 768px) {
     .popup-content {
       top: 130px;
-      width: 240px;
+      width: 200px;
       height: 50%;
     }
   }
@@ -63,8 +63,8 @@
   @media (max-width: 480px) {
     .popup-content {
       top: 120px;
-      width: 200px;
-      height: 50%;
+      width: 160px;
+      height: 30%;
     }
   }
   

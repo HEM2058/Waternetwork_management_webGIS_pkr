@@ -112,7 +112,7 @@ console.log(apiData)
 
   useEffect(() => {
 
-  console.log("Re executed")
+console.log(selectedLayer)
   updateZoomBasedOnScreenSize();
 
  
@@ -239,6 +239,7 @@ console.log(apiData)
    
     apiData.forEach((item) => {
       const { Palika, name } = item;
+      if(selectedLayer==name){
       const wmsLayer = new TileLayer({
         source: new TileWMS({
           url: `http://localhost:8080/geoserver/${Palika}/wms`,
@@ -249,9 +250,11 @@ console.log(apiData)
           serverType: 'geoserver',
           visible: true,
         }),
-      });
+      })
+      map.addLayer(wmsLayer);
+    }
     
-      // map.addLayer(wmsLayer);
+     
         });
     
     
@@ -591,7 +594,7 @@ if(Reset==true){
         // Zoom to the marker's location
         const view = map.getView();
         view.fit(markerFeature.getGeometry().getExtent(), {
-          padding: [50, 50, 50, 50], // You can adjust the padding as needed
+          padding: [50, 50, 50, 150], // You can adjust the padding as needed
           duration: 1000, // Animation duration in milliseconds
         });
       }
