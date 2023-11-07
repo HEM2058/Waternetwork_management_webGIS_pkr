@@ -479,4 +479,33 @@ button[data-tooltip]:hover:after {
   }
 }
 
+/* Style for the radio buttons */
+input[type="radio"] {
+  margin-right: 5px; /* Add some spacing between the radio button and the text */
+  cursor: pointer;
+  font-size: 11px;
+}
+
+/* Style for the custom radio indicator */
+input[type="radio"] + label {
+/* Hide the labels */
+  position: relative;
+  padding-left: 30px; /* Space for the custom radio indicator */
+  cursor: pointer;
+  font-size: 11px;
+}
+
+
+
+/* Style for the custom radio indicator when selected */
+input[type="radio"]:checked + label::before {
+  background-color: #0074e4; /* Background color when selected */
+}
+
+/* Optional hover effect for labels */
+input[type="radio"] + label:hover::before {
+  border-color: #005aaf; /* Adjust the border color on hover */
+}
+
+
 

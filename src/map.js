@@ -779,11 +779,31 @@ if (searchResults) {
   <button onClick={() => exportMapImage()} data-tooltip="Export Map"><i className="fa fa-print"></i></button>
   <button className={showBaseLayerPopup ? 'active' : ''} onClick={() => toggleBaseLayerPopup()} data-tooltip="Base Layers"><i className="fas fa-globe"></i></button>
   {showBaseLayerPopup && (
-    <div className={`base-layer-popup`}>
-      <button onClick={() => handleBaseLayerChange('googleSatellite')}>googleSatellite</button>
-      <button onClick={() => handleBaseLayerChange('osm')} >OSM</button>
-    </div>
-  )}
+
+<div className={`base-layer-popup`}>
+  <>
+    <input
+      type="radio"
+      id="googleSatelliteToggle"
+      name="baseLayer"
+      checked={baseLayerName === 'googleSatellite'}
+      onChange={() => handleBaseLayerChange('googleSatellite')}
+    />
+    <label htmlFor="googleSatelliteToggle">Google Satellite</label>
+
+    <input
+      type="radio"
+      id="osmToggle"
+      name="baseLayer"
+      checked={baseLayerName === 'osm'}
+      onChange={() => handleBaseLayerChange('osm')}
+    />
+    <label htmlFor="osmToggle">OSM</label>
+  </>
+  </div>
+)}
+
+
   <button onClick={toggleFilter} className={showFilter ? 'active' : ''} data-tooltip="Filter">
     <i className="fas fa-filter"></i>
   </button>
