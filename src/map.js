@@ -30,7 +30,7 @@ import Point from 'ol/geom/Point';
 import PropertyViewer from './PropertyViewer'; // Import the PropertyViewer component
 import Circle from 'ol/style/Circle';
 function OpenLayersMap({ apiData }) {
-
+  const [map, setMap] = useState(null)
   const [colorHash, setColorHash] = useState({});
   const [initialZoom, setInitialZoom] = useState(10); // Set your initial zoom level here
   const [selectedData, setSelectedData] = useState(null);
@@ -38,7 +38,7 @@ function OpenLayersMap({ apiData }) {
   const [selectedLayer, setSelectedLayer] = useState('Layer 1');
   const [availableLayers, setAvailableLayers] = useState([]);
   const [searchText, setSearchText] = useState(null); // Store the latest search text
-  const [baseLayerName, setBaseLayerName] = useState('osm'); // stores latest baselayer selection from baselayer lists
+  const [baseLayerName, setBaseLayerName] = useState(''); // stores latest baselayer selection from baselayer lists
   const [showFilter, setShowFilter] = useState(false); //stores filter button activate state
   const [showBaseLayerPopup, setShowBaseLayerPopup] = useState(false); //stores baselayer button activate state 
   const [Reset, setReset] = useState(false);
@@ -97,7 +97,7 @@ console.log(apiData)
 
   };
   useEffect(() => {
-    
+
   console.log("Re executed")
      
 
@@ -122,22 +122,12 @@ console.log(apiData)
 // Add a click event listener
 // northArrow.addEventListener('click', resetMapToNorth);
 
-     // Determine the initial zoom level based on screen width
-     const screenWidth = window.innerWidth;
-
-     if (screenWidth <= 1024) {
-      console.log("Going inside 1024")
-       setInitialZoom(8); // Adjust the initial zoom level for smaller screens
-       
-     } else {
     
-       setInitialZoom(10); // Set the default initial zoom level for larger screens
-     }
-    // URL to the GeoJSON data
-    const geoJSONUrl = '/data/bajhanga.geojson';
+   
 
     // Set up the map once the GeoJSON data is available
-    const map = new Map({
+    if(!map){
+    const openmap = new Map({
       target: 'map',
       layers: [],
       view: new View({
@@ -159,6 +149,12 @@ console.log(apiData)
       }),
       controls: defaultControls().extend([new FullScreen()]),
     });
+
+    setMap(openmap)
+
+    
+  }
+    
   // // Add a base layer (e.g., OpenStreetMap)
   // const baseLayer = new TileLayer({
   //   source: new OSM(),
@@ -169,18 +165,19 @@ console.log(apiData)
 // Create OpenStreetMap layer as a base layer
 
     // Create OpenStreetMap layer as a base layer
- 
+  const geoJSONUrl = '/data/bajhanga.geojson';
    
      
-   
+   if(map){
         
         const osmLayer = new TileLayer({
           source: new OSM(),
           opacity: 0.2,
           visible: baseLayerName === 'osm', // Check if it's the selected base layer
         });
-        map.addLayer(osmLayer);
-      
+         map.addLayer(osmLayer);
+      }
+      if(map){ 
         const googleSatelliteLayer = new TileLayer({
           source: new XYZ({
             url: 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
@@ -190,10 +187,11 @@ console.log(apiData)
           visible: baseLayerName === 'googleSatellite', // Check if it's the selected base layer
         });
         map.addLayer(googleSatelliteLayer);
-      
+      }
       // Add other layers as needed based on baseLayerName
 
      // Add filtering functionality
+     if(map) {
      if (apiData) {
       const distinctPalikas = [...new Set(apiData.map((item) => item.Palika))];
       setAvailableLayers(
@@ -204,7 +202,9 @@ console.log(apiData)
             layers: palikaLayers.map((item) => item.name),
           };
         })
-      )};
+      )}};
+
+      if (map){
     
   if (apiData) {
    
@@ -258,12 +258,13 @@ console.log(apiData)
       map.addLayer(wmsLayer);
     });
     
-  }
+  }}
  
 
   
-  
+  if(map){
     map.getViewport().classList.add('map-pointer-cursor');
+  }
 // After creating the map
 // map.getView().on('change:rotation', function (event) {
 //   rotateNorthArrow(event.target.getRotation());
@@ -305,13 +306,18 @@ console.log(apiData)
       },
     });
   
+    if(map){
     map.addLayer(vectorLayer);
   
-  
+    }
 // Add ScaleLine control to the map
+if(map){
 map.addControl(new ScaleLine());
 const zoomslider = new ZoomSlider();
+
 map.addControl(zoomslider);
+}
+
     const popup = new Overlay({
       element: document.getElementById('popup'),
       autoPan: true,
@@ -319,9 +325,9 @@ map.addControl(zoomslider);
         duration: 250,
       },
     });
-
+if(map){
     map.addOverlay(popup);
-
+}
 // Function to zoom into a specific polygon
 function zoomToFeature(feature) {
   try {
@@ -386,7 +392,7 @@ function zoomToFeatureByLocal(local) {
  
 // Define a variable to track the previously clicked feature
 let previousClickedFeature = null;
-
+if(map){
 map.on('click', function (event) {
   map.forEachFeatureAtPixel(event.pixel, function (feature) {
     const properties = feature.getProperties();
@@ -424,7 +430,7 @@ map.on('click', function (event) {
      
     }
   });
-});
+})};
 
 
 
@@ -447,6 +453,7 @@ const onClose = () => {
 };
 
   // Add an event listener to the map viewport to detect clicks outside features
+  if (map){
   map.getViewport().addEventListener('click', function (event) {
     const pixel = map.getEventPixel(event);
 
@@ -455,7 +462,7 @@ const onClose = () => {
       // Close the popup and reset the map to its initial state
       onClose();
     }
-  });
+  })};
 
 
     // Function to generate a unique color with 50% opacity based on the feature's local property
@@ -672,7 +679,8 @@ if(Reset==true){
   setReset(!Reset)
 }
 
-  },[apiData, selectedPalika, selectedLayer,searchText,baseLayerName,Reset]);
+
+  },[apiData, selectedPalika, selectedLayer,searchText,baseLayerName,Reset,map]);
 
   return (
     <div>
