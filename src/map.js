@@ -32,7 +32,7 @@ import Circle from 'ol/style/Circle';
 function OpenLayersMap({ apiData }) {
   const [map, setMap] = useState(null)
   const [colorHash, setColorHash] = useState({});
-  const [initialZoom, setInitialZoom] = useState(10); // Set your initial zoom level here
+  const [initialZoom, setInitialZoom] = useState(null); // Set your initial zoom level here
   const [selectedData, setSelectedData] = useState(null);
   const [selectedPalika, setSelectedPalika] = useState('');
   const [selectedLayer, setSelectedLayer] = useState('Layer 1');
@@ -96,10 +96,24 @@ console.log(apiData)
     setClosePopup(false); // Set ClosePopup to false when closing the popup
 
   };
+
+        // Function to calculate and update the initial zoom level based on screen size
+        const updateZoomBasedOnScreenSize = () => {
+          const screenWidth = window.innerWidth;
+          console.log(screenWidth)
+          if (screenWidth < 768) { // Adjust this value based on your design breakpoints
+            console.log("inside 768")
+            setInitialZoom(4); // Set the zoom level for smaller screens
+          } else {
+            console.log("outside")
+            setInitialZoom(10); // Set the default zoom level for larger screens
+          }
+        };
+
   useEffect(() => {
 
   console.log("Re executed")
-     
+  updateZoomBasedOnScreenSize();
 
  
     const minZoom = 9.3; // Define the minimum zoom level you want (e.g., 4)
@@ -155,14 +169,7 @@ console.log(apiData)
     
   }
     
-  // // Add a base layer (e.g., OpenStreetMap)
-  // const baseLayer = new TileLayer({
-  //   source: new OSM(),
-  //   visible: true,
-  //   opacity:0.2,
-  // });
-  // map.addLayer(baseLayer);
-// Create OpenStreetMap layer as a base layer
+
 
     // Create OpenStreetMap layer as a base layer
   const geoJSONUrl = '/data/bajhanga.geojson';
@@ -530,7 +537,7 @@ document.addEventListener('click', (event) => {
 
 
 
-  },[apiData, selectedPalika, selectedLayer, baseLayerName, Reset, map]);
+  },[apiData, selectedPalika, selectedLayer, baseLayerName, Reset, map, initialZoom]);
 
   useEffect(()=>{
 if(Reset==true){
