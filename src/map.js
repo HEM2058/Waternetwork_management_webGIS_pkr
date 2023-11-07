@@ -569,44 +569,51 @@ if(Reset==true){
 
   //This useEffect is depends upon the latest searchText usestate variable so that we can search and get result. We can click on the search result to display popup with its location marking at map
   useEffect(() => {
-   const addMarker = (lat, lon) => {
-  if (map) {
-    // Create a style for the marker
-    const markerStyle = new Style({
-      image: new Circle({
-        radius: 5, // Increase the size as needed
-        fill: new Fill({
-          color: 'green', // Change the color to blue
-        }),
-        stroke: new Stroke({
-          color: 'black', // You can change the border color
-          width: 2, // Adjust the border width
-        }),
-      }),
-    });
-
-    // Create a marker feature
-    const markerFeature = new Feature({
-      geometry: new Point(fromLonLat([lon, lat])),
-    });
-
-    markerFeature.setStyle(markerStyle);
-
-  
-      // If you want to create the layer if it doesn't exist:
-      const markerLayer = new VectorLayer({
-        source: new VectorSource({
-          features: [markerFeature],
-        }),
-        style: markerStyle, // Apply the custom style to the marker
-      });
-
-      map.addLayer(markerLayer);
+    const addMarker = (lat, lon) => {
+      if (map) {
+        // Create a style for the marker
+        const markerStyle = new Style({
+          image: new Circle({
+            radius: 5, // Increase the size as needed
+            fill: new Fill({
+              color: 'green', // Change the color to blue
+            }),
+            stroke: new Stroke({
+              color: 'black', // You can change the border color
+              width: 2, // Adjust the border width
+            }),
+          }),
+        });
+    
+        // Create a marker feature
+        const markerFeature = new Feature({
+          geometry: new Point(fromLonLat([lon, lat])),
+        });
+    
+        markerFeature.setStyle(markerStyle);
+    
+        // If you want to create the layer if it doesn't exist:
+        const markerLayer = new VectorLayer({
+          source: new VectorSource({
+            features: [markerFeature],
+          }),
+          style: markerStyle, // Apply the custom style to the marker
+        });
+    
+        map.addLayer(markerLayer);
+    
         // Update markerLayerRef.current to the new marker layer
-     markerLayerRef.current = markerLayer;
-   
-  }
-};
+        markerLayerRef.current = markerLayer;
+    
+        // Zoom to the marker's location
+        const view = map.getView();
+        view.fit(markerFeature.getGeometry().getExtent(), {
+          padding: [50, 50, 50, 50], // You can adjust the padding as needed
+          duration: 1000, // Animation duration in milliseconds
+        });
+      }
+    };
+    
 
     
     function handleSearchResultClick(geojsonFeature, propertyValue) {
