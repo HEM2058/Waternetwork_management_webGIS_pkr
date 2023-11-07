@@ -372,17 +372,17 @@ function zoomToFeature(feature) {
 
 
 // Define a custom style function for polygons
-function polygonStyleFunction(feature, resolution) {
-  return new Style({
-    stroke: new Stroke({
-      color: 'blue',
-      width: 1,
-    }),
-    fill: new Fill({
-      color: 'rgba(0, 0, 255, 0.1)',
-    }),
-  });
-}
+// function polygonStyleFunction(feature, resolution) {
+//   return new Style({
+//     stroke: new Stroke({
+//       color: 'blue',
+//       width: 1,
+//     }),
+//     fill: new Fill({
+//       color: 'rgba(0, 0, 255, 0.1)',
+//     }),
+//   });
+// }
 
 // Function to zoom into a specific polygon by matching the LOCAL property
 function zoomToFeatureByLocal(local) {
@@ -551,6 +551,12 @@ document.addEventListener('click', (event) => {
     
 
    
+
+
+
+  },[apiData, selectedPalika, selectedLayer, baseLayerName, Reset, map]);
+
+  useEffect(()=>{
 if(Reset==true){
   console.log(Reset)
     // Reset the map to its initial state
@@ -558,9 +564,7 @@ if(Reset==true){
   map.getView().setZoom(initialZoom);
   setReset(!Reset)
 }
-
-
-  },[apiData, selectedPalika, selectedLayer, baseLayerName, Reset, map]);
+  },[Reset])
   useEffect(() => {
     const addMarker = (lat, lon) => {
       console.log(lat)
