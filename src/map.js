@@ -35,7 +35,7 @@ function OpenLayersMap({ apiData }) {
   const [initialZoom, setInitialZoom] = useState(null); // Set your initial zoom level here
   const [selectedData, setSelectedData] = useState(null);
   const [selectedPalika, setSelectedPalika] = useState('');
-  const [selectedLayer, setSelectedLayer] = useState('Layer 1');
+  const [selectedLayer, setSelectedLayer] = useState('');
   const [availableLayers, setAvailableLayers] = useState([]);
   const [searchText, setSearchText] = useState(null); // Store the latest search text
   const [baseLayerName, setBaseLayerName] = useState(''); // stores latest baselayer selection from baselayer lists
@@ -86,10 +86,10 @@ if(showBaseLayerPopup){
 //reset initial map view state switcher
 const resetFunction=()=>
 {  
-  console.log("clicked reset")
+
   setReset(!Reset)
 }
-console.log(apiData)
+
 
    // Callback function to handle closing the popup, this is passing as prop to PropertyViewer component and will call back once popup is closed
    const handlePopupClose = () => {
@@ -100,19 +100,19 @@ console.log(apiData)
         // Function to calculate and update the initial zoom level based on screen size
         const updateZoomBasedOnScreenSize = () => {
           const screenWidth = window.innerWidth;
-          console.log(screenWidth)
+        
           if (screenWidth < 768) { // Adjust this value based on your design breakpoints
-            console.log("inside 768")
+          
             setInitialZoom(4); // Set the zoom level for smaller screens
           } else {
-            console.log("outside")
+           
             setInitialZoom(10); // Set the default zoom level for larger screens
           }
         };
 
   useEffect(() => {
 
-console.log(selectedLayer)
+    console.log(selectedLayer)
   updateZoomBasedOnScreenSize();
 
  
@@ -233,34 +233,29 @@ console.log(selectedLayer)
         })
       )}};
 
-      if (map){
-    
-  if (apiData) {
-   
-    apiData.forEach((item) => {
-      const { Palika, name } = item;
-      if(selectedLayer==name){
-      const wmsLayer = new TileLayer({
-        source: new TileWMS({
-          url: `http://localhost:8080/geoserver/${Palika}/wms`,
-          params: {
-            'LAYERS': `${Palika}:${name}`,
-            'TILED': true,
-          },
-          serverType: 'geoserver',
-          visible: true,
-        }),
-      })
-      map.addLayer(wmsLayer);
-    }
-    
-     
-        });
-    
-    
-   
-    
-  }}
+      if (map) {
+        if (apiData) {
+          apiData.forEach((item) => {
+            const { Palika, name } = item;
+            if (selectedLayer.includes(name)) { // Check if the selectedLayer array includes the current 'name'
+              console.log(name)
+              const wmsLayer = new TileLayer({
+                source: new TileWMS({
+                  url: `http://localhost:8080/geoserver/${Palika}/wms`,
+                  params: {
+                    'LAYERS': `${Palika}:${name}`,
+                    'TILED': true,
+                  },
+                  serverType: 'geoserver',
+                  visible: true,
+                }),
+              });
+              map.addLayer(wmsLayer);
+            }
+          });
+        }
+      }
+      
  
 
   
@@ -758,17 +753,24 @@ if (searchResults) {
     {availableLayers.find((layer) => layer.palika === selectedPalika)?.layers.map((layer, index) => (
       <div key={index}>
         <input
-          type="radio"
+          type="checkbox" // Change the input type to checkbox
           id={layer}
-          name="layerRadio"
+          name="layerCheckbox" // You can use the same name or change it if needed
           value={layer}
-          checked={selectedLayer === layer}
-          onChange={() => setSelectedLayer(layer)}
+          checked={selectedLayer.includes(layer)} // Check if the layer is included in the selectedLayer array
+          onChange={() => {
+            if (selectedLayer.includes(layer)) {
+              setSelectedLayer(selectedLayer.filter(selected => selected !== layer)); // Remove the layer from selectedLayer array if it's already selected
+            } else {
+              setSelectedLayer([...selectedLayer, layer]); // Add the layer to selectedLayer array if it's not selected
+            }
+          }}
         />
         <label htmlFor={layer}>{layer}</label>
       </div>
     ))}
   </div>
+
   </div>
 )}
   <div>
