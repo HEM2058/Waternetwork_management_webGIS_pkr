@@ -193,7 +193,7 @@ console.log(apiData)
     if (baseLayerName === 'osm') {
       osmLayer = new TileLayer({
         source: new OSM(),
-        opacity: 0.2,
+        opacity: 1,
         name: 'osm',
       });
       map.addLayer(osmLayer);
@@ -355,7 +355,6 @@ function zoomToFeature(feature) {
   try {
     const extent = feature.getGeometry().getExtent();
     // console.log('Zooming to extent:', extent); // Add this for debugging
-    console.log(feature)
     const mapView = map.getView();
     // console.log('Map View:', mapView); // Add this for debugging
 
@@ -393,7 +392,6 @@ function zoomToFeatureByLocal(local) {
     for (const feature of features) {
       const featureProperties = feature.getProperties();
       if (featureProperties.LOCAL === local) {
-          console.log(featureProperties.LOCAL)
         setSelectedData(featureProperties);
         zoomToFeature(feature);
         
@@ -497,13 +495,73 @@ const onClose = () => {
       // Generate a new random color with 50% opacity (alpha: 0.5)
       const randomColor = `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(
         Math.random() * 256
-      )}, 0.4)`;
+      )}, 0.5)`;
       colorHash[local] = randomColor;
 
       return randomColor;
     }
 
 
+  
+    
+      // Create a function to handle setting latitude and longitude
+ 
+      
+    
+        
+    
+        // Call addMarker to add the marker to the map
+     
+   
+    
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+  
+
+
+    // Add an event listener to the document click event
+document.addEventListener('click', (event) => {
+  const searchResultsContainer = document.getElementById('search-results');
+
+  // Check if the click event target is outside the search result area
+  if (!searchResultsContainer.contains(event.target)) {
+    searchResultsContainer.innerHTML = ''; // Clear the search results
+  }
+});
+
+    
+
+    
+
+   
+if(Reset==true){
+  console.log(Reset)
+    // Reset the map to its initial state
+  map.getView().setCenter(fromLonLat([81.2519, 29.7767]));
+  map.getView().setZoom(initialZoom);
+  setReset(!Reset)
+}
+
+
+  },[apiData, selectedPalika, selectedLayer, baseLayerName, Reset, map]);
+  useEffect(() => {
     const addMarker = (lat, lon) => {
       console.log(lat)
       console.log(lon)
@@ -512,9 +570,9 @@ const onClose = () => {
         // Create a style for the marker
         const markerStyle = new Style({
           image: new Circle({
-            radius: 10, // Increase the size as needed
+            radius: 5, // Increase the size as needed
             fill: new Fill({
-              color: 'blue', // Change the color to blue
+              color: 'green', // Change the color to blue
             }),
             stroke: new Stroke({
               color: 'black', // You can change the border color
@@ -538,20 +596,6 @@ const onClose = () => {
       }
     };
     
-    
-      // Create a function to handle setting latitude and longitude
- 
-      
-    
-        
-    
-        // Call addMarker to add the marker to the map
-     
-   
-    
-
-
-
     function handleSearchResultClick(geojsonFeature, propertyValue) {
       // Assuming you have the properties data in the 'properties' variable
       const properties = geojsonFeature.properties;
@@ -619,22 +663,6 @@ if (searchResults) {
       }, 500); // Adjust the delay (in milliseconds) as needed
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-
-
-
-
-  
     function handleWFSRequest() {
       const searchResultsContainer = document.getElementById('search-results');
       searchResultsContainer.innerHTML = ''; // Clear previous results
@@ -675,35 +703,9 @@ if (searchResults) {
         searchResultsContainer.innerHTML = '';
       }
     }
-
-
-    // Add an event listener to the document click event
-document.addEventListener('click', (event) => {
-  const searchResultsContainer = document.getElementById('search-results');
-
-  // Check if the click event target is outside the search result area
-  if (!searchResultsContainer.contains(event.target)) {
-    searchResultsContainer.innerHTML = ''; // Clear the search results
-  }
-});
-
-    
-
-    
-
-    // Call the handleWFSRequest function whenever searchText changes
-    handleWFSRequest();
-if(Reset==true){
-  console.log(Reset)
-    // Reset the map to its initial state
-  map.getView().setCenter(fromLonLat([81.2519, 29.7767]));
-  map.getView().setZoom(initialZoom);
-  setReset(!Reset)
-}
-
-
-  },[apiData, selectedPalika, selectedLayer,searchText,baseLayerName,Reset,map]);
-
+     // Call the handleWFSRequest function whenever searchText changes
+     handleWFSRequest();
+},[searchText])
   return (
     <div>
         {selectedData && <MunicipalityInfo data={selectedData} />}
