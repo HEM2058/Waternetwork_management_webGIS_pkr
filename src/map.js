@@ -168,26 +168,48 @@ console.log(apiData)
   const geoJSONUrl = '/data/bajhanga.geojson';
    
      
-   if(map){
-        
-        const osmLayer = new TileLayer({
-          source: new OSM(),
-          opacity: 0.2,
-          visible: baseLayerName === 'osm', // Check if it's the selected base layer
-        });
-         map.addLayer(osmLayer);
-      }
-      if(map){ 
-        const googleSatelliteLayer = new TileLayer({
-          source: new XYZ({
-            url: 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
-            maxZoom: 21,
-          }),
-          opacity: 1,
-          visible: baseLayerName === 'googleSatellite', // Check if it's the selected base layer
-        });
-        map.addLayer(googleSatelliteLayer);
-      }
+  if (map) {
+    // Check if there's an existing 'osm' layer and remove it
+    const existingOSMLayer = map.getLayers().getArray().find((layer) => {
+      return layer.get('name') === 'osm';
+    });
+  
+    if (existingOSMLayer) {
+      map.removeLayer(existingOSMLayer);
+    }
+  
+    // Check if there's an existing 'googleSatellite' layer and remove it
+    const existingGoogleSatelliteLayer = map.getLayers().getArray().find((layer) => {
+      return layer.get('name') === 'googleSatellite';
+    });
+  
+    if (existingGoogleSatelliteLayer) {
+      map.removeLayer(existingGoogleSatelliteLayer);
+    }
+  
+    let osmLayer; // Declare the variable here
+  
+    // Create and add the new layer based on the 'baseLayerName'
+    if (baseLayerName === 'osm') {
+      osmLayer = new TileLayer({
+        source: new OSM(),
+        opacity: 0.2,
+        name: 'osm',
+      });
+      map.addLayer(osmLayer);
+    } else if (baseLayerName === 'googleSatellite') {
+      const googleSatelliteLayer = new TileLayer({
+        source: new XYZ({
+          url: 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
+          maxZoom: 21,
+        }),
+        opacity: 1,
+        name: 'googleSatellite',
+      });
+      map.addLayer(googleSatelliteLayer);
+    }
+  }
+  
       // Add other layers as needed based on baseLayerName
 
      // Add filtering functionality
