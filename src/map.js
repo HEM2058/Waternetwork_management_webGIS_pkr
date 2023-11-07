@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios'; // Import Axios
 import 'ol/ol.css';
@@ -45,7 +45,7 @@ function OpenLayersMap({ apiData }) {
   const [Property, setProperty] = useState('');
   const [Popup, setPopup] = useState('');
   const [ClosePopup, setClosePopup] = useState(false)
-
+  const markerLayerRef = useRef(null);
   // const [latitude, setLatitude] = useState("");
   // const [longitude, setLongitude] = useState("");
 // this updates BaseLayerName with latest click on baselayers list
@@ -565,40 +565,49 @@ if(Reset==true){
   setReset(!Reset)
 }
   },[Reset])
+
+
+  //This useEffect is depends upon the latest searchText usestate variable so that we can search and get result. We can click on the search result to display popup with its location marking at map
   useEffect(() => {
-    const addMarker = (lat, lon) => {
-      console.log(lat)
-      console.log(lon)
-      if (map) {
-        console.log("ok")
-        // Create a style for the marker
-        const markerStyle = new Style({
-          image: new Circle({
-            radius: 5, // Increase the size as needed
-            fill: new Fill({
-              color: 'green', // Change the color to blue
-            }),
-            stroke: new Stroke({
-              color: 'black', // You can change the border color
-              width: 2, // Adjust the border width
-            }),
-          }),
-        });
-    
-        const markerLayer = new VectorLayer({
-          source: new VectorSource({
-            features: [
-              new Feature({
-                geometry: new Point(fromLonLat([lon, lat])),
-              }),
-            ],
-          }),
-          style: markerStyle, // Apply the custom style to the marker
-        });
-    
-        map.addLayer(markerLayer);
-      }
-    };
+   const addMarker = (lat, lon) => {
+  if (map) {
+    // Create a style for the marker
+    const markerStyle = new Style({
+      image: new Circle({
+        radius: 5, // Increase the size as needed
+        fill: new Fill({
+          color: 'green', // Change the color to blue
+        }),
+        stroke: new Stroke({
+          color: 'black', // You can change the border color
+          width: 2, // Adjust the border width
+        }),
+      }),
+    });
+
+    // Create a marker feature
+    const markerFeature = new Feature({
+      geometry: new Point(fromLonLat([lon, lat])),
+    });
+
+    markerFeature.setStyle(markerStyle);
+
+  
+      // If you want to create the layer if it doesn't exist:
+      const markerLayer = new VectorLayer({
+        source: new VectorSource({
+          features: [markerFeature],
+        }),
+        style: markerStyle, // Apply the custom style to the marker
+      });
+
+      map.addLayer(markerLayer);
+        // Update markerLayerRef.current to the new marker layer
+     markerLayerRef.current = markerLayer;
+   
+  }
+};
+
     
     function handleSearchResultClick(geojsonFeature, propertyValue) {
       // Assuming you have the properties data in the 'properties' variable
@@ -658,6 +667,7 @@ if (searchResults) {
 }
             // Close the popup by triggering setClosePopup(true)
             setClosePopup(true)
+            markerLayerRef.current.getSource().clear();
             // Remove the close icon from the container
             if (searchContainer.contains(closeIcon)) {
               searchContainer.removeChild(closeIcon);
