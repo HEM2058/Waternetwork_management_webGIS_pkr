@@ -208,6 +208,11 @@
 /* Media query for the "Relief Request" button */
 @media (max-width: 768px) {
   .relief-request-button {
+    padding: 5px 20px; /* Adjust padding for smaller screens */
+  }
+}
+@media (max-width: 768px) {
+  .relief-request-button {
     padding: 5px 10px; /* Adjust padding for smaller screens */
   }
 }

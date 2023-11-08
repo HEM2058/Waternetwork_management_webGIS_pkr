@@ -19,13 +19,21 @@ function Navbar() {
           <div className="logo2-container">
             <div className="horizontal-container">
               {/* Relief Request Button */}
+              <div className="icon-container" data-tooltip="Places">
+             
+             <Link to="/places" className='relief-request-button' >
+             <i class="fas fa-map-marker"></i>
+
+             </Link>
+             
+           </div>
               <div className="icon-container" data-tooltip="Relief Request">
-              <div className="relief-request-button">
-                <Link to="/QuickAid" >
+             
+                <Link to="/QuickAid" className='relief-request-button' >
                 <i class="fas fa-paper-plane"></i>
 
                 </Link>
-                </div>
+                
               </div>
 
               {/* Municipality Login Button */}
