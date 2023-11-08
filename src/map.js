@@ -609,13 +609,10 @@ if(Reset==true){
       }
     };
     
-//handling adding the polygon to the map and zooming to their extent
+//adding the polygon on the map and zooming to their extent
 const addPolygon = (coordinates) => {
   if (map) {
-    // Output the projection of the map
-    const mapProjection = map.getView().getProjection();
-    console.log('Map Projection:', mapProjection.getCode());
-// Transform the coordinates to EPSG:3857 (Web Mercator)
+ 
 
 
     // Define the polygon style
@@ -655,6 +652,51 @@ const addPolygon = (coordinates) => {
   }
 };
 
+//adding the multipoligon on the map and zooming to their extent
+const addMultiPolygon = (multiPolygonCoordinates) => {
+  if (map) {
+    // Define the polygon style
+    const polygonStyle = new Style({
+      stroke: new Stroke({
+        color: 'blue', // Adjust the border color
+        width: 2, // Adjust the border width
+      }),
+      fill: new Fill({
+        color: 'rgba(0, 0, 255, 0.2)', // Adjust the fill color and opacity
+      }),
+    });
+
+    // Create an array to store individual polygon features
+    const polygonFeatures = [];
+
+    // Iterate through each polygon in the MultiPolygon
+    for (const polygonCoordinates of multiPolygonCoordinates) {
+      const polygonFeature = new Feature({
+        geometry: new Polygon(polygonCoordinates),
+      });
+      polygonFeature.setStyle(polygonStyle);
+      polygonFeatures.push(polygonFeature);
+    }
+
+    // Create a vector layer for the polygon features
+    const polygonLayer = new VectorLayer({
+      source: new VectorSource({
+        features: polygonFeatures,
+      }),
+      style: polygonStyle,
+    });
+
+    map.addLayer(polygonLayer);
+
+    // Zoom to the extent of all polygon features
+    const view = map.getView();
+    const extent = polygonLayer.getSource().getExtent();
+    view.fit(extent, {
+      padding: [50, 50, 50, 150],
+      duration: 1000,
+    });
+  }
+};
 
 //handling line feature in the map and zooming to their extent
 const addLine = (coordinates) => {
@@ -715,7 +757,18 @@ const addLine = (coordinates) => {
     console.log(geojsonFeature.geometry.coordinates)
     addPolygon(geojsonFeature.geometry.coordinates);
    
-  } else if (geometryType === 'LineString') {
+  }else if (geometryType === 'MultiPolygon') {
+
+  //transfering from EPSG:4326 into EPSG:3857 which is the default projection of the openlayers
+  const transformedPolygons = geojsonFeature.geometry.coordinates.map(polygon => {
+    return polygon.map(ring => ring.map(coord => fromLonLat(coord)));
+  });
+  geojsonFeature.geometry.coordinates = transformedPolygons;
+    console.log(geojsonFeature.geometry.coordinates)
+    addMultiPolygon(geojsonFeature.geometry.coordinates);
+
+  }
+   else if (geometryType === 'LineString') {
     // Handle the line geometry
     addLine(geojsonFeature.geometry.coordinates);
   } else {
