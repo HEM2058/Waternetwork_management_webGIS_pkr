@@ -1,10 +1,12 @@
 import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import './Navbar.css'; // You can create a CSS file for styling
 import WavingFlag from './assets/WavingFlag.gif';
 import logo from './assets/ddc-demo.png';
-import { Routes, Route, Link } from 'react-router-dom';
 
 function Navbar() {
+  const location = useLocation();
+  console.log(location)
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
@@ -19,28 +21,37 @@ function Navbar() {
           <div className="logo2-container">
             <div className="horizontal-container">
               {/* Relief Request Button */}
-              <div className="icon-container" data-tooltip="Places">
-             
-             <Link to="/places" className='relief-request-button' >
-             <i class="fas fa-map-marker"></i>
-
-             </Link>
-             
-           </div>
-              <div className="icon-container" data-tooltip="Relief Request">
-             
-                <Link to="/QuickAid" className='relief-request-button' >
-                <i class="fas fa-paper-plane"></i>
-
+              <div
+                className={`icon-container ${
+                  location.pathname === '/places' ? 'active' : ''
+                }`}
+                data-tooltip="Places"
+              >
+                <Link to="/places" >
+                  <i className="fas fa-map-marker"></i>
                 </Link>
-                
+              </div>
+
+              <div
+                className={`icon-container ${
+                  location.pathname === '/QuickAid' ? 'active' : ''
+                }`}
+                data-tooltip="Relief Request"
+              >
+                <Link to="/QuickAid" >
+                  <i className="fas fa-paper-plane"></i>
+                </Link>
               </div>
 
               {/* Municipality Login Button */}
-              <div className="icon-container" data-tooltip="Municipality Login">
-                <Link to="/Log-in" className="login-link">
-                <i class="fas fa-sign-in-alt"></i>
-
+              <div
+                className={`icon-container ${
+                  location.pathname === '/Log-in' ? 'active' : ''
+                }`}
+                data-tooltip="Municipality Login"
+              >
+                <Link to="/Log-in" >
+                  <i className="fas fa-sign-in-alt"></i>
                 </Link>
               </div>
             </div>

@@ -77,40 +77,11 @@
   gap: 20px; /* Add spacing between "Log in" link and logo */
 }
 
-/* Style for the "Log in" link */
-.login-link {
-  text-decoration: none;
-  font-size: 20px;
-  font-family: 'Clambo', sans-serif;
-  position: relative; /* Create a stacking context for the shadow */
-  padding: 10px 15px; /* Add padding for a larger clickable area */
-  background: linear-gradient(135deg, #FFD700, #FFA500); /* Gradient background */
-  color: #080202; /* Text color */
-  border-radius: 5px; /* Rounded corners */
-  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
-}
 
-/* Style for the shadow effect */
-.login-shadow {
-  position: absolute;
-  bottom: -5px; /* Adjust the distance of the shadow effect */
-  left: 0;
-  width: 100%;
-  height: 2px; /* Shadow height */
-  opacity: 0.7; /* Shadow opacity */
-  transition: opacity 0.3s ease; /* Add a smooth transition effect */
-}
 
-/* Hover effect for the "Log in" link */
-.login-link:hover {
-  background: linear-gradient(135deg, #FFA500, #FFD700); /* Gradient background on hover */
-  transform: translateY(-2px); /* Lift the button slightly on hover */
-}
 
-/* Hover effect for the shadow */
-.login-link:hover .login-shadow {
-  opacity: 1;
-}
+
+
 
 /* Responsive styles */
 @media (max-width: 768px) {
@@ -139,18 +110,16 @@
     align-items: center;
     width: 240px;
   }
-  .login-link {
-    padding: 5px 10px; /* Add padding for a larger clickable area */
-  }
+
 }
 
-@media (max-width: 576px) {
+@media (max-width: 468px) {
   /* Styles for mobile devices */
   .navbar {
     height: 50px; /* Further reduce height for mobile devices */
   }
   .logo1-container h2 {
-    font-size: 18px;
+    font-size: 15px;
     font-family: 'Clambo', sans-serif;
   }
   .navbar-brand a {
@@ -163,10 +132,14 @@
     width: 40px; /* Adjust logo size for mobile devices */
     margin-left: 10px; /* Reduce left margin for mobile devices */
   }
-
-  .login-link {
-    padding: 5px 10px; /* Add padding for a larger clickable area */
+  .horizontal-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Add spacing between "Log in" link and logo */
   }
+  
+
+
 }
 
 /* Styling for the "More" button */
@@ -183,23 +156,23 @@
   color: #f5f1f1; /* Adjust the color as needed */
 }
 
-.relief-request-button  {
+.icon-container  {
 
   text-decoration: none;
 
   position: relative; /* Create a stacking context for the shadow */
   padding: 10px 15px; /* Add padding for a larger clickable area */
   background: linear-gradient(135deg, #FFD700, #FFA500); /* Gradient background */
-  color: #080202; /* Text color */
   border-radius: 5px; /* Rounded corners */
   transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+  cursor: pointer;
 }
 
-.relief-request-button  a{
+.icon-container a{
   color: #080202; /* Text color */
 
 }
-.relief-request-button:hover {
+.icon-container:hover {
   background: linear-gradient(135deg, #FFA500, #FFD700); /* Gradient background on hover */
   transform: translateY(-2px); /* Lift the button slightly on hover */
 }
@@ -207,22 +180,19 @@
 
 /* Media query for the "Relief Request" button */
 @media (max-width: 768px) {
-  .relief-request-button {
+  .icon-container   {
     padding: 5px 20px; /* Adjust padding for smaller screens */
   }
 }
-@media (max-width: 768px) {
-  .relief-request-button {
-    padding: 5px 10px; /* Adjust padding for smaller screens */
+@media (max-width: 468px) {
+  .icon-container   {
+    padding: 4px 8px; /* Adjust padding for smaller screens */
   }
 }
 
 /* Tooltip styles */
-.icon-container {
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-}
+
+
 
 .icon-container::after {
   content: attr(data-tooltip);
@@ -244,4 +214,10 @@
 .icon-container:hover::after {
   opacity: 1;
   transform: translateX(-50%) translateY(-10px);
+}
+
+/* Navbar.css */
+.icon-container.active {
+  background: red;
+
 }
