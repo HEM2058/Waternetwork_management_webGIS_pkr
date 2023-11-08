@@ -535,14 +535,21 @@ const onClose = () => {
 
 
     // Add an event listener to the document click event
-document.addEventListener('click', (event) => {
-  const searchResultsContainer = document.getElementById('search-results');
-
-  // Check if the click event target is outside the search result area
-  if (!searchResultsContainer.contains(event.target)) {
-    searchResultsContainer.innerHTML = ''; // Clear the search results
-  }
-});
+    document.addEventListener('click', (event) => {
+      const searchResultsContainer = document.getElementById('search-results');
+    
+      // Check if the searchResultsContainer and mapContainer exist
+      if (searchResultsContainer) {
+        // Check if the click event target is outside the search results area
+        if (!searchResultsContainer.contains(event.target)) {
+          // Check if the click event target is inside the map container
+     
+            searchResultsContainer.innerHTML = ''; // Clear the search results
+          
+        }
+      }
+    });
+    
 
     
 
