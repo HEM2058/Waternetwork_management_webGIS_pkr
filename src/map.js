@@ -47,6 +47,9 @@ function OpenLayersMap({ apiData }) {
   const [Popup, setPopup] = useState('');
   const [ClosePopup, setClosePopup] = useState(false)
   const markerLayerRef = useRef(null);
+  const polygonLayerRef = useRef(null);
+  const multipolygonLayerRef = useRef(null);
+  const lineLayerRef = useRef(null);
   // const [latitude, setLatitude] = useState("");
   // const [longitude, setLongitude] = useState("");
 // this updates BaseLayerName with latest click on baselayers list
@@ -642,7 +645,8 @@ const addPolygon = (coordinates) => {
     });
 
     map.addLayer(polygonLayer);
-
+      // Update polygonLayerRef.current to the new polygon layer
+      polygonLayerRef.current = polygonLayer;
     // Zoom to the polygon's extent
     const view = map.getView();
     view.fit(polygonFeature.getGeometry().getExtent(), {
@@ -687,7 +691,8 @@ const addMultiPolygon = (multiPolygonCoordinates) => {
     });
 
     map.addLayer(polygonLayer);
-
+      // Update multipolygonLayerRef.current to the new multipolygon layer
+      multipolygonLayerRef.current = polygonLayer;
     // Zoom to the extent of all polygon features
     const view = map.getView();
     const extent = polygonLayer.getSource().getExtent();
@@ -725,7 +730,8 @@ const addLine = (coordinates) => {
     });
 
     map.addLayer(lineLayer);
-
+    // Update lineLayerRef.current to the new line layer
+    lineLayerRef.current = lineLayer;
     // Zoom to the line's extent
     const view = map.getView();
     view.fit(lineFeature.getGeometry().getExtent(), {
@@ -758,7 +764,7 @@ const addLine = (coordinates) => {
     addPolygon(geojsonFeature.geometry.coordinates);
    
   }else if (geometryType === 'MultiPolygon') {
-
+    // Handle the multipolygon geometry
   //transfering from EPSG:4326 into EPSG:3857 which is the default projection of the openlayers
   const transformedPolygons = geojsonFeature.geometry.coordinates.map(polygon => {
     return polygon.map(ring => ring.map(coord => fromLonLat(coord)));
@@ -770,6 +776,9 @@ const addLine = (coordinates) => {
   }
    else if (geometryType === 'LineString') {
     // Handle the line geometry
+      //transfering from EPSG:4326 into EPSG:3857 which is the default projection of the openlayers
+    const transformedCoordinates = geojsonFeature.geometry.coordinates.map(coord => fromLonLat(coord));
+    geojsonFeature.feature.geometry.coordinates = transformedCoordinates;
     addLine(geojsonFeature.geometry.coordinates);
   } else {
     // Handle other geometry types as needed
@@ -824,7 +833,25 @@ if (searchResults) {
             // Close the popup by triggering setClosePopup(true)
             setClosePopup(true)
             //clear the previous marker from the map
+            if(markerLayerRef.current){
             markerLayerRef.current.getSource().clear();
+            }
+
+            //clear the previous polygon marker from the map
+            if(polygonLayerRef.current){
+              console.log("erased polygon")
+              polygonLayerRef.current.getSource().clear();
+              }
+                //clear the previous multipolygon marker from the map
+            if(multipolygonLayerRef.current){
+              console.log("erased multipolygon")
+              multipolygonLayerRef.current.getSource().clear();
+              }
+                //clear the previous polygon marker from the map
+            if(lineLayerRef.current){
+              console.log("erased line")
+              lineLayerRef.current.getSource().clear();
+              }
             //Reset the map view to initial state
               // Reset the map to its initial state
   map.getView().setCenter(fromLonLat([81.2519, 29.7767]));
