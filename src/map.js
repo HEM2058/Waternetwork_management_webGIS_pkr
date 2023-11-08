@@ -234,6 +234,16 @@ const resetFunction=()=>
       )}};
 
       if (map) {
+        // Get all layers currently added to the map
+        const currentLayers = map.getLayers().getArray();
+      
+        // Remove all previous WMS layers
+        currentLayers.forEach((layer) => {
+          if (layer instanceof TileLayer && layer.getSource() instanceof TileWMS) {
+            map.removeLayer(layer);
+          }
+        });
+      
         if (apiData) {
           apiData.forEach((item) => {
             const { Palika, name } = item;
@@ -255,6 +265,7 @@ const resetFunction=()=>
           });
         }
       }
+      
       
  
 
