@@ -150,12 +150,12 @@ const resetFunction=()=>
         zoom: initialZoom,
         minZoom: minZoom, // Set the minimum zoom level
       
-        // extent: [
-        //   8909115.173371011,  // Minimum longitude (west) in meters
-        //   3318850.109835052,   // Minimum latitude (south) in meters
-        //   9149115.173371011,  // Maximum longitude (east) in meters
-        //   3568989.6836373677  // Maximum latitude (north) in meters
-        // ]
+        extent: [
+          8909115.173371011,  // Minimum longitude (west) in meters
+          3318850.109835052,   // Minimum latitude (south) in meters
+          9149115.173371011,  // Maximum longitude (east) in meters
+          3568989.6836373677  // Maximum latitude (north) in meters
+        ]
         
         
         
@@ -615,12 +615,14 @@ const addPolygon = (coordinates) => {
     // Output the projection of the map
     const mapProjection = map.getView().getProjection();
     console.log('Map Projection:', mapProjection.getCode());
+// Transform the coordinates to EPSG:3857 (Web Mercator)
+
 
     // Define the polygon style
     const polygonStyle = new Style({
       stroke: new Stroke({
         color: 'blue', // Adjust the border color
-        width: 22, // Adjust the border width
+        width: 2, // Adjust the border width
       }),
       fill: new Fill({
         color: 'rgba(0, 0, 255, 0.2)', // Adjust the fill color and opacity
@@ -696,6 +698,8 @@ const addLine = (coordinates) => {
       // Assuming you have the properties data in the 'properties' variable
       const properties = geojsonFeature.properties;
       const geometryType = geojsonFeature.geometry.type;
+// Replace the original geometry with the transformed geometry
+
       console.log(geometryType)
   if (geometryType === 'Point') {
 
@@ -705,8 +709,12 @@ const addLine = (coordinates) => {
     addMarker(newLatitude, newLongitude);
   } else if (geometryType === 'Polygon') {
     // Handle the polygon geometry
-    addPolygon(geojsonFeature.geometry.coordinates);
+    //transfering from EPSG:4326 into EPSG:3857 which is the default projection of the openlayers
+    const transformedCoordinates = geojsonFeature.geometry.coordinates.map(ring => ring.map(coord => fromLonLat(coord)));
+    geojsonFeature.geometry.coordinates = transformedCoordinates;
     console.log(geojsonFeature.geometry.coordinates)
+    addPolygon(geojsonFeature.geometry.coordinates);
+   
   } else if (geometryType === 'LineString') {
     // Handle the line geometry
     addLine(geojsonFeature.geometry.coordinates);
