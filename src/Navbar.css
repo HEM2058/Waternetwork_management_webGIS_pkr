@@ -83,64 +83,6 @@
 
 
 
-/* Responsive styles */
-@media (max-width: 768px) {
-  /* Styles for tablets and smaller screens */
-  .navbar {
-    height: 60px; /* Reduce height for smaller screens */
-  }
-  .logo1-container h2 {
-    font-size: 20px;
-    font-family: 'Clambo', sans-serif;
-  }
-  .navbar-brand a {
-    text-decoration: none;
-    font-size: 15px;
-    font-family: 'Clambo', sans-serif;
-  }
-
-  .logo1 {
-    width: 50px; /* Adjust logo size for smaller screens */
-  }
-  /* .logo2 {
-    width: 50px;
-  } */
-  .logo1-container {
-    display: flex;
-    align-items: center;
-    width: 240px;
-  }
-
-}
-
-@media (max-width: 468px) {
-  /* Styles for mobile devices */
-  .navbar {
-    height: 50px; /* Further reduce height for mobile devices */
-  }
-  .logo1-container h2 {
-    font-size: 15px;
-    font-family: 'Clambo', sans-serif;
-  }
-  .navbar-brand a {
-    text-decoration: none;
-    font-size: 20px;
-    font-family: 'Clambo', sans-serif;
-  }
-
-  .logo1 {
-    width: 40px; /* Adjust logo size for mobile devices */
-    margin-left: 10px; /* Reduce left margin for mobile devices */
-  }
-  .horizontal-container {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Add spacing between "Log in" link and logo */
-  }
-  
-
-
-}
 
 /* Styling for the "More" button */
 .more-button {
@@ -178,17 +120,7 @@
 }
 
 
-/* Media query for the "Relief Request" button */
-@media (max-width: 768px) {
-  .icon-container   {
-    padding: 5px 20px; /* Adjust padding for smaller screens */
-  }
-}
-@media (max-width: 468px) {
-  .icon-container   {
-    padding: 4px 8px; /* Adjust padding for smaller screens */
-  }
-}
+
 
 /* Tooltip styles */
 
@@ -219,5 +151,71 @@
 /* Navbar.css */
 .icon-container.active {
   background: red;
+
+}
+
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  /* Styles for tablets and smaller screens */
+  .navbar {
+    height: 60px; /* Reduce height for smaller screens */
+  }
+  .logo1-container h2 {
+    font-size: 20px;
+    font-family: 'Clambo', sans-serif;
+  }
+  .navbar-brand a {
+    text-decoration: none;
+    font-size: 15px;
+    font-family: 'Clambo', sans-serif;
+  }
+
+  .logo1 {
+    width: 50px; /* Adjust logo size for smaller screens */
+  }
+  /* .logo2 {
+    width: 50px;
+  } */
+  .logo1-container {
+    display: flex;
+    align-items: center;
+    width: 240px;
+  }
+  .icon-container   {
+    padding: 5px 20px; /* Adjust padding for smaller screens */
+  }
+
+}
+
+@media (max-width: 468px) {
+  /* Styles for mobile devices */
+  .navbar {
+    height: 50px; /* Further reduce height for mobile devices */
+  }
+  .logo1-container h2 {
+    font-size: 15px;
+    font-family: 'Clambo', sans-serif;
+  }
+  .navbar-brand a {
+    text-decoration: none;
+    font-size: 20px;
+    font-family: 'Clambo', sans-serif;
+  }
+
+  .logo1 {
+    width: 40px; /* Adjust logo size for mobile devices */
+    margin-left: 10px; /* Reduce left margin for mobile devices */
+  }
+  .horizontal-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Add spacing between "Log in" link and logo */
+  }
+  
+  .icon-container   {
+    padding: 4px 8px; /* Adjust padding for smaller screens */
+  }
+
 
 }
