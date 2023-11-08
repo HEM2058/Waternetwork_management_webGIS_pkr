@@ -1,0 +1,91 @@
+.places-container {
+    height: 100vh;
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .header {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .places-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    height: 70%;
+   justify-content: center;
+
+  }
+  
+  .place-container {
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: calc(33.33% - 20px); /* Adjust the width as needed */
+    width: 40%;
+  }
+  
+  .place-title {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .image-container {
+    width: 100%;
+    height: 200px; /* Set the desired height */
+    background-image: url('');
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .place-description {
+    font-size: 14px;
+    margin-top: 10px;
+  }
+  
+
+  button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    margin: 5px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative;
+    
+  }
+  
+  .pagination {
+    display: flex;
+    position:absolute;
+    flex-direction: row;
+    justify-content: center;
+    bottom: 20px;
+  }
+  
+  .pagination button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 5px;
+  }
+  
+  .current-page {
+    font-weight: bold;
+    font-size: 16px;
+    margin: 0 5px;
+  }
+  

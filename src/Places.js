@@ -1,2 +1,55 @@
 import './Places.css'
 
+import React from 'react'
+
+function Places() {
+  return (
+  
+    <div className='places-container'>
+    <div className='header'>Popular Places</div>
+    <div className='places-list'>
+      <div className='place-container'>
+        <div className='place-title'>Shaileshwori Temple</div>
+        <div className='image-container'>
+          <img src='' alt='Place Image' />
+        </div>
+        <div className='place-control'>
+        <button id='share'><i class="fas fa-share"></i></button>
+          <button id='expand'><i class="fas fa-expand"></i></button>
+        </div>
+        <div className='place-description'>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam alias tenetur eum, ipsa corporis illo recusandae fugiat sapiente neque reiciendis quia ullam. Sint ex sed facilis deleniti consectetur quo consequatur eveniet? Quas deleniti fuga, vero blanditiis saepe culpa, hic eum ea iste dolorem minus incidunt, nihil sit quisquam earum aliquam ratione aperiam unde laborum nesciunt? Laborum dolor ipsam quas aliquam laudantium deleniti magni cupiditate fugiat doloremque repellat vero, earum obcaecati temporibus quos consequatur deserunt dolores est, inventore doloribus culpa assumenda quidem laboriosam similique. Enim natus voluptates autem vel non explicabo sequi iste repellat aliquid nihil adipisci eveniet molestiae veniam corrupti, dolores eius quaerat inventore nam vitae tempore officia. Vitae explicabo autem libero eaque illo vel temporibus. Deserunt dolores porro sed.
+        </div>
+      </div>
+      <div className='place-container'>
+        <div className='place-title'>Shaileshwori Temple</div>
+        <div className='image-container'>
+          <img src='' alt='Place Image' />
+        </div>
+        <div className='place-control'>
+          <button id='share'><i class="fas fa-share"></i></button>
+          <button id='expand'><i class="fas fa-expand"></i></button>
+        </div>
+        <div className='place-description'>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus soluta nemo dicta eius adipisci doloribus laboriosam eos? Nesciunt, fugit. Soluta dicta adipisci autem beatae reiciendis fuga sapiente, dolorum explicabo. Ea eligendi quasi dicta error ducimus, quos fugiat assumenda amet velit ex porro in, placeat doloribus iusto rem facere odio? Illum impedit, officia consequuntur reprehenderit ratione natus reiciendis dolorem, est assumenda illo perspiciatis eum dolor culpa quisquam sit iusto! Praesentium adipisci earum hic enim voluptatum et, voluptates eius deleniti velit nulla similique laborum. Voluptatem unde pariatur magni, sequi temporibus commodi nesciunt hic libero laborum autem neque corporis doloremque iusto saepe sed exercitationem rerum culpa minus aspernatur obcaecati placeat ad repudiandae magnam. Molestias excepturi reprehenderit perferendis soluta numquam? Et laboriosam quibusdam esse.
+        </div>
+      </div>
+      
+     
+      {/* <!-- Repeat this structure for other places --> */}
+  
+      {/* <!-- Pagination --> */}
+     
+    <div class='pagination'>
+      <button>&laquo; Prev</button>
+      <span class='current-page'>1</span>
+      <button>Next &raquo;</button>
+    </div>
+    </div>
+  </div>
+  
+   
+  )
+}
+
+export default Places

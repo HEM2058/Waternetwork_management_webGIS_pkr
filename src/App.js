@@ -6,7 +6,7 @@ import OpenLayersMap from './map'
 import MapComposite  from './mapcomposite';
 import  LayerUploadForm from './shp_geojson';
 import QuickAid from './QuickAid';
-
+import Places from './Places'
 import {Routes, Route} from 'react-router-dom';
 
 
@@ -20,6 +20,7 @@ function App() {
             <Route path="/" element = { <MapComposite/>} />  
             <Route path="/LayerUploadForm" element = { <LayerUploadForm/>} />  
             <Route path="/QuickAid" element = { <QuickAid/>} /> 
+            <Route path="/Places" element = {<Places/>}/>
           </Routes>
       
    
