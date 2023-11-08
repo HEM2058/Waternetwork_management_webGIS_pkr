@@ -305,8 +305,9 @@ const resetFunction=()=>
             color: color,
           }),
           stroke: new Stroke({
-            color: 'black',
+            color: 'black', // Set the stroke color to black
             width: 2,
+            lineDash: [5, 5], // Create a dotted line effect with 5px dashes and 5px gaps
           }),
           text: new Text({
             text: name,
@@ -428,7 +429,7 @@ map.on('click', function (event) {
       feature.setStyle(new Style({
         fill: new Fill({ color: 'rgba(0, 0, 0, 0)' }), // Fully transparent fill
         stroke: new Stroke({
-          color: 'blue',
+          color: 'red',
           width: 2,
         }),
       }));
