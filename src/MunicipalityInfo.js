@@ -1,7 +1,7 @@
 // MunicipalityInfo.js
 import React from 'react';
 import './MunicipalityInfo.css'
-
+import { Routes, Route, Link } from 'react-router-dom';
 function MunicipalityInfo({ data }) {
    
   return (
@@ -16,11 +16,11 @@ function MunicipalityInfo({ data }) {
           
           </a>
           
-          <a className="map_popup__btn" href={data.WEBSITE} target="_blank">
+          <Link to="/places" className="map_popup__btn" href={data.WEBSITE} >
             
-            PLACES <i className="fas fa-arrow-right arrow-animation"></i>
-              
-              </a>
+        Places <i className="fas fa-arrow-right arrow-animation"></i>
+          
+          </Link>
         </div>
       </div>
       
