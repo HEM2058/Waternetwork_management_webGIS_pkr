@@ -113,6 +113,7 @@ const resetFunction=()=>
             setInitialZoom(10); // Set the default zoom level for larger screens
           }
         };
+        
 
   useEffect(() => {
 
