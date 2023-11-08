@@ -14,7 +14,7 @@ import VectorLayer from 'ol/layer/Vector';
 import Overlay from 'ol/Overlay';
 import { Style, Text, Fill, Stroke } from 'ol/style';
 import ScaleLine from 'ol/control/ScaleLine';
-import { LineString, Polygon } from 'ol/geom';
+import { LineString} from 'ol/geom';
 import { Draw } from 'ol/interaction';
 import {ZoomSlider} from 'ol/control.js';
 import {FullScreen, defaults as defaultControls} from 'ol/control.js';
@@ -27,6 +27,7 @@ import $ from 'jquery';
 import MunicipalityInfo from './MunicipalityInfo';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
+import Polygon from 'ol/geom/Polygon';
 import PropertyViewer from './PropertyViewer'; // Import the PropertyViewer component
 import Circle from 'ol/style/Circle';
 function OpenLayersMap({ apiData }) {
@@ -149,12 +150,12 @@ const resetFunction=()=>
         zoom: initialZoom,
         minZoom: minZoom, // Set the minimum zoom level
       
-        extent: [
-          8909115.173371011,  // Minimum longitude (west) in meters
-          3318850.109835052,   // Minimum latitude (south) in meters
-          9149115.173371011,  // Maximum longitude (east) in meters
-          3568989.6836373677  // Maximum latitude (north) in meters
-        ]
+        // extent: [
+        //   8909115.173371011,  // Minimum longitude (west) in meters
+        //   3318850.109835052,   // Minimum latitude (south) in meters
+        //   9149115.173371011,  // Maximum longitude (east) in meters
+        //   3568989.6836373677  // Maximum latitude (north) in meters
+        // ]
         
         
         
@@ -561,6 +562,8 @@ if(Reset==true){
 
   //This useEffect is depends upon the latest searchText usestate variable so that we can search and get result. We can click on the search result to display popup with its location marking at map
   useEffect(() => {
+
+    //handling adding marker and zooming to their extent
     const addMarker = (lat, lon) => {
       if (map) {
         // Create a style for the marker
@@ -606,20 +609,113 @@ if(Reset==true){
       }
     };
     
+//handling adding the polygon to the map and zooming to their extent
+const addPolygon = (coordinates) => {
+  if (map) {
+    // Output the projection of the map
+    const mapProjection = map.getView().getProjection();
+    console.log('Map Projection:', mapProjection.getCode());
+
+    // Define the polygon style
+    const polygonStyle = new Style({
+      stroke: new Stroke({
+        color: 'blue', // Adjust the border color
+        width: 22, // Adjust the border width
+      }),
+      fill: new Fill({
+        color: 'rgba(0, 0, 255, 0.2)', // Adjust the fill color and opacity
+      }),
+    });
+
+    // Create a polygon feature
+    const polygonFeature = new Feature({
+      geometry: new Polygon(coordinates),
+    });
+
+    polygonFeature.setStyle(polygonStyle);
+
+    // Create a vector layer for the polygon
+    const polygonLayer = new VectorLayer({
+      source: new VectorSource({
+        features: [polygonFeature],
+      }),
+      style: polygonStyle,
+    });
+
+    map.addLayer(polygonLayer);
+
+    // Zoom to the polygon's extent
+    const view = map.getView();
+    view.fit(polygonFeature.getGeometry().getExtent(), {
+      padding: [50, 50, 50, 150],
+      duration: 1000,
+    });
+  }
+};
+
+
+//handling line feature in the map and zooming to their extent
+const addLine = (coordinates) => {
+  if (map) {
+    // Define the line style
+    const lineStyle = new Style({
+      stroke: new Stroke({
+        color: 'red', // Adjust the line color
+        width: 3, // Adjust the line width
+      }),
+    });
+
+    // Create a line feature
+    const lineFeature = new Feature({
+      geometry: new LineString(coordinates),
+    });
+
+    lineFeature.setStyle(lineStyle);
+
+    // Create a vector layer for the line
+    const lineLayer = new VectorLayer({
+      source: new VectorSource({
+        features: [lineFeature],
+      }),
+      style: lineStyle,
+    });
+
+    map.addLayer(lineLayer);
+
+    // Zoom to the line's extent
+    const view = map.getView();
+    view.fit(lineFeature.getGeometry().getExtent(), {
+      padding: [50, 50, 50, 150],
+      duration: 1000,
+    });
+  }
+};
 
     
     function handleSearchResultClick(geojsonFeature, propertyValue) {
       // Assuming you have the properties data in the 'properties' variable
       const properties = geojsonFeature.properties;
-      const coordinates = geojsonFeature.geometry.coordinates
-      const newLatitude = coordinates[1];
-      const newLongitude = coordinates[0];
-      // setLatitude(newLatitude);
-      // setLongitude(newLongitude);
-      //  console.log(newLatitude)
-        // console.log(latitude)
-        // console.log(longitude)
-        addMarker(newLatitude, newLongitude);
+      const geometryType = geojsonFeature.geometry.type;
+      console.log(geometryType)
+  if (geometryType === 'Point') {
+
+    const coordinates = geojsonFeature.geometry.coordinates;
+    const newLatitude = coordinates[1];
+    const newLongitude = coordinates[0];
+    addMarker(newLatitude, newLongitude);
+  } else if (geometryType === 'Polygon') {
+    // Handle the polygon geometry
+    addPolygon(geojsonFeature.geometry.coordinates);
+    console.log(geojsonFeature.geometry.coordinates)
+  } else if (geometryType === 'LineString') {
+    // Handle the line geometry
+    addLine(geojsonFeature.geometry.coordinates);
+  } else {
+    // Handle other geometry types as needed
+    console.warn('Unsupported geometry type:', geometryType);
+  }
+
+  
        // get the searchResults by id and setting style to none when displaying the popup
 const searchResults = document.getElementById("search-results");
  
