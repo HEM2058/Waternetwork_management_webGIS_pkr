@@ -6,15 +6,24 @@
   justify-content: space-between;
   align-items: center;
   height: 70px;
-  background: linear-gradient(135deg, #857e19, #4B0082); /* Initial gradient background */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Increased shadow for more effect */
+  background: linear-gradient(90deg, #857e19, #4B0082); /* Gradient from left to right */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   position: relative;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  transition: background 1s linear, box-shadow 0.3s ease; /* Smooth transitions for background and shadow */
-  animation: colorChange 10s infinite alternate; /* Animation for color change */
+  transition: background 1s linear, box-shadow 0.3s ease;
+  animation: colorMove 5s infinite linear;
 }
 
-@keyframes colorChange {
+@keyframes colorMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+/* @keyframes colorChange {
   0% {
     background: linear-gradient(135deg, #857e19, #4B0082);
   }
@@ -22,7 +31,7 @@
   100% {
     background: linear-gradient(135deg, #4B0082, #857e19);
   }
-}
+} */
 
 /* Rest of your CSS remains the same... */
 
