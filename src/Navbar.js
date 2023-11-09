@@ -25,7 +25,7 @@ function Navbar() {
                 className={`icon-container ${
                   location.pathname === '/places' ? 'active' : ''
                 }`}
-                data-tooltip="Places"
+                data-tooltip="स्थानहरू"
               >
                 <Link to="/places" >
                   <i className="fas fa-map-marker"></i> <span>Places</span>
@@ -36,7 +36,7 @@ function Navbar() {
                 className={`icon-container ${
                   location.pathname === '/QuickAid' ? 'active' : ''
                 }`}
-                data-tooltip="Relief Request"
+                data-tooltip="राहत अनुरोध"
               >
                 <Link to="/QuickAid" >
                   <i className="fas fa-paper-plane"></i> <span>Relief Request</span>
@@ -48,10 +48,10 @@ function Navbar() {
                 className={`icon-container ${
                   location.pathname === '/Log-in' ? 'active' : ''
                 }`}
-                data-tooltip="Municipality Login"
+                data-tooltip="पालिका लगइन"
               >
                 <Link to="/Log-in" >
-                  <i className="fas fa-sign-in-alt"></i><span> Municipality Log-in</span>
+                  <i className="fas fa-sign-in-alt"></i><span> Palika Login</span>
                 </Link>
               </div>
             </div>

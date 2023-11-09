@@ -121,6 +121,7 @@
 }
 .icon-container span{
  margin-top:4px ;
+
 }
 .icon-container:hover {
   background: linear-gradient(135deg, #FFA500, #FFD700); /* Gradient background on hover */
@@ -129,7 +130,7 @@
 
 
 .icon-container i{
-  font-size: 30px;
+  font-size: 26px;
   color: #3e3737;
 }
 

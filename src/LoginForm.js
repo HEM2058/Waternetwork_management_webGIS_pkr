@@ -32,7 +32,7 @@ const LoginForm = () => {
   return (
     <div className="login-container">
       <h1 className="login-header">
-        <FontAwesomeIcon icon={faBuilding} /> Municipality Login
+        <FontAwesomeIcon icon={faBuilding} /> Palika Login
       </h1>
       <form onSubmit={handleSubmit} className="login-form">
         <div>
