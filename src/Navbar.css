@@ -103,16 +103,24 @@
   text-decoration: none;
 
   position: relative; /* Create a stacking context for the shadow */
-  padding: 10px 15px; /* Add padding for a larger clickable area */
+  padding: 7px 10px; /* Add padding for a larger clickable area */
   background: linear-gradient(135deg, #FFD700, #FFA500); /* Gradient background */
   border-radius: 5px; /* Rounded corners */
   transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
   cursor: pointer;
+  display: flex;
+
 }
 
 .icon-container a{
   color: #080202; /* Text color */
+  display: flex;
+  gap: 6px;
+  place-content: center;
 
+}
+.icon-container span{
+ margin-top:4px ;
 }
 .icon-container:hover {
   background: linear-gradient(135deg, #FFA500, #FFD700); /* Gradient background on hover */
@@ -120,7 +128,10 @@
 }
 
 
-
+.icon-container i{
+  font-size: 30px;
+  color: #3e3737;
+}
 
 /* Tooltip styles */
 
@@ -150,19 +161,41 @@
 
 /* Navbar.css */
 .icon-container.active {
-  background: red;
+  background:rgb(188, 106, 12);
+
+}
+.icon-container.active i{
+  color:#6c0f0f;
 
 }
 
 
 /* Responsive styles */
-@media (max-width: 768px) {
+@media (max-width:936px) {
+  .icon-container   {
+    padding: 5px 8px; /* Adjust padding for smaller screens */
+    
+  }
+  .icon-container a{
+    gap: 4px;
+  }
+  .icon-container span{
+    font-size: 15px;
+   }
+  .icon-container i{
+    font-size: 25px;
+  }
+  .logo1-container h2{
+    font-size:25px ;
+  }
+}
+@media (max-width: 780px) {
   /* Styles for tablets and smaller screens */
   .navbar {
     height: 60px; /* Reduce height for smaller screens */
   }
   .logo1-container h2 {
-    font-size: 20px;
+    font-size: 25px;
     font-family: 'Clambo', sans-serif;
   }
   .navbar-brand a {
@@ -184,8 +217,17 @@
   }
   .icon-container   {
     padding: 5px 20px; /* Adjust padding for smaller screens */
+    
   }
 
+  .icon-container i{
+    font-size: 25px;
+ 
+  }
+  .icon-container span{
+  
+    display: none;
+   }
 }
 
 @media (max-width: 468px) {
@@ -216,6 +258,13 @@
   .icon-container   {
     padding: 4px 8px; /* Adjust padding for smaller screens */
   }
+  
+.icon-container i{
+  font-size: 20px;
+}
+.icon-container span{
 
+  display: none;
+ }
 
 }

@@ -28,7 +28,7 @@ function Navbar() {
                 data-tooltip="Places"
               >
                 <Link to="/places" >
-                  <i className="fas fa-map-marker"></i>
+                  <i className="fas fa-map-marker"></i> <span>Places</span>
                 </Link>
               </div>
 
@@ -39,7 +39,7 @@ function Navbar() {
                 data-tooltip="Relief Request"
               >
                 <Link to="/QuickAid" >
-                  <i className="fas fa-paper-plane"></i>
+                  <i className="fas fa-paper-plane"></i> <span>Relief Request</span>
                 </Link>
               </div>
 
@@ -51,7 +51,7 @@ function Navbar() {
                 data-tooltip="Municipality Login"
               >
                 <Link to="/Log-in" >
-                  <i className="fas fa-sign-in-alt"></i>
+                  <i className="fas fa-sign-in-alt"></i><span> Municipality Log-in</span>
                 </Link>
               </div>
             </div>

@@ -153,6 +153,7 @@ const resetFunction=()=>
         center: fromLonLat([81.2519, 29.7767]),
         zoom: initialZoom,
         minZoom: minZoom, // Set the minimum zoom level
+        rotation: 0, // Set rotation to 0 to disable rotation
       
         extent: [
           8909115.173371011,  // Minimum longitude (west) in meters
