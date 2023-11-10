@@ -34,7 +34,7 @@ function Navbar() {
 
               <div
                 className={`icon-container ${
-                  location.pathname === '/Relief' ? 'active' : ''
+                  location.pathname === '/Relief' || location.pathname === '/QuickAid' ? 'active' : ''
                 }`}
                 data-tooltip="राहत अनुरोध"
               >
