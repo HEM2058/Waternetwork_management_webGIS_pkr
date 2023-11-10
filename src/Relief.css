@@ -1,47 +1,76 @@
+/* Highlighting Premium Styles */
+
+/* Container styling */
 .relief-container {
-    max-width: 800px;
+    max-width: 100%;
     margin: auto;
     padding: 40px;
     background-color: #f9f9f9;
     border-radius: 15px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     text-align: center;
-  }
-  
+}
 
-  
-  .description {
+/* Container content structure */
+.TextImg {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+/* Description text styling */
+.description {
     flex: 1;
     text-align: left;
     color: #333;
-  }
-  
-  .description p {
+    background-color: #fff; /* Set a background color */
+    padding: 20px; /* Add padding for spacing */
+    border-radius: 10px; /* Add rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+}
+
+.description p {
     margin-bottom: 20px;
     line-height: 1.6;
-  }
-  
-  .relief-container .image-container {
+    font-size: 18px; /* Increase font size for better readability */
+    font-weight: bold; /* Make text bold for emphasis */
+    color: #555; /* Adjust text color */
+}
+
+/* Add any other custom styles based on your design preferences */
+
+
+.description p {
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+/* Image container styling */
+.relief-container .image-container {
     flex: 1;
     border-radius: 15px;
     overflow: hidden;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    height: 250px;
-  }
-  
-  img {
+    height: 400px; /* Increased height for a more premium feel */
+    place-self: center;
+}
+
+/* Image styling */
+img {
     max-width: 100%;
     height: auto;
     border-radius: 15px;
-  }
-  
-  .relief-button-container {
+}
+
+/* Button container styling */
+.relief-button-container {
     margin-top: 30px;
     display: flex;
     justify-content: space-between;
-  }
-  
-  .relief-container  a {
+}
+
+/* Common button styles */
+.relief-container a {
     padding: 15px 30px;
     color: white;
     border: none;
@@ -53,10 +82,9 @@
     cursor: pointer;
     border-radius: 8px;
     transition: background-color 0.3s ease;
-  }
-/* QuickAid.css */
+}
 
-/* ... (Previous styles remain unchanged) */
+/* Cancel button styling */
 .cancel-button {
     padding: 15px 20px;
     background-color: #dc3545; /* Red shade for cancel button */
@@ -65,12 +93,13 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-  }
-  
-  .cancel-button:hover {
+}
+
+.cancel-button:hover {
     background-color: #c82333; /* Darker red shade on hover */
-  }
-  
+}
+
+/* Proceed button styling */
 .proceed-button {
     padding: 15px 20px;
     background-color: #28a745; /* Green shade for proceed button */
@@ -79,22 +108,54 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-  }
-  
-  button.proceed-button:hover {
-    background-color: #218838; /* Darker green shade on hover */
-  }
-  
-  /* ... (Media queries and other styles remain unchanged) */
-  
-  
-  
-  .relief-container a{
-    text-decoration: none;
+}
 
-  }
-  
-  @media (max_width:768px) {
-  
+button.proceed-button:hover {
+    background-color: #218838; /* Darker green shade on hover */
+}
+
+/* Mobile responsiveness media query */
+
+
+@media (max-width: 1207px) {
+    /* Remove flex styling for .TextImg */
+    .relief-container {
+        max-width: 100%;
+        margin: auto;
+        padding: 10px;
+        background-color: #f9f9f9;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+    .relief-container .TextImg {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+    .description {
+        flex: 1;
+        text-align: left;
+        color: #333;
+        background-color: #fff; /* Set a background color */
+        padding: 10px; /* Add padding for spacing */
+        border-radius: 10px; /* Add rounded corners */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+    }
     
-  }
+    .description p {
+        margin-bottom: 10px;
+        line-height: 1.6;
+        font-size: 14px; /* Increase font size for better readability */
+        font-weight: bold; /* Make text bold for emphasis */
+        color: #555; /* Adjust text color */
+    }
+    img{
+        display: none;
+       }
+
+}
+/* Icon styling */
+.relief-container i {
+    color: green;
+}
