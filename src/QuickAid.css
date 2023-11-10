@@ -2,131 +2,117 @@
 
 .quick-aid-form-unique {
   display: flex;
-  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  width: 100vw; /* Set the width to 95% of the viewport width */
-  height: calc(100vh - 140px); /* Set the height to 100% of the viewport height minus 77px */
-  padding: 25px;
-  flex-wrap: wrap; /* Allow columns to wrap to the next row on smaller screens */
-  overflow-y: auto; /* Enable vertical scrolling if content exceeds the container's height */
-  overflow-x: hidden;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+
 }
 
 .column-unique {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  margin: 10px;
-  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 20px;
   background-color: #f9f9f9;
-  border-radius: 5px;
-  flex: 0 0 45%; /* Adjust the width for smaller screens */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow effect */
-  
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+
+}
+
+.column-left-unique {
+  order: 1;
+}
+
+.column-right-unique {
+  order: 2;
+}
+
+.quick-aid-heading {
+  font-size: 1.7em;
+  margin-bottom: 20px;
+  color: #007BFF;
 }
 
 .form-section-unique {
-  margin: 10px 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px; /* Add vertical spacing */
+  margin-bottom: 10px;
+  
 }
 
-label {
+.form-section-unique label {
+  display: block;
+  font-size: 15px;
+  margin-bottom: 4px;
   font-weight: bold;
-  font-family:Lucida Sans;
+  color: #333;
 }
 
-input[type="text"],
-input[type="tel"],
-input[type="file"],
-select {
+.form-section-unique input,
+.form-section-unique select {
   width: 100%;
-  padding: 5px;
-  border: 1px solid #2f65e2;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
   border-radius: 5px;
+  background-color: #fff;
+  color: #555;
+  transition: border-color 0.3s ease;
+  
 }
 
-input[type="file"]-unique {
-  width: 100%; /* Set the width to make it rectangular */
+.form-section-unique input:focus,
+.form-section-unique select:focus {
+  border-color: #007BFF;
 }
+
 .note-text {
-  font-size: 16px;
-  color: #555; /* Text color */
-  margin-top: 10px; /* Add some top margin for separation */
+  font-style: italic;
+  color: #777;
 }
 
-/* You can add more styles as needed */
-
-.map-section-unique {
-  margin: 10px;
-}
-
-#map-unique .map  {
+#map-unique .map {
   width: 100%;
-  height: 400px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow effect */
+  height: 270px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-#map-unique .north-arrow {
- display: none;
+/* hiding the unnecessary information from the map component */
+#map-unique .filter-container,
+#map-unique .search-container,
+#map-unique .button-container {
+  display: none;
 }
 
-#map-unique  .map_popup {
-display: none;
-}
-.submit-button-unique {
-  background-color: #007bff;
+button {
+  padding: 15px 20px;
+  background-color: #007BFF;
   color: #fff;
   border: none;
-  border-radius: 4px;
-  padding: 10px 20px;
+  border-radius: 5px;
   cursor: pointer;
-  height: 40px;
-  margin-top: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow effect */
+  transition: background-color 0.3s ease;
 }
 
-.submit-button-unique:hover {
+button:hover {
   background-color: #0056b3;
 }
 
-/* Media Query for screens smaller than 768px (adjust as needed) */
-@media (max-width: 768px) {
-  .column-unique {
-    flex: 0 0 83%; /* Make columns full width on smaller screens */
+.submit-button-unique {
+  background-color: #28a745;
+}
+
+.submit-button-unique:hover {
+  background-color: #218838;
+}
+
+@media (min-width: 768px) {
+  .column-left-unique {
+    width: 48%;
+    margin-right: 4%;
   }
 
-  .submit-button-unique {
-    width: 30%; /* Make the submit button full width on smaller screens */
+  .column-right-unique {
+    width: 48%;
   }
-  
-.quick-aid-form-unique {
-  display: flex;
-  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  width: 100vw; /* Set the width to 95% of the viewport width */
-  height: calc(100vh - 140px); /* Set the height to 100% of the viewport height minus 77px */
-  padding: 10px;
-  flex-wrap: wrap; /* Allow columns to wrap to the next row on smaller screens */
-  overflow-y: auto; /* Enable vertical scrolling if content exceeds the container's height */
-  overflow-x: hidden;
-}
-}
-
-#map-unique /* Filter.css */
-.filter-container {
-display: none;
-}
-
-
-#map-unique .search-container {
- display: none;
-}
-
-
-#map-unique .button-container {
- display: none;
 }
