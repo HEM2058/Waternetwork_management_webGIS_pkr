@@ -34,11 +34,11 @@ function Navbar() {
 
               <div
                 className={`icon-container ${
-                  location.pathname === '/QuickAid' ? 'active' : ''
+                  location.pathname === '/Relief' ? 'active' : ''
                 }`}
                 data-tooltip="राहत अनुरोध"
               >
-                <Link to="/QuickAid" >
+                <Link to="/Relief" >
                   <i className="fas fa-paper-plane"></i> <span>Relief Request</span>
                 </Link>
               </div>

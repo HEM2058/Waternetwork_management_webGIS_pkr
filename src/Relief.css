@@ -8,12 +8,7 @@
     text-align: center;
   }
   
-  .TextImg {
-    display: flex;
-    gap: 40px;
-    align-items: center;
-    justify-content: center;
-  }
+
   
   .description {
     flex: 1;
@@ -26,11 +21,12 @@
     line-height: 1.6;
   }
   
-  .image-container {
+  .relief-container .image-container {
     flex: 1;
     border-radius: 15px;
     overflow: hidden;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    height: 250px;
   }
   
   img {
@@ -45,10 +41,8 @@
     justify-content: space-between;
   }
   
-  .back-button,
-  .next-button {
+  .relief-container  a {
     padding: 15px 30px;
-    background-color: #4caf50;
     color: white;
     border: none;
     text-align: center;
@@ -60,13 +54,47 @@
     border-radius: 8px;
     transition: background-color 0.3s ease;
   }
-  
-  .next-button {
-    background-color: #008cba;
+/* QuickAid.css */
+
+/* ... (Previous styles remain unchanged) */
+.cancel-button {
+    padding: 15px 20px;
+    background-color: #dc3545; /* Red shade for cancel button */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
   }
   
-  .back-button:hover,
-  .next-button:hover {
-    background-color: #45a049;
+  .cancel-button:hover {
+    background-color: #c82333; /* Darker red shade on hover */
   }
   
+.proceed-button {
+    padding: 15px 20px;
+    background-color: #28a745; /* Green shade for proceed button */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button.proceed-button:hover {
+    background-color: #218838; /* Darker green shade on hover */
+  }
+  
+  /* ... (Media queries and other styles remain unchanged) */
+  
+  
+  
+  .relief-container a{
+    text-decoration: none;
+
+  }
+  
+  @media (max_width:768px) {
+  
+    
+  }
