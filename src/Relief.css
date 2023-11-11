@@ -116,13 +116,12 @@ button.proceed-button:hover {
 
 /* Mobile responsiveness media query */
 
-
 @media (max-width: 1207px) {
     /* Remove flex styling for .TextImg */
     .relief-container {
         max-width: 100%;
         margin: auto;
-        padding:20px;
+        padding:10px;
         background-color: #f9f9f9;
         border-radius: 15px;
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
@@ -135,18 +134,17 @@ button.proceed-button:hover {
     }
     .description {
         flex: 1;
-        text-align: left;
         color: #333;
         background-color: #fff; /* Set a background color */
-        padding: 15px; /* Add padding for spacing */
+        padding: 10px; /* Add padding for spacing */
         border-radius: 10px; /* Add rounded corners */
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
     }
     
     .description p {
-        margin-bottom: 15px;
+        margin-bottom: 5px;
         line-height: 2;
-        font-size: 15px; /* Increase font size for better readability */
+        font-size: 10px; /* Increase font size for better readability */
         font-weight: bold; /* Make text bold for emphasis */
         color: #555; /* Adjust text color */
     }
