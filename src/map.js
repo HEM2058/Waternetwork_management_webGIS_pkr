@@ -30,7 +30,7 @@ import Point from 'ol/geom/Point';
 import Polygon from 'ol/geom/Polygon';
 import PropertyViewer from './PropertyViewer'; // Import the PropertyViewer component
 import Circle from 'ol/style/Circle';
-function OpenLayersMap({ apiData }) {
+function OpenLayersMap({ apiData, location }) {
   const [map, setMap] = useState(null)
   const [colorHash, setColorHash] = useState({});
   const [initialZoom, setInitialZoom] = useState(null); // Set your initial zoom level here
@@ -39,7 +39,7 @@ function OpenLayersMap({ apiData }) {
   const [selectedLayer, setSelectedLayer] = useState('');
   const [availableLayers, setAvailableLayers] = useState([]);
   const [searchText, setSearchText] = useState(null); // Store the latest search text
-  const [baseLayerName, setBaseLayerName] = useState(''); // stores latest baselayer selection from baselayer lists
+  const [baseLayerName, setBaseLayerName] = useState('osm'); // stores latest baselayer selection from baselayer lists
   const [showFilter, setShowFilter] = useState(false); //stores filter button activate state
   const [showBaseLayerPopup, setShowBaseLayerPopup] = useState(false); //stores baselayer button activate state 
   const [Reset, setReset] = useState(false);
@@ -118,6 +118,7 @@ const resetFunction=()=>
   useEffect(() => {
 
     console.log(selectedLayer)
+
   updateZoomBasedOnScreenSize();
 
  
@@ -460,8 +461,8 @@ map.on('click', function (event) {
 const onClose = () => {
   setSelectedData(null); // Close the popup by resetting the selectedData state to null
 
-  map.getView().setCenter(fromLonLat([81.2519, 29.7767]));
-  map.getView().setZoom(initialZoom);
+  // map.getView().setCenter(fromLonLat([81.2519, 29.7767]));
+  // map.getView().setZoom(initialZoom);
 
 
   // Remove the highlight style from the previously clicked feature (if there is one)
@@ -621,6 +622,15 @@ if(Reset==true){
         });
       }
     };
+
+    //calling the marker function by sending the current location of the user from quickaid form 
+  // Split the string into an array of latitude and longitude
+  if(location){
+const [latitude, longitude] = location.split(',');
+
+// Call the addMarker function with the extracted latitude and longitude
+addMarker(parseFloat(latitude), parseFloat(longitude));
+  }
     
 //adding the polygon on the map and zooming to their extent
 const addPolygon = (coordinates) => {
@@ -917,7 +927,7 @@ if (searchResults) {
     }
      // Call the handleWFSRequest function whenever searchText changes
      handleWFSRequest();
-},[searchText])
+},[searchText, location])
   return (
     <div>
         {selectedData && <MunicipalityInfo data={selectedData} />}
