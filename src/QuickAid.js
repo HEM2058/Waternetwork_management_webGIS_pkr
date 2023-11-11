@@ -59,8 +59,23 @@ const QuickAid = () => {
         <div className="column-unique column-right-unique">
           <h1 className="quick-aid-heading">राहत सहयोगको लागि अनुरोध- पृष्ठ 2 </h1> {/* सहायता अनुरोध गर्नुहोस् - पृष्ठ 2 */}
           <div className="form-section-unique">
-            <label htmlFor="municipality-unique">Palika (नगरपालिका) *</label> {/* नगरपालिका * */}
-            <input type="text" id="municipality-unique" />
+          <label htmlFor="municipality-unique">पालिका चयन गर्नुहोस् (Select a palika) *</label>
+<select id="municipality-unique">
+  <option value="Bungal">बुङ्गल नगरपालिका</option>
+  <option value="Bitthadchir">बित्थडचिर गाँउपालिका</option>
+  <option value="Chhabispathibhera">छबिसपाथिभेरा गाँउपालिका</option>
+  <option value="Durgathali">दुर्गाथली गाँउपालिका</option>
+  <option value="Jayaprithvi">जयपृथ्वी नगरपालिका</option>
+  <option value="Saipal">सइपाल गाउपालिका</option>
+  <option value="Kedarsyun">केदारस्युँ गाँउपालिका</option>
+  <option value="Khaptadchhanna">खप्तडछान्ना गाउँपालिका</option>
+  <option value="Mastha">मष्टा गाउँपालिका</option>
+  <option value="Surma">सूर्मा गाउँपालिका</option>
+  <option value="Talakot">तलकोट गाँउपालिका</option>
+  <option value="Thalara">थलारा गाउँपालिका</option>
+</select>
+
+
           </div>
           <div className="form-section-unique">
             <label htmlFor="ward-unique">Ward (वार्ड) *</label> {/* वार्ड * */}
