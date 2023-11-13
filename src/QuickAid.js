@@ -67,6 +67,7 @@ const QuickAid = () => {
 
   const handlePalikaChange = (e) => {
     setPalika(e.target.value);
+    console.log(palika)
   };
 
   const handleWardChange = (e) => {
@@ -80,26 +81,28 @@ const QuickAid = () => {
   const handleSubmit = async () => {
     try {
       const formData = new FormData();
-      formData.append('palika', palika);
+      formData.append('palika', palika); // Use the state value directly
       formData.append('ward', ward);
-      formData.append('location', coordinate); // Assuming 'coordinate' corresponds to 'location' in the model
+      formData.append('location', coordinate);
       formData.append('name', name);
       formData.append('phone', phone);
       formData.append('citizenship_no', citizenship_no);
-      formData.append('House_no', house_no); // 'H' in 'House_no' is capitalized in the model
-      formData.append('disaster', disaster);
+      formData.append('House_no', house_no);
+      formData.append('disaster', disaster); // Use the state value directly
       formData.append('img', img);
-      
-
+  
+      console.log(formData);
+  
       const response = await axios.post('http://127.0.0.1:2500/relief_request', formData);
-
+  
       console.log('Response from the server:', response.data);
-
+  
       // You can also redirect to a success page or perform other actions based on the response
     } catch (error) {
       console.error('Error sending request:', error.message);
     }
   };
+  
 
   return (
     <div className="quick-aid-form-unique">
@@ -148,8 +151,20 @@ const QuickAid = () => {
           <div className="form-section-unique">
             <label htmlFor="municipality-unique">पालिका चयन गर्नुहोस् (Select a palika) *</label>
             <select id="municipality-unique" value={palika} onChange={handlePalikaChange}>
+        
               <option value="Bungal">बुङ्गल नगरपालिका</option>
-              {/* ... Other options ... */}
+              <option value="Bitthadchir">बित्थडचिर गाँउपालिका</option>
+              <option value="Chhabispathibhera">छबिसपाथिभेरा गाँउपालिका</option>
+              <option value="Durgathali">दुर्गाथली गाँउपालिका</option>
+              <option value="Jayaprithvi">जयपृथ्वी नगरपालिका</option>
+              <option value="Saipal">सइपाल गाउपालिका</option>
+              <option value="Kedarsyun">केदारस्युँ गाँउपालिका</option>
+              <option value="Khaptadchhanna">खप्तडछान्ना गाउँपालिका</option>
+              <option value="Mastha">मष्टा गाउँपालिका</option>
+              <option value="Surma">सूर्मा गाउँपालिका</option>
+              <option value="Talakot">तलकोट गाँउपालिका</option>
+              <option value="Thalara">थलारा गाउँपालिका</option>
+      
             </select>
           </div>
           <div className="form-section-unique">
