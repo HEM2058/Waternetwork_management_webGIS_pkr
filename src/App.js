@@ -8,6 +8,7 @@ import  LayerUploadForm from './shp_geojson';
 import QuickAid from './QuickAid';
 import Places from './Places'
 import Relief from './Relief';
+import PalikaDashboard from './PalikaDashboard';
 import {Routes, Route} from 'react-router-dom';
 
 
@@ -23,6 +24,7 @@ function App() {
             <Route path="/QuickAid" element = { <QuickAid/>} /> 
             <Route path="/Places" element = {<Places/>}/>
             <Route path="/Relief" element = {<Relief/>}/>
+            <Route path="/palika_dashboard" element = {<PalikaDashboard/>}/>
           </Routes>
       
    
