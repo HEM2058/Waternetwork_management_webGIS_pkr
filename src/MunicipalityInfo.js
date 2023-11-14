@@ -18,7 +18,7 @@ function MunicipalityInfo({ data }) {
           
           <Link to="/places" className="map_popup__btn" href={data.WEBSITE} >
             
-        Places <i className="fas fa-arrow-right arrow-animation"></i>
+        PLACES <i className="fas fa-arrow-right arrow-animation"></i>
           
           </Link>
         </div>

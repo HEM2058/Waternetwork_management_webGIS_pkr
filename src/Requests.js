@@ -10,7 +10,7 @@ function Requests() {
     // Fetch data from the API
     const fetchData = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:2500/relief_request');
+        const response = await fetch('http://127.0.0.1:2500/api/relief_request');
         const jsonData = await response.json();
         setData(jsonData);
       } catch (error) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import './PalikaDashboard.css';
-
+import {Link} from 'react-router-dom'
 function PalikaDashboard() {
   return (
     <div className="palika-dashboard">
@@ -13,7 +13,8 @@ function PalikaDashboard() {
         {/* Relief Request Section */}
         <div className="section">
           <div className="section-item">
-            <h3><i className="fas fa-hands-helping"></i> Relief Requests</h3>
+            <Link to ='/requests'> <i className="fas fa-hands-helping"></i> Relief Request</Link>
+          
             {/* Add your content for the Relief Request section here */}
           </div>
         </div>
@@ -21,7 +22,8 @@ function PalikaDashboard() {
         {/* Add Place Section */}
         <div className="section">
           <div className="section-item">
-            <h3><i className="fas fa-map-marker-alt"></i> Add Place</h3>
+            <h3></h3>
+            <Link to ='/requests'> <i className="fas fa-map-marker-alt"></i> Add Place</Link>
             {/* Add your content for the Add Place section here */}
           </div>
         </div>
@@ -29,7 +31,8 @@ function PalikaDashboard() {
         {/* Publish Layer Section */}
         <div className="section">
           <div className="section-item">
-            <h3><i className="fas fa-layer-group"></i> Publish Layer</h3>
+      
+            <Link to ='/requests'> <i className="fas fa-layer-group"></i> Publish Layer</Link>
             {/* Add your content for the Publish Layer section here */}
           </div>
         </div>

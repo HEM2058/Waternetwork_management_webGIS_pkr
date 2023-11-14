@@ -3,7 +3,7 @@ import './LoginForm.css'; // Import the CSS file
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // Import FontAwesome
 import { faBuilding } from '@fortawesome/free-solid-svg-icons'; // Import a building icon (you can choose a different icon if needed)
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
-
+import { Link} from 'react-router-dom';
 const LoginForm = () => {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
@@ -44,7 +44,10 @@ const LoginForm = () => {
           <input type="password" value={password} onChange={handlePasswordChange} />
         </div>
         <div>
-          <button type="submit">Login</button>
+          <button type="submit"> Log in</button>
+          <Link to="/palika_dashboard" >
+                 
+               Log in </Link> 
         </div>
       </form>
       <p className="warning-message">
