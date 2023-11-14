@@ -108,13 +108,8 @@ button:hover {
   background-color: #218838;
 }
 
-@media (min-width: 768px) {
-  .column-left-unique {
-    width: 48%;
-    margin-right: 4%;
-  }
-
-  .column-right-unique {
-    width: 48%;
+@media (max-width: 768px) {
+  .column-unique h1 {
+    font-size: 22px;
   }
 }
