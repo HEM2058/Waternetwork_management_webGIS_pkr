@@ -4,6 +4,7 @@ import './QuickAid.css';
 import OpenLayersMap from './map';
 
 const QuickAid = () => {
+  const [hidepopup,setHidepopup] = useState(true)
   const [currentPage, setCurrentPage] = useState(1);
   const [location, setLocation] = useState('');
   const [name, setName] = useState('');
@@ -157,7 +158,7 @@ const QuickAid = () => {
             </div>
           </div>
           <div id="map-unique">
-            <OpenLayersMap location={location} />
+           {hidepopup && ( <OpenLayersMap hidepopup={hidepopup} location={location}  /> )}
           </div>
           <button type="button" onClick={prevPage}>
             Back

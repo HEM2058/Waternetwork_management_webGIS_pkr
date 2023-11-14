@@ -80,13 +80,44 @@
       transform: translateX(0);
     }
     50% {
-      transform: translateX(5px); /* Adjust the distance the arrow moves */
+      transform: translateX(2px); /* Adjust the distance the arrow moves */
     }
     100% {
       transform: translateX(0);
     }
   }
 
+  @media screen and (max-width: 768px) {
+    .map_popup {
+      width: 200px; /* Adjust width for smaller screens */
+    }
+    .map_popup__btn-row {
+      width: 210px; /* Adjust button wrapper width */
+    }
+    /* Button wrapper */
+    .map_popup__btn-row {
+      align-items: center;
+      margin-top: 15px;
+      border-radius: 25px;
+      padding: 8px 0;
+     
+    }
+  
+  /* Popup button */
+  .map_popup__btn {
+    background: #0070c0;
+    color: #fff;
+    padding: 5px 10px; /* Reduced button size */
+    text-decoration: none;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s;
+    font-size: 12px; /* Reduced text size */
+  
+  }
+  
+  }
+  
   
   
   

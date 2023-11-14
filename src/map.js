@@ -30,7 +30,7 @@ import Point from 'ol/geom/Point';
 import Polygon from 'ol/geom/Polygon';
 import PropertyViewer from './PropertyViewer'; // Import the PropertyViewer component
 import Circle from 'ol/style/Circle';
-function OpenLayersMap({ apiData, location }) {
+function OpenLayersMap({ apiData, location, hidepopup }) {
   const [map, setMap] = useState(null)
   const [colorHash, setColorHash] = useState({});
   const [initialZoom, setInitialZoom] = useState(null); // Set your initial zoom level here
@@ -53,6 +53,7 @@ function OpenLayersMap({ apiData, location }) {
   // const [latitude, setLatitude] = useState("");
   // const [longitude, setLongitude] = useState("");
 // this updates BaseLayerName with latest click on baselayers list
+console.log(hidepopup)
 function handleBaseLayerChange(layer) { 
   console.log(layer)
   setBaseLayerName(layer);
@@ -930,7 +931,9 @@ if (searchResults) {
 },[searchText, location])
   return (
     <div>
-        {selectedData && <MunicipalityInfo data={selectedData} />}
+  {/* hide popup = true is only available if map component is rendered inside QuickAid component. */}
+ {!hidepopup && selectedData && <MunicipalityInfo data={selectedData} />}
+
       <div id="map" className="map" />
         {/* Filter controls */}
         <div className="search-container">
@@ -1039,7 +1042,7 @@ if (searchResults) {
   
 </div>
 
-<PropertyViewer properties={Property} setClosePopup={ClosePopup} onClosePopup={handlePopupClose} />
+(<PropertyViewer properties={Property} setClosePopup={ClosePopup} onClosePopup={handlePopupClose} />
 
       {/* <div id="north-arrow" className="north-arrow">
   <span className="north-arrow-text">N</span>

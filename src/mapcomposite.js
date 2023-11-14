@@ -27,9 +27,9 @@ function MapComposite() {
       </div> */}
      
       <ApiDataFetcher onDataFetched={handleDataFetched} />
-      {isDataLoaded ? null:( // Conditional rendering of OpenLayersMap
+      {isDataLoaded ? ( // Conditional rendering of OpenLayersMap
   <OpenLayersMap apiData={apiData} />
-) }
+) : null}
 
       
     
