@@ -65,7 +65,7 @@ const QuickAid = () => {
 
       console.log(formData);
 
-      const response = await axios.post('http://127.0.0.1:2500/relief_request', formData);
+      const response = await axios.post('http://127.0.0.1:2500/api/relief_request', formData);
 
       console.log('Response from the server:', response.data);
 

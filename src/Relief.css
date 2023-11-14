@@ -126,31 +126,52 @@ button.proceed-button:hover {
         border-radius: 15px;
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
         text-align: center;
+        
     }
     .relief-container .TextImg {
         display: flex;
         flex-direction: column;
         gap: 4px;
     }
-    .description {
+    .relief-container  .description {
         flex: 1;
         color: #333;
         background-color: #fff; /* Set a background color */
-        padding: 10px; /* Add padding for spacing */
+        padding: 2px; /* Add padding for spacing */
         border-radius: 10px; /* Add rounded corners */
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
     }
     
-    .description p {
+    .relief-container  .description p {
         margin-bottom: 5px;
         line-height: 2;
-        font-size: 10px; /* Increase font size for better readability */
+        font-size: 15px; /* Increase font size for better readability */
         font-weight: bold; /* Make text bold for emphasis */
         color: #555; /* Adjust text color */
     }
     .relief-container img{
         display: none;
        }
+      .relief-container   .cancel-button {
+        padding: 15px 10px;
+        margin-left: 20px;
+        background-color: #dc3545; /* Red shade for cancel button */
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    .relief-container  .proceed-button {
+        padding: 15px 10px;
+        margin-right: 20px;
+        background-color: #28a745; /* Green shade for proceed button */
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
 
 }
 /* Icon styling */

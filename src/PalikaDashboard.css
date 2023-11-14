@@ -72,7 +72,7 @@
     }
   
     .section-item {
-      width: 100px; /* Adjust the width as needed */
+      width: 150px; /* Adjust the width as needed */
       height: 100px; /* Square dimensions */
       font-size: 0.8rem; /* Adjust the font size for smaller screens */
     }
