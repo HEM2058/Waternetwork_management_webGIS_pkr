@@ -3,8 +3,8 @@ import { useLocation } from 'react-router-dom';
 import React from 'react'
 
 function Places() {
-  const { nepaliData } = useLocation().state;
-  console.log(nepaliData)
+  const location = useLocation();
+  const nepaliData = location.state ? location.state.nepaliData : null;
   return (
   
     <div className='places-container'>
