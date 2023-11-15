@@ -1,12 +1,34 @@
 import './Places.css'
-
+import { useLocation } from 'react-router-dom';
 import React from 'react'
 
 function Places() {
+  const { nepaliData } = useLocation().state;
+  console.log(nepaliData)
   return (
   
     <div className='places-container'>
-    <div className='header'>Popular Places</div>
+      
+
+      <div className='header'>
+        <select id="municipality-unique" value={nepaliData}>
+          <option value="">All Palika</option>
+          <option value="Bungal">बुङ्गल नगरपालिका</option>
+          <option value="Bitthadchir">बित्थडचिर गाँउपालिका</option>
+          <option value="Chhabispathibhera">छबिसपाथिभेरा गाँउपालिका</option>
+          <option value="Durgathali">दुर्गाथली गाँउपालिका</option>
+          <option value="Jayaprithvi">जयपृथ्वी नगरपालिका</option>
+          <option value="Saipal">सइपाल गाउपालिका</option>
+          <option value="Kedarsyun">केदारस्युँ गाँउपालिका</option>
+          <option value="Khaptadchhanna">खप्तडछान्ना गाउँपालिका</option>
+          <option value="Mastha">मष्टा गाउँपालिका</option>
+          <option value="Surma">सूर्मा गाउँपालिका</option>
+          <option value="Talakot">तलकोट गाँउपालिका</option>
+          <option value="Thalara">थलारा गाउँपालिका</option>
+        </select>
+      </div>
+      
+      
     <div className='places-list'>
       <div className='place-container'>
         <div className='place-title'>Shaileshwori Temple</div>

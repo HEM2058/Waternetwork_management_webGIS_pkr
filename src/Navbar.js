@@ -6,7 +6,6 @@ import logo from './assets/ddc-demo.png';
 
 function Navbar() {
   const location = useLocation();
-  console.log(location)
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">

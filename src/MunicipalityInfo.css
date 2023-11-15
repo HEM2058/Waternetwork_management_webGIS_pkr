@@ -41,6 +41,7 @@
   
   /* Popup button */
   .map_popup__btn {
+    display: flex;
     background: #0070c0;
     color: #fff;
     padding: 10px 8px;
@@ -51,24 +52,17 @@
     flex: 1; /* Distribute available space evenly between buttons */
     margin: 0 5px; /* Add space between buttons */
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+   
   }
   
   .map_popup__btn:hover {
     background: #0050a0;
   }
-  
-  /* Close button */
-  .close-button {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    cursor: pointer;
-    color: #000;
+  .map_popup  a, button{
+    font-size: 13px;
+    
   }
   
-  .close-button:hover {
-    color: #ff0000;
-  }
 /* Add this CSS for the arrow animation */
 .arrow-animation {
     margin-left: 5px; /* Adjust the spacing between text and arrow as needed */
@@ -101,6 +95,10 @@
       border-radius: 25px;
       padding: 8px 0;
      
+    }
+    .map_popup  a, button{
+      font-size: 12px;
+      
     }
   
   /* Popup button */
