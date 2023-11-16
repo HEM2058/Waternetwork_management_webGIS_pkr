@@ -6,6 +6,11 @@ import logo from './assets/ddc-demo.png';
 
 function Navbar() {
   const location = useLocation();
+
+  // Check if the user token is present in localStorage
+  const userToken = localStorage.getItem('authToken');
+  const isLoggedIn = userToken !== null;
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
@@ -26,7 +31,7 @@ function Navbar() {
                 }`}
                 data-tooltip="स्थानहरू"
               >
-                <Link to="/places" >
+                <Link to="/places">
                   <i className="fas fa-map-marker"></i> <span>Places</span>
                 </Link>
               </div>
@@ -37,22 +42,35 @@ function Navbar() {
                 }`}
                 data-tooltip="राहत अनुरोध"
               >
-                <Link to="/Relief" >
+                <Link to="/Relief">
                   <i className="fas fa-paper-plane"></i> <span>Relief Request</span>
                 </Link>
               </div>
 
-              {/* Municipality Login Button */}
-              <div
-                className={`icon-container ${
-                  location.pathname === '/Log-in' ? 'active' : ''
-                }`}
-                data-tooltip="पालिका लगइन"
-              >
-                <Link to="/Log-in" >
-                  <i className="fas fa-sign-in-alt"></i><span> Palika Login</span>
-                </Link>
-              </div>
+              {/* Render Palika Dashboard or Palika Login based on login status */}
+              {isLoggedIn ? (
+                <div
+                  className={`icon-container ${
+                    location.pathname === '/palika_dashboard' ? 'active' : ''
+                  }`}
+                  data-tooltip="पालिका ड्यासबोर्ड"
+                >
+                  <Link to="/palika_dashboard">
+                    <i className="fas fa-tachometer-alt"></i><span> Palika Dashboard</span>
+                  </Link>
+                </div>
+              ) : (
+                <div
+                  className={`icon-container ${
+                    location.pathname === '/Log-in' ? 'active' : ''
+                  }`}
+                  data-tooltip="पालिका लगइन"
+                >
+                  <Link to="/Log-in">
+                    <i className="fas fa-sign-in-alt"></i><span> Palika Login</span>
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         </div>

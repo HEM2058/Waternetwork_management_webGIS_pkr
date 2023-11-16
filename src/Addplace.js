@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import './Addplace.css'
-const AddPlaceForm = () => {
+import './Addplace.css';
+import { useNavigate } from 'react-router-dom';
+
+const Addplace = () => {
   const [selectedPalika, setSelectedPalika] = useState('');
   const [placeTitle, setPlaceTitle] = useState('');
   const [placeDescription, setPlaceDescription] = useState('');
   const [placeImage, setPlaceImage] = useState(null);
   const [placeCoordinates, setPlaceCoordinates] = useState('');
+  const navigate = useNavigate();
 
   const handlePalikaChange = (e) => {
     setSelectedPalika(e.target.value);
@@ -20,7 +23,6 @@ const AddPlaceForm = () => {
   };
 
   const handleImageChange = (e) => {
-    // Handle file upload logic if needed
     setPlaceImage(e.target.files[0]);
   };
 
@@ -30,14 +32,21 @@ const AddPlaceForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log({
-      selectedPalika,
-      placeTitle,
-      placeDescription,
-      placeImage,
-      placeCoordinates,
-    });
+
+    const userToken = localStorage.getItem('authToken');
+
+    if (userToken) {
+      console.log({
+        selectedPalika,
+        placeTitle,
+        placeDescription,
+        placeImage,
+        placeCoordinates,
+      });
+      // Add logic to handle form submission with the user token
+    } else {
+      navigate('/Log-in');
+    }
   };
 
   return (
@@ -52,7 +61,6 @@ const AddPlaceForm = () => {
             value={selectedPalika}
             onChange={handlePalikaChange}
           >
-            {/* Add options dynamically based on your data */}
             <option value="Bungal">बुङ्गल नगरपालिका</option>
             <option value="Bitthadchir">बित्थडचिर गाँउपालिका</option>
             {/* Add other options as needed */}
@@ -114,5 +122,4 @@ const AddPlaceForm = () => {
   );
 };
 
-export default AddPlaceForm;
-
+export default Addplace;
