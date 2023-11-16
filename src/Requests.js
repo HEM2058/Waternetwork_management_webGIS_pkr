@@ -24,8 +24,7 @@ function Requests() {
           if (userResponse.ok) {
             const userData = await userResponse.json();
             const username = userData.username;
-         
-            console.log(username)
+
             // Fetch requests filtered by the username
             const requestsResponse = await fetch(`http://127.0.0.1:2500/api/relief_request/${username}/`, {
               headers: {
@@ -35,7 +34,6 @@ function Requests() {
 
             if (requestsResponse.ok) {
               const jsonData = await requestsResponse.json();
-              console.log(jsonData)
               setData(jsonData);
             } else {
               setError('Error fetching data. Please try again later.');
@@ -74,43 +72,51 @@ function Requests() {
         </div>
       ) : (
         <>
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Phone</th>
-                <th>Citizenship No</th>
-                <th>House No</th>
-                <th>Disaster</th>
-                <th>Ward</th>
-                <th>Location</th>
-                <th>Requested Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((item, index) => (
-                <tr key={index}>
-                  <td>{item.name}</td>
-                  <td>{item.phone}</td>
-                  <td>{item.citizenship_no}</td>
-                  <td>{item.House_no}</td>
-                  <td>{item.disaster}</td>
-                  <td>{item.ward}</td>
-                  <td>{item.location}</td>
-                  <td>{item.uploaded_date}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          {data.length === 0 ? (
+            <div className="no-requests-message">
+              No relief requests so far
+            </div>
+          ) : (
+            <>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Citizenship No</th>
+                    <th>House No</th>
+                    <th>Disaster</th>
+                    <th>Ward</th>
+                    <th>Location</th>
+                    <th>Requested Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.map((item, index) => (
+                    <tr key={index}>
+                      <td>{item.name}</td>
+                      <td>{item.phone}</td>
+                      <td>{item.citizenship_no}</td>
+                      <td>{item.House_no}</td>
+                      <td>{item.disaster}</td>
+                      <td>{item.ward}</td>
+                      <td>{item.location}</td>
+                      <td>{item.uploaded_date}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
 
-          {/* Pagination */}
-          <div className="pagination">
-            {Array.from({ length: totalPages }, (_, index) => (
-              <button key={index} onClick={() => handlePageClick(index + 1)}>
-                {index + 1}
-              </button>
-            ))}
-          </div>
+              {/* Pagination */}
+              <div className="pagination">
+                {Array.from({ length: totalPages }, (_, index) => (
+                  <button key={index} onClick={() => handlePageClick(index + 1)}>
+                    {index + 1}
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
         </>
       )}
     </div>
