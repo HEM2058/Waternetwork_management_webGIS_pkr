@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Addplace.css';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Addplace = () => {
   const [selectedPalika, setSelectedPalika] = useState('');
@@ -8,6 +8,10 @@ const Addplace = () => {
   const [placeDescription, setPlaceDescription] = useState('');
   const [placeImage, setPlaceImage] = useState(null);
   const [placeCoordinates, setPlaceCoordinates] = useState('');
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const userPalikaName = queryParams.get('userPalikaName') || 'Default Palika Name';
+  console.log(userPalikaName)
   const navigate = useNavigate();
 
   const handlePalikaChange = (e) => {
@@ -55,16 +59,21 @@ const Addplace = () => {
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="municipality-unique">Select Palika:</label>
-          <select
-            className="form-control"
-            id="municipality-unique"
-            value={selectedPalika}
-            onChange={handlePalikaChange}
-          >
-            <option value="Bungal">बुङ्गल नगरपालिका</option>
-            <option value="Bitthadchir">बित्थडचिर गाँउपालिका</option>
-            {/* Add other options as needed */}
-          </select>
+          <select id="municipality-unique" value={userPalikaName}>
+          <option value="">All Palika</option>
+          <option value="Bungal">बुङ्गल नगरपालिका</option>
+          <option value="Bitthadchir">बित्थडचिर गाँउपालिका</option>
+          <option value="Chhabispathibhera">छबिसपाथिभेरा गाँउपालिका</option>
+          <option value="Durgathali">दुर्गाथली गाँउपालिका</option>
+          <option value="Jayaprithvi">जयपृथ्वी नगरपालिका</option>
+          <option value="Saipal">सइपाल गाउपालिका</option>
+          <option value="Kedarsyun">केदारस्युँ गाँउपालिका</option>
+          <option value="Khaptadchhanna">खप्तडछान्ना गाउँपालिका</option>
+          <option value="Mastha">मष्टा गाउँपालिका</option>
+          <option value="Surma">सूर्मा गाउँपालिका</option>
+          <option value="Talakot">तलकोट गाँउपालिका</option>
+          <option value="Thalara">थलारा गाउँपालिका</option>
+        </select>
         </div>
 
         <div className="form-group">

@@ -51,7 +51,7 @@ function Navbar() {
               {isLoggedIn ? (
                 <div
                   className={`icon-container ${
-                    location.pathname === '/palika_dashboard' ? 'active' : ''
+                    location.pathname === '/palika_dashboard' ||location.pathname === '/palika_dashboard/requests'||location.pathname === '/palika_dashboard/add_place' ? 'active' : ''
                   }`}
                   data-tooltip="पालिका ड्यासबोर्ड"
                 >

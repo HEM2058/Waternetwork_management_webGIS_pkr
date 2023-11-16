@@ -77,9 +77,10 @@ function PalikaDashboard() {
             <div className="section">
               <div className="section-item">
                 <h3></h3>
-                <Link to="/palika_dashboard/add_place">
-                  <i className="fas fa-map-marker-alt"></i> Add Place
-                </Link>
+                <Link to={`/palika_dashboard/add_place?userPalikaName=${encodeURIComponent(palikaName)}`}>
+  <i className="fas fa-map-marker-alt"></i> Add Place
+</Link>
+
                 {/* Add your content for the Add Place section here */}
               </div>
             </div>
