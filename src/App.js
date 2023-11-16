@@ -10,6 +10,7 @@ import Places from './Places'
 import Relief from './Relief';
 import PalikaDashboard from './PalikaDashboard';
 import Requests from './Requests';
+import Addplace from './Addplace';
 import {Routes, Route} from 'react-router-dom';
 
 
@@ -26,7 +27,8 @@ function App() {
             <Route path="/Places" element = {<Places/>}/>
             <Route path="/Relief" element = {<Relief/>}/>
             <Route path="/palika_dashboard" element = {<PalikaDashboard/>}/>
-            <Route path="/requests" element= {<Requests/>}/>
+            <Route path="/palika_dashboard/requests" element= {<Requests/>}/>
+            <Route path="/palika_dashboard/Add_Place" element= {<Addplace/>}/>
           </Routes>
       
    

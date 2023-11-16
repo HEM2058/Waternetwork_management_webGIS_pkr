@@ -13,7 +13,7 @@ function PalikaDashboard() {
         {/* Relief Request Section */}
         <div className="section">
           <div className="section-item">
-            <Link to ='/requests'> <i className="fas fa-hands-helping"></i> Relief Request</Link>
+            <Link to ='/palika_dashboard/requests'> <i className="fas fa-hands-helping"></i> Relief Request</Link>
           
             {/* Add your content for the Relief Request section here */}
           </div>
@@ -23,7 +23,7 @@ function PalikaDashboard() {
         <div className="section">
           <div className="section-item">
             <h3></h3>
-            <Link to ='/requests'> <i className="fas fa-map-marker-alt"></i> Add Place</Link>
+            <Link to ='/palika_dashboard/add_place'> <i className="fas fa-map-marker-alt"></i> Add Place</Link>
             {/* Add your content for the Add Place section here */}
           </div>
         </div>

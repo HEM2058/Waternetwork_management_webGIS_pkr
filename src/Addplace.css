@@ -1,0 +1,52 @@
+/* Default styles */
+
+
+  
+  .container .form-group {
+    margin-bottom: 20px;
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .container {
+      max-width: 100%;
+      padding: 0 15px;
+    }
+  
+    .form-group {
+      margin-bottom: 15px;
+    }
+  }
+  
+  /* Styles for Select Palika */
+  #municipality-unique {
+    width: 100%;
+  }
+  
+  /* Styles for Place Title */
+  #place-title {
+    width: 100%;
+  }
+  
+  /* Styles for Place Description */
+  #place-description {
+    width: 100%;
+  }
+  
+  /* Styles for Place Image */
+  #place-image {
+    width: 100%;
+  }
+  
+  /* Styles for Place Coordinates */
+  #place-coordinates {
+    width: 100%;
+  }
+  
+  /* Styles for Submit Button */
+  .btn-primary {
+    display: block;
+    width: 100%;
+    padding: 10px;
+  }
+  
