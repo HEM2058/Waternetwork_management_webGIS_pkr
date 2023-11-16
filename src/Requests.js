@@ -5,16 +5,16 @@ import { useNavigate } from 'react-router-dom';
 function Requests() {
   const [data, setData] = useState([]);
   const [error, setError] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch data from the API only if the user token exists
     const userToken = localStorage.getItem('authToken');
 
     if (userToken) {
       const fetchData = async () => {
         try {
-          // Fetch user information from the 'users/me' endpoint
           const userResponse = await fetch('http://127.0.0.1:2500/auth/users/me/', {
             headers: {
               Authorization: `Token ${userToken}`,
@@ -25,8 +25,7 @@ function Requests() {
             const userData = await userResponse.json();
             const username = userData.username;
 
-            // Fetch requests filtered by the username
-            const requestsResponse = await fetch(`http://127.0.0.1:2500/api/relief_request/${username}/`, {
+            const requestsResponse = await fetch(`http://127.0.0.1:2500/api/relief_request/${username}/?page=${currentPage}`, {
               headers: {
                 Authorization: `Token ${userToken}`,
               },
@@ -34,7 +33,11 @@ function Requests() {
 
             if (requestsResponse.ok) {
               const jsonData = await requestsResponse.json();
-              setData(jsonData);
+              setData(jsonData.results);
+                // Calculate total pages based on count and items per page
+            setTotalPages(Math.ceil(jsonData.count / 5));
+              console.log(jsonData);
+
             } else {
               setError('Error fetching data. Please try again later.');
               console.error('Error fetching data:', requestsResponse.statusText);
@@ -53,15 +56,12 @@ function Requests() {
     } else {
       navigate('/Log-in');
     }
-  }, []); // The empty dependency array ensures that the effect runs only once on component mount
 
-  // Pagination variables and functions
-  const itemsPerPage = 5;
-  const totalPages = Math.ceil(data.length / itemsPerPage);
+
+  }, [currentPage]);
 
   const handlePageClick = (selectedPage) => {
-    // Handle page change logic here
-    console.log(`Selected Page: ${selectedPage}`);
+    setCurrentPage(selectedPage);
   };
 
   return (
@@ -89,6 +89,7 @@ function Requests() {
                     <th>Ward</th>
                     <th>Location</th>
                     <th>Requested Date</th>
+                    <th>Image</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -102,6 +103,7 @@ function Requests() {
                       <td>{item.ward}</td>
                       <td>{item.location}</td>
                       <td>{item.uploaded_date}</td>
+                      <td>{item.img}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -110,7 +112,11 @@ function Requests() {
               {/* Pagination */}
               <div className="pagination">
                 {Array.from({ length: totalPages }, (_, index) => (
-                  <button key={index} onClick={() => handlePageClick(index + 1)}>
+                  <button
+                    key={index}
+                    onClick={() => handlePageClick(index + 1)}
+                    className={currentPage === index + 1 ? 'active' : ''}
+                  >
                     {index + 1}
                   </button>
                 ))}
