@@ -6,6 +6,7 @@ function Requests() {
   const [data, setData] = useState([]);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+
   useEffect(() => {
     // Fetch data from the API only if the user token exists
     const userToken = localStorage.getItem('authToken');
@@ -13,18 +14,36 @@ function Requests() {
     if (userToken) {
       const fetchData = async () => {
         try {
-          const response = await fetch('http://127.0.0.1:2500/api/relief_request', {
+          // Fetch user information from the 'users/me' endpoint
+          const userResponse = await fetch('http://127.0.0.1:2500/auth/users/me/', {
             headers: {
               Authorization: `Token ${userToken}`,
             },
           });
 
-          if (response.ok) {
-            const jsonData = await response.json();
-            setData(jsonData);
+          if (userResponse.ok) {
+            const userData = await userResponse.json();
+            const username = userData.username;
+         
+            console.log(username)
+            // Fetch requests filtered by the username
+            const requestsResponse = await fetch(`http://127.0.0.1:2500/api/relief_request/${username}/`, {
+              headers: {
+                Authorization: `Token ${userToken}`,
+              },
+            });
+
+            if (requestsResponse.ok) {
+              const jsonData = await requestsResponse.json();
+              console.log(jsonData)
+              setData(jsonData);
+            } else {
+              setError('Error fetching data. Please try again later.');
+              console.error('Error fetching data:', requestsResponse.statusText);
+            }
           } else {
-            setError('Error fetching data. Please try again later.');
-            console.error('Error fetching data:', response.statusText);
+            setError('Error fetching user data. Please try again later.');
+            console.error('Error fetching user data:', userResponse.statusText);
           }
         } catch (error) {
           setError('Error fetching data. Please try again later.');
@@ -34,16 +53,14 @@ function Requests() {
 
       fetchData();
     } else {
-      navigate('/Log-in')
-      // setError('You are not authorized to view this page. Please log in.');
+      navigate('/Log-in');
     }
   }, []); // The empty dependency array ensures that the effect runs only once on component mount
 
-  // Assuming 5 items per page for pagination
+  // Pagination variables and functions
   const itemsPerPage = 5;
   const totalPages = Math.ceil(data.length / itemsPerPage);
 
-  // Example of how you might implement pagination
   const handlePageClick = (selectedPage) => {
     // Handle page change logic here
     console.log(`Selected Page: ${selectedPage}`);
@@ -60,7 +77,6 @@ function Requests() {
           <table>
             <thead>
               <tr>
-                {/* <th>Palika</th> */}
                 <th>Name</th>
                 <th>Phone</th>
                 <th>Citizenship No</th>
@@ -74,7 +90,6 @@ function Requests() {
             <tbody>
               {data.map((item, index) => (
                 <tr key={index}>
-                  {/* <td>{item.palika}</td> */}
                   <td>{item.name}</td>
                   <td>{item.phone}</td>
                   <td>{item.citizenship_no}</td>
