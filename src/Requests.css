@@ -39,10 +39,9 @@
     border: 1px solid #ccc;
   }
   
-  .requests-table  .pagination button active {
-    background-color: #ff0011;
-    color: #fff;
-    border: 1px solid #007bff;
+  .pagination button.active {
+    background-color: rgb(42, 12, 72);
+ 
   }
   
   
