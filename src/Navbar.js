@@ -43,7 +43,7 @@ function Navbar() {
                 data-tooltip="राहत अनुरोध"
               >
                 <Link to="/Relief">
-                  <i className="fas fa-paper-plane"></i> <span>Relief Request</span>
+                <i class="fas fa-hands-helping"></i><span>Relief Request</span>
                 </Link>
               </div>
 

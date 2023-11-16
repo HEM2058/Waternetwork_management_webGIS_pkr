@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 import './QuickAid.css';
 import OpenLayersMap from './map';
 
 const QuickAid = () => {
-  const [hidepopup,setHidepopup] = useState(true)
+  const [hidepopup, setHidepopup] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [location, setLocation] = useState('');
   const [name, setName] = useState('');
@@ -16,9 +17,7 @@ const QuickAid = () => {
   const [palika, setPalika] = useState('');
   const [ward, setWard] = useState('');
   const [coordinate, setCoordinate] = useState('');
-  console.log(palika)
-  console.log(disaster)
-  console.log(location)
+
   const nextPage = () => {
     setCurrentPage((prevPage) => prevPage + 1);
   };
@@ -70,9 +69,23 @@ const QuickAid = () => {
 
       console.log('Response from the server:', response.data);
 
+      // Display sweet alert based on the response
+      Swal.fire({
+        icon: 'success',
+        title: 'Request Submitted',
+        text: 'Your relief request has been successfully submitted!',
+      });
+
       // You can also redirect to a success page or perform other actions based on the response
     } catch (error) {
       console.error('Error sending request:', error.message);
+
+      // Display error sweet alert
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Failed to submit the request. Please try again later.',
+      });
     }
   };
 
