@@ -41,7 +41,7 @@ const AddPlaceForm = () => {
   };
 
   return (
-    <div className="container mt-5">
+    <div className="container-addplace">
       <h2>Add Place</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">

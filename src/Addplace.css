@@ -1,52 +1,65 @@
-/* Default styles */
+/* Addplace.css */
 
-
+.container-addplace {
+    width: 800px;
+    margin: auto;
+}
   
-  .container .form-group {
+
+.container-addplace .form-group {
     margin-bottom: 20px;
   }
   
-  /* Responsive styles */
-  @media (max-width: 768px) {
-    .container {
-      max-width: 100%;
-      padding: 0 15px;
-    }
-  
-    .form-group {
-      margin-bottom: 15px;
-    }
-  }
-  
-  /* Styles for Select Palika */
-  #municipality-unique {
+
+  .container-addplace  #municipality-unique {
     width: 100%;
   }
   
-  /* Styles for Place Title */
-  #place-title {
-    width: 100%;
-  }
-  
-  /* Styles for Place Description */
-  #place-description {
-    width: 100%;
-  }
-  
-  /* Styles for Place Image */
-  #place-image {
-    width: 100%;
-  }
-  
-  /* Styles for Place Coordinates */
+ 
+.container-addplace  #place-title,
+  #place-description,
+  #place-image,
   #place-coordinates {
     width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #555;
+    transition: border-color 0.3s ease;
   }
   
-  /* Styles for Submit Button */
-  .btn-primary {
+  .container-addplace   #place-title:focus,
+  #place-description:focus,
+  #place-image:focus,
+  #place-coordinates:focus {
+    border-color: #007BFF;
+  }
+  .container-addplace    .btn-primary {
     display: block;
     width: 100%;
     padding: 10px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .container-addplace  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+  
+  @media (max-width: 768px) {
+    .container-addplace     #municipality-unique,
+    #place-title,
+    #place-description,
+    #place-image,
+    #place-coordinates,
+    .btn-primary {
+      width: 100%;
+    }
   }
   
