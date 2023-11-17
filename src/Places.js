@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import './Places.css';
@@ -8,15 +7,18 @@ function Places() {
   const nepaliData = location.state ? location.state.nepaliData : null;
   const [palika, setPalika] = useState(nepaliData);
   const [places, setPlaces] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     // Fetch data from the API dynamically based on the selected palika
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:2500/api/Places/${palika}/`);
+        const response = await fetch(`http://127.0.0.1:2500/api/Places/${palika}/?page=${currentPage}`);
         if (response.ok) {
           const data = await response.json();
-          setPlaces(data); // Assuming the API response is an array of places
+          setPlaces(data.results); // Assuming the API response has a 'results' property containing an array of places
+          setTotalPages(Math.ceil(data.count / 1)); // Assuming 1 items per page
           console.log(data);
         } else {
           console.error('Failed to fetch places:', response.statusText);
@@ -27,10 +29,19 @@ function Places() {
     };
 
     fetchData();
-  }, [palika]); // Trigger the effect whenever the selected palika changes
+  }, [palika, currentPage]); // Trigger the effect whenever the selected palika or current page changes
 
   const handlePalikaChange = (e) => {
     setPalika(e.target.value);
+    setCurrentPage(1); // Reset current page when changing the selected palika
+  };
+
+  const openPopup = (imageUrl) => {
+    window.open(imageUrl, 'Image Popup', 'width=600,height=400');
+  };
+
+  const handlePageClick = (page) => {
+    setCurrentPage(page);
   };
 
   return (
@@ -38,7 +49,6 @@ function Places() {
       <div className='header'>
         <select id="municipality-unique" value={palika} onChange={handlePalikaChange}>
           {/* Options for palika selection */}
-          <option value="">All Palika</option>
           <option value="Bungal">बुङ्गल नगरपालिका</option>
           <option value="Bitthadchir">बित्थडचिर गाँउपालिका</option>
           <option value="Chhabispathibhera">छबिसपाथिभेरा गाँउपालिका</option>
@@ -55,28 +65,38 @@ function Places() {
       </div>
 
       <div className='places-list'>
-        {places.map((place, index) => (
-          <div className='place-container' key={index}>
-            <div className='place-title'>{place.place_title}</div>
-            <div className='image-container'>
-              <img src={place.place_image} alt='Place Image' />
+        {places.length === 0 ? (
+          <div className='no-places-found'>No places found for the selected palika.</div>
+        ) : (
+          places.map((place, index) => (
+            <div className='place-container' key={index}>
+              <div className='place-title'>{place.place_title}</div>
+              <div className='image-container'>
+                <img src={place.place_image} alt='Place Image' />
+              </div>
+              <div className='place-control'>
+                <button id='share'><i className="fas fa-share"></i></button>
+                <button id='expand' onClick={() => openPopup(place.place_image)}><i className="fas fa-expand"></i></button>
+              </div>
+              <div className='place-description'>
+                {place.place_description}
+              </div>
             </div>
-            <div className='place-control'>
-              <button id='share'><i className="fas fa-share"></i></button>
-              <button id='expand'><i className="fas fa-expand"></i></button>
-            </div>
-            <div className='place-description'>
-              {place.place_description}
-            </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
 
       {/* Pagination */}
       <div className='pagination'>
-        <button>&laquo; Prev</button>
-        <span className='current-page'>1</span>
-        <button>Next &raquo;</button>
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index}
+            onClick={() => handlePageClick(index + 1)}
+            className={currentPage === index + 1 ? 'active' : ''}
+          >
+            {index + 1}
+          </button>
+        ))}
       </div>
     </div>
   );

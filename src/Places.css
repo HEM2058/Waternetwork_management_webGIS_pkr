@@ -44,7 +44,16 @@
     height: 200px; /* Set the desired height */
     background-size: cover;
     background-position: center;
+    display: flex;
+    place-content: center;
   }
+  /* Apply the styles to the image inside the container */
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Maintain aspect ratio and cover the container */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+}
   
   .place-description {
     font-size: 14px;
