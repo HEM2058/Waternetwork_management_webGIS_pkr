@@ -1,17 +1,43 @@
-import './Places.css'
+
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import React from 'react'
+import './Places.css';
 
 function Places() {
   const location = useLocation();
   const nepaliData = location.state ? location.state.nepaliData : null;
-  return (
-  
-    <div className='places-container'>
-      
+  const [palika, setPalika] = useState(nepaliData);
+  const [places, setPlaces] = useState([]);
 
+  useEffect(() => {
+    // Fetch data from the API dynamically based on the selected palika
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://127.0.0.1:2500/api/Places/${palika}/`);
+        if (response.ok) {
+          const data = await response.json();
+          setPlaces(data); // Assuming the API response is an array of places
+          console.log(data);
+        } else {
+          console.error('Failed to fetch places:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error fetching places:', error.message);
+      }
+    };
+
+    fetchData();
+  }, [palika]); // Trigger the effect whenever the selected palika changes
+
+  const handlePalikaChange = (e) => {
+    setPalika(e.target.value);
+  };
+
+  return (
+    <div className='places-container'>
       <div className='header'>
-        <select id="municipality-unique" value={nepaliData}>
+        <select id="municipality-unique" value={palika} onChange={handlePalikaChange}>
+          {/* Options for palika selection */}
           <option value="">All Palika</option>
           <option value="Bungal">बुङ्गल नगरपालिका</option>
           <option value="Bitthadchir">बित्थडचिर गाँउपालिका</option>
@@ -27,56 +53,33 @@ function Places() {
           <option value="Thalara">थलारा गाउँपालिका</option>
         </select>
       </div>
-      
-      
-    <div className='places-list'>
-      <div className='place-container'>
-        <div className='place-title'>Shaileshwori Temple</div>
-        <div className='image-container'>
-          <img src='' alt='Place Image' />
-        </div>
-        <div className='place-control'>
-        <button id='share'><i class="fas fa-share"></i></button>
-          <button id='expand'><i class="fas fa-expand"></i></button>
-        </div>
-        <div className='place-description'>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam alias tenetur eum, ipsa corporis illo recusandae fugiat sapiente neque reiciendis quia ullam. Sint ex sed facilis deleniti consectetur quo consequatur eveniet? Quas deleniti fuga, vero blanditiis saepe culpa, hic eum ea iste dolorem minus incidunt, nihil sit quisquam earum aliquam ratione aperiam unde laborum nesciunt? Laborum dolor ipsam quas aliquam laudantium deleniti magni cupiditate fugiat doloremque repellat vero, earum obcaecati temporibus quos consequatur deserunt dolores est, inventore doloribus culpa assumenda quidem laboriosam similique. Enim natus voluptates autem vel non explicabo sequi iste repellat aliquid nihil adipisci eveniet molestiae veniam corrupti, dolores eius quaerat inventore nam vitae tempore officia. Vitae explicabo autem libero eaque illo vel temporibus. Deserunt dolores porro sed.
-        </div>
+
+      <div className='places-list'>
+        {places.map((place, index) => (
+          <div className='place-container' key={index}>
+            <div className='place-title'>{place.place_title}</div>
+            <div className='image-container'>
+              <img src={place.place_image} alt='Place Image' />
+            </div>
+            <div className='place-control'>
+              <button id='share'><i className="fas fa-share"></i></button>
+              <button id='expand'><i className="fas fa-expand"></i></button>
+            </div>
+            <div className='place-description'>
+              {place.place_description}
+            </div>
+          </div>
+        ))}
       </div>
-      <div className='place-container'>
-        <div className='place-title'>Shaileshwori Temple</div>
-        <div className='image-container'>
-          <img src='' alt='Place Image' />
-        </div>
-        <div className='place-control'>
-          <button id='share'><i class="fas fa-share"></i></button>
-          <button id='expand'><i class="fas fa-expand"></i></button>
-        </div>
-        <div className='place-description'>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus soluta nemo dicta eius adipisci doloribus laboriosam eos? Nesciunt, fugit. Soluta dicta adipisci autem beatae reiciendis fuga sapiente, dolorum explicabo. Ea eligendi quasi dicta error ducimus, quos fugiat assumenda amet velit ex porro in, placeat doloribus iusto rem facere odio? Illum impedit, officia consequuntur reprehenderit ratione natus reiciendis dolorem, est assumenda illo perspiciatis eum dolor culpa quisquam sit iusto! Praesentium adipisci earum hic enim voluptatum et, voluptates eius deleniti velit nulla similique laborum. Voluptatem unde pariatur magni, sequi temporibus commodi nesciunt hic libero laborum autem neque corporis doloremque iusto saepe sed exercitationem rerum culpa minus aspernatur obcaecati placeat ad repudiandae magnam. Molestias excepturi reprehenderit perferendis soluta numquam? Et laboriosam quibusdam esse.
-        </div>
+
+      {/* Pagination */}
+      <div className='pagination'>
+        <button>&laquo; Prev</button>
+        <span className='current-page'>1</span>
+        <button>Next &raquo;</button>
       </div>
-      
-     
-      {/* <!-- Repeat this structure for other places --> */}
-  
-      {/* <!-- Pagination --> */}
-     
-    <div class='pagination'>
-      <button>&laquo; Prev</button>
-      <span class='current-page'>1</span>
-      <button>Next &raquo;</button>
     </div>
-    </div>
-  </div>
-  
-   
-  )
+  );
 }
 
-export default Places
-
-
-
-
-
+export default Places;

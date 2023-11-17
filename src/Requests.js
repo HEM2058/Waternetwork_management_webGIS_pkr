@@ -89,7 +89,7 @@ function Requests() {
                     <th>Ward</th>
                     <th>Location</th>
                     <th>Requested Date</th>
-                    <th>Image</th>
+                    <th>Reference</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -103,7 +103,11 @@ function Requests() {
                       <td>{item.ward}</td>
                       <td>{item.location}</td>
                       <td>{item.uploaded_date}</td>
-                      <td>{item.img}</td>
+                      <td className='img-link'>
+        <a href={item.img} target="_blank" rel="noopener noreferrer">
+        Image
+        </a>
+      </td>
                     </tr>
                   ))}
                 </tbody>
