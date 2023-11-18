@@ -4,7 +4,7 @@ import './Places.css';
 
 function Places() {
   const location = useLocation();
-  const nepaliData = location.state ? location.state.nepaliData : null;
+  const nepaliData = location.state ? location.state.nepaliData : 'Bungal';
   const [palika, setPalika] = useState(nepaliData);
   const [places, setPlaces] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
