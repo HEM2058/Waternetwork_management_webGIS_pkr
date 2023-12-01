@@ -1,5 +1,5 @@
 /* Styling for the map container */
-.map {
+#map {
     width: 100%; /* Set the desired width */
     height: calc(100vh - 70px); 
     
@@ -485,3 +485,81 @@ button[data-tooltip]:hover:after {
 
 
 
+.filter-popup {
+  position: absolute;
+  top: 185px;
+  right: 4px;
+  background: #007BFF;
+  color: #fff;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  width: 155px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.filter-popup button {
+  font-size: 15px;
+  padding: 10px;
+  background-color: transparent;
+  color: #fff;
+  border: none;
+  border-bottom: 1px solid #fff;
+  transition: background-color 0.3s ease;
+}
+
+.filter-popup button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Style for the select dropdown */
+.filter-popup select {
+  margin: 10px;
+  padding: 5px;
+  border-radius: 5px;
+  outline: none;
+}
+
+.filter-popup label {
+  margin-left: 10px;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+/* Optional styling for the loading message */
+.filter-popup p {
+  margin: 10px;
+}
+
+/* Optional styling for the filtered data */
+.filter-popup ul {
+  list-style: none;
+  padding: 0;
+  height: 200px;
+  overflow-y: auto;
+}
+
+.filter-popup li {
+  font-size: 13px;
+  margin: 5px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+}
+
+.filter-popup li:hover {
+  background-color: #f7f7f7;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.filter-popup li.active {
+  background-color: #ff0000; /* Change this to your desired background color for the active item */
+  color: #ffffff; /* Change this to your desired text color for the active item */
+}

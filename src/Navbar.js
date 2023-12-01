@@ -18,7 +18,7 @@ function Navbar() {
           <Link to="/">
             <div className="logo1-container">
               <img src={WavingFlag} alt="WavingFlag" className="logo1" />
-              <h2>Bajhang Digital Map</h2>
+              <h2>Pokhara Metro Web GIS based Water Pipeline Management System</h2>
             </div>
           </Link>
 
@@ -32,20 +32,11 @@ function Navbar() {
                 data-tooltip="स्थानहरू"
               >
                 <Link to="/places">
-                  <i className="fas fa-map-marker"></i> <span>Places</span>
+                  <i className="fas fa-database"></i> <span>Database</span>
                 </Link>
               </div>
 
-              <div
-                className={`icon-container ${
-                  location.pathname === '/Relief' || location.pathname === '/QuickAid' ? 'active' : ''
-                }`}
-                data-tooltip="राहत अनुरोध"
-              >
-                <Link to="/Relief">
-                <i class="fas fa-hands-helping"></i><span>Relief Request</span>
-                </Link>
-              </div>
+         
 
               {/* Render Palika Dashboard or Palika Login based on login status */}
               {isLoggedIn ? (
@@ -67,7 +58,7 @@ function Navbar() {
                   data-tooltip="पालिका लगइन"
                 >
                   <Link to="/Log-in">
-                    <i className="fas fa-sign-in-alt"></i><span> Palika Login</span>
+                    <i className="fas fa-sign-in-alt"></i><span> Metro Login</span>
                   </Link>
                 </div>
               )}

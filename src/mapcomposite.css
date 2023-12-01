@@ -1,4 +1,9 @@
 /* MapComposite.css */
+.map-composite-container{
+display: flex;
+}
+
+
 .map-container {
   position: relative;
   width: 100%;

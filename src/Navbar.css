@@ -36,7 +36,7 @@
 /* Rest of your CSS remains the same... */
 
 .logo1-container h2 {
-  font-size: 30px;
+  font-size: 25px;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   color: white;
   animation: headerAnimation 5s linear infinite alternate;

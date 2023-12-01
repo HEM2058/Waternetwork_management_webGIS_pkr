@@ -6,7 +6,7 @@ function ApiDataFetcher({ onDataFetched }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:2500/api/geoshp');
+        const response = await fetch('http://127.0.0.1:2500/api/geojson-features');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

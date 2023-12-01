@@ -63,7 +63,7 @@ const LoginForm = () => {
   return (
     <div className="login-container">
       <h1 className="login-header">
-        <FontAwesomeIcon icon={faBuilding} /> Palika Login
+        <FontAwesomeIcon icon={faBuilding} /> Pokhara Metro Login
       </h1>
       <form onSubmit={handleSubmit} className="login-form">
         <div>

@@ -1,45 +1,59 @@
 import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilter } from '@fortawesome/free-solid-svg-icons';
 import OpenLayersMap from './map';
-import './mapcomposite.css'; // Import your CSS file for styling
+import './mapcomposite.css';
 import ApiDataFetcher from './ApiDataFetcher';
+import NetworkAnalysis from './Networkanalysis';
 import { Link } from 'react-router-dom';
+
 function MapComposite() {
-  const [showFilter, setShowFilter] = useState(false);
   const [apiData, setApiData] = useState([]);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const [selectedCoordinate, setSelectedCoordinate] = useState(null);
+  const [fillInputMode, setFillInputMode] = useState(false);
+  
 
   const handleDataFetched = (data) => {
-    setApiData(data); // Store the data in the state
-    setIsDataLoaded(true); // Set the data-loaded flag to true
-  };
-  const toggleFilter = () => {
-    setShowFilter(!showFilter);
+    setApiData(data);
+    setIsDataLoaded(true);
   };
 
+  const handleMapClick = (coordinate) => {
+   
+    setSelectedCoordinate(coordinate);
+
+    // setFillInputMode(true); // Set fillInputMode to true when the map is clicked
+  };
+
+  const handleFillInputCallback = (value) => {
+    // Handle the callback value from NetworkAnalysis
+    setFillInputMode(value)
+    console.log('Callback value from NetworkAnalysis:', value);
+    // Perform further actions based on the value if needed
+  };
+ // Define a no-op function
+ const noOp = () => {};
   return (
-    <div className="map-container">
-      {/* <div className={`filter-toggle ${showFilter ? 'active' : ''}`}>
-        <button onClick={toggleFilter}>
-          <FontAwesomeIcon icon={faFilter} />
-        </button>
-      </div> */}
-     
-      <ApiDataFetcher onDataFetched={handleDataFetched} />
-      {isDataLoaded ? ( // Conditional rendering of OpenLayersMap
-  <OpenLayersMap apiData={apiData} />
-) : null}
+    <div className="map-composite-container">
+      <div className="left-panel">
+        <NetworkAnalysis
+          selectedCoordinate={selectedCoordinate}
+          fillInputMode={fillInputMode}
+          onFillInputCallback={handleFillInputCallback}
+        />
+      </div>
 
-      
+      <div className="map-container">
+        <ApiDataFetcher onDataFetched={handleDataFetched} />
+        {isDataLoaded ? (
+      <OpenLayersMap
+      apiData={apiData}
+      onMapClick={handleMapClick}
+    />
     
+        ) : null}
+      </div>
     </div>
   );
-}
-
-function handleReliefRequestClick() {
-  // Implement the logic for handling the relief request here
-  // For example, you can open a modal or navigate to a relief request page.
 }
 
 export default MapComposite;

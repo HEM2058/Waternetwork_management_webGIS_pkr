@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import './MunicipalityInfo.css'
 import { Routes, Route, Link, useNavigate } from 'react-router-dom';
-import Places from './Places';
 
 function MunicipalityInfo({ data }) {
   const [palikaname, setPalikaname] = useState('');
@@ -14,20 +13,22 @@ console.log(navigate)
     navigate('/places',{state: { nepaliData: data.LOCAL}});
     
   };
+    // Assuming data.Layer is a string
+    const modifiedLayer = data.Layer.replace(/dia/g, 'meter');
 
   return (
     <div className="map_popup">
-      <div className="map_popup__title">{data.NEPALI_NAME}</div>
+      <div className="map_popup__title">Water Pipeline</div>
       <div className="map_popup__content">
-        <strong>{data.LOCAL}</strong> ({data.TYPE})
+        <strong>Pipe Diameter</strong> ({ modifiedLayer})
         <div className="map_popup__btn-row">
-       <a className="map_popup__btn" href={data.WEBSITE} target="_blank">
+       {/* <a className="map_popup__btn" href={data.WEBSITE} target="_blank">
             WEBSITE <i className="fas fa-arrow-right arrow-animation"></i>
           </a>
        
           <button className="map_popup__btn" onClick={handlePlacesClick}>
             PLACES <i className="fas fa-arrow-right arrow-animation"></i>
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

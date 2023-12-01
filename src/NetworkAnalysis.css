@@ -1,0 +1,46 @@
+.network-analysis-container {
+    width: 300px; /* Adjust the width based on your layout */
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+
+  }
+  .network-analysis{
+    height: 100%;
+    overflow-y: auto;
+  }
+  .feature {
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition for background color change */
+  }
+  
+  .feature.expanded {
+    background-color: #f0f0f0;
+  }
+  
+  .feature-header {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .feature-content {
+    margin-top: 10px;
+  }
+  
+  .input-group {
+    margin-bottom: 10px;
+  }
+  
+  .info-icon {
+    color: #3498db;
+    cursor: pointer;
+    transition: color 0.3s ease; /* Smooth transition for color change */
+  }
+  
+  .info-icon:hover {
+    color: #2980b9;
+  }
+  
