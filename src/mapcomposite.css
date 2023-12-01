@@ -1,7 +1,10 @@
 /* MapComposite.css */
 .map-composite-container{
 display: flex;
+height: calc(100vh - 70px);
+
 }
+
 
 
 .map-container {

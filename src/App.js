@@ -9,6 +9,7 @@ import PalikaDashboard from './PalikaDashboard';
 import Requests from './Requests';
 import Addplace from './Addplace';
 import Networkanalysis from './Networkanalysis';
+import Sidebar from './sidebar';
 import {Routes, Route} from 'react-router-dom';
 
 
@@ -25,6 +26,8 @@ function App() {
             <Route path="/palika_dashboard/requests" element= {<Requests/>}/>
             <Route path="/palika_dashboard/Add_Place" element= {<Addplace/>}/>
             <Route path="/Networkanalysis" element= {<Networkanalysis/>}/>
+            <Route path="/sidebar" element= {<Sidebar/>}/>
+
 
           </Routes>
       

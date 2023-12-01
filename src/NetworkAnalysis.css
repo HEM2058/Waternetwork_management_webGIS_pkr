@@ -3,44 +3,49 @@
     height: 100%;
     padding: 20px;
     box-sizing: border-box;
+    position: relative;
+    left: 90px;
+  
+   
+}
 
-  }
-  .network-analysis{
+.network-analysis {
     height: 100%;
     overflow-y: auto;
-  }
-  .feature {
+}
+
+.feature {
     border: 1px solid #ddd;
     margin-bottom: 10px;
     padding: 10px;
     cursor: pointer;
     transition: background-color 0.3s ease; /* Smooth transition for background color change */
-  }
-  
-  .feature.expanded {
+    overflow: hidden; /* Ensure content doesn't overflow the feature box */
+}
+
+.feature.expanded {
     background-color: #f0f0f0;
-  }
-  
-  .feature-header {
+}
+
+.feature-header {
     display: flex;
     justify-content: space-between;
-  }
-  
-  .feature-content {
+}
+
+.feature-content {
     margin-top: 10px;
-  }
-  
-  .input-group {
+}
+
+.input-group {
     margin-bottom: 10px;
-  }
-  
-  .info-icon {
+}
+
+.info-icon {
     color: #3498db;
     cursor: pointer;
     transition: color 0.3s ease; /* Smooth transition for color change */
-  }
-  
-  .info-icon:hover {
+}
+
+.info-icon:hover {
     color: #2980b9;
-  }
-  
+}

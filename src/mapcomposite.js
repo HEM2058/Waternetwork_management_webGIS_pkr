@@ -3,6 +3,7 @@ import OpenLayersMap from './map';
 import './mapcomposite.css';
 import ApiDataFetcher from './ApiDataFetcher';
 import NetworkAnalysis from './Networkanalysis';
+import Sidebar from './sidebar';
 import { Link } from 'react-router-dom';
 
 function MapComposite() {
@@ -10,7 +11,6 @@ function MapComposite() {
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [selectedCoordinate, setSelectedCoordinate] = useState(null);
   const [fillInputMode, setFillInputMode] = useState(false);
-  
 
   const handleDataFetched = (data) => {
     setApiData(data);
@@ -18,23 +18,26 @@ function MapComposite() {
   };
 
   const handleMapClick = (coordinate) => {
-   
     setSelectedCoordinate(coordinate);
-
     // setFillInputMode(true); // Set fillInputMode to true when the map is clicked
   };
 
   const handleFillInputCallback = (value) => {
     // Handle the callback value from NetworkAnalysis
-    setFillInputMode(value)
+    setFillInputMode(value);
     console.log('Callback value from NetworkAnalysis:', value);
     // Perform further actions based on the value if needed
   };
- // Define a no-op function
- const noOp = () => {};
+
+  // Define a no-op function
+  const noOp = () => {};
+
   return (
     <div className="map-composite-container">
+
+     
       <div className="left-panel">
+      <Sidebar />
         <NetworkAnalysis
           selectedCoordinate={selectedCoordinate}
           fillInputMode={fillInputMode}
@@ -45,11 +48,7 @@ function MapComposite() {
       <div className="map-container">
         <ApiDataFetcher onDataFetched={handleDataFetched} />
         {isDataLoaded ? (
-      <OpenLayersMap
-      apiData={apiData}
-      onMapClick={handleMapClick}
-    />
-    
+          <OpenLayersMap apiData={apiData} onMapClick={handleMapClick} />
         ) : null}
       </div>
     </div>

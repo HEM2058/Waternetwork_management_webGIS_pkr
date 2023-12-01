@@ -1,6 +1,8 @@
 /* Styling for the map container */
 #map {
-    width: 100%; /* Set the desired width */
+  position: relative;
+  left: 10%;
+    width: 90%; /* Set the desired width */
     height: calc(100vh - 70px); 
     
   }
