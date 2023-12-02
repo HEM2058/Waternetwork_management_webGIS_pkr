@@ -18,7 +18,7 @@ function Navbar() {
           <Link to="/">
             <div className="logo1-container">
               <img src={WavingFlag} alt="WavingFlag" className="logo1" />
-              <h2>Pokhara Metro Web GIS based Water Pipeline Management System</h2>
+              <h2>Pokhara Khanepani web GIS application</h2>
             </div>
           </Link>
 

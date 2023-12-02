@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './map.css';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
-import { NavigationControl } from 'maplibre-gl'; // Add this import
-import NetworkAnalysis from './Networkanalysis';
+import { NavigationControl, ScaleControl } from 'maplibre-gl';
 
 function ButtonContainer({ map, resetFunction, exportMapImage, toggleBaseLayerPopup, showBaseLayerPopup, handleBaseLayerChange, toggleFilterPopup, showFilterPopup, apiData }) {
   const [filteredData, setFilteredData] = useState([]);
@@ -11,26 +10,23 @@ function ButtonContainer({ map, resetFunction, exportMapImage, toggleBaseLayerPo
   const [selectedFilterLayer, setSelectedFilterLayer] = useState('');
   const [selectedListItemIndex, setSelectedListItemIndex] = useState(null);
   console.log(selectedListItemIndex)
-  const handleItemClick = (feature,index) => {
-    console.log(feature)
+
+  const handleItemClick = (feature, index) => {
     setSelectedListItemIndex(index);
     const multiLineString = feature.geometry.coordinates;
-  
-    // Calculate the bounds manually
+
     const lineBounds = multiLineString.reduce((bounds, lineString) => {
       lineString.forEach((coord) => {
         bounds.extend(maplibregl.LngLat.convert(coord));
       });
       return bounds;
     }, new maplibregl.LngLatBounds());
-  
-    // Remove the existing highlight layer if it exists
+
     if (map.getLayer('highlight-layer')) {
       map.removeLayer('highlight-layer');
       map.removeSource('highlight');
     }
-  
-    // Add the new highlight layer to the map
+
     map.addSource('highlight', {
       type: 'geojson',
       data: {
@@ -41,7 +37,7 @@ function ButtonContainer({ map, resetFunction, exportMapImage, toggleBaseLayerPo
         },
       },
     });
-  
+
     map.addLayer({
       id: 'highlight-layer',
       type: 'line',
@@ -55,13 +51,10 @@ function ButtonContainer({ map, resetFunction, exportMapImage, toggleBaseLayerPo
         'line-width': 4,
       },
     });
-  
-    // Adjust padding and duration as needed
+
     map.fitBounds(lineBounds, { padding: 20, duration: 2000 });
   };
-  
-  
-  
+
   useEffect(() => {
     const fetchDataForLayer = async (layerName) => {
       setIsLoading(true);
@@ -82,8 +75,30 @@ function ButtonContainer({ map, resetFunction, exportMapImage, toggleBaseLayerPo
     }
   }, [selectedFilterLayer, apiData]);
 
+  const getCurrentLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          map.flyTo({
+            center: [longitude, latitude], // Reversed order because Mapbox GL uses [lng, lat]
+            zoom: 15,
+          });
+        },
+        (error) => {
+          console.error('Error getting current location:', error.message);
+        }
+      );
+    } else {
+      console.error('Geolocation is not supported by your browser.');
+    }
+  };
+
   return (
     <div className="button-container">
+         <button onClick={getCurrentLocation} data-tooltip="Get Current Location">
+        <i className="fas fa-location-arrow"></i>
+      </button>
       <button id="reset-button" onClick={() => resetFunction()} data-tooltip="Reset Map View">
         <i className="fas fa-undo"></i>
       </button>
@@ -100,7 +115,7 @@ function ButtonContainer({ map, resetFunction, exportMapImage, toggleBaseLayerPo
               type="radio"
               id="DefaultMapToggle"
               name="baseLayer"
-              checked={false} 
+              checked={false}
               onChange={() => handleBaseLayerChange('')}
             />
             <label htmlFor="googleSatelliteToggle">Default BaseMap</label>
@@ -130,35 +145,33 @@ function ButtonContainer({ map, resetFunction, exportMapImage, toggleBaseLayerPo
           </select>
 
           {selectedFilterLayer && (
-      <>
-        {isLoading && <p>Loading...</p>}
-        {filteredData.length > 0 && (
-          <div>
-            <label>Filtered Data:</label>
-            <ul>
-              {filteredData.map((feature, index) => (
-                <li
-                  key={index}
-                  onClick={() => handleItemClick(feature, index)}
-                  className={selectedListItemIndex === index ? 'active' : ''}
-                >
-                  {feature.properties.name}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </>
-    )}
-  
-
+            <>
+              {isLoading && <p>Loading...</p>}
+              {filteredData.length > 0 && (
+                <div>
+                  <label>Filtered Data:</label>
+                  <ul>
+                    {filteredData.map((feature, index) => (
+                      <li
+                        key={index}
+                        onClick={() => handleItemClick(feature, index)}
+                        className={selectedListItemIndex === index ? 'active' : ''}
+                      >
+                        {feature.properties.name}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </>
+          )}
         </div>
       )}
+
+   
     </div>
   );
 }
-
-
 
 function OpenLayersMap({ apiData, onMapClick }) {
   const [map, setMap] = useState(null);
@@ -176,10 +189,39 @@ function OpenLayersMap({ apiData, onMapClick }) {
         center: [83.97517583929165, 28.214732103900108],
         zoom: 11.5,
       });
-       // Add navigation control to the map
-       newMap.addControl(new NavigationControl(), 'bottom-right');
 
-      newMap.on('load', () => {
+      newMap.addControl(new ScaleControl(), 'bottom-right');
+      newMap.addControl(new NavigationControl(), 'bottom-right');
+
+      newMap.on('load', async () => {
+        try {
+          const response = await fetch('/data/servicearea.geojson');
+          const localGeojsonData = await response.json();
+          console.log(localGeojsonData);
+
+          newMap.addSource('local-geojson', {
+            type: 'geojson',
+            data: localGeojsonData,
+          });
+
+          newMap.addLayer({
+            id: 'local-geojson-layer',
+            type: 'line',
+            source: 'local-geojson',
+            layout: {
+              'line-join': 'round',
+              'line-cap': 'round',
+            },
+            paint: {
+              'line-color': '#ff0000',
+              'line-width': 3,
+              'line-dasharray': [2, 2], // Adjust the numbers to change the pattern
+            },
+          });
+        } catch (error) {
+          console.error('Error loading local GeoJSON:', error);
+        }
+
         newMap.addSource('water-pipeline', {
           type: 'geojson',
           data: firstItem.geojson,
@@ -198,46 +240,42 @@ function OpenLayersMap({ apiData, onMapClick }) {
             'line-width': 2,
           },
         });
+
         newMap.on('click', (e) => {
-          // Handle click on the base layer
           if (onMapClick) {
             const clickedCoordinate = newMap.unproject(e.point);
-            console.log(clickedCoordinate)
+            console.log(clickedCoordinate);
             onMapClick(clickedCoordinate);
           }
         });
-      });
 
-      newMap.on('click', 'water-pipeline-layer', (e) => {
-        const featureProperties = e.features[0].properties;
-        const coordinates = e.lngLat;
-      
-        // Check if the feature is a water pipeline
-        if (featureProperties.name === 'waterpipe') {
-          // Display diameter for water pipelines
-          new maplibregl.Popup()
-            .setLngLat(coordinates)
-            .setHTML(`<h3>Diameter</h3><p>${featureProperties.diameter} meter</p>`)
-            .addTo(newMap);
-        } else {
-          // Display only the name for other features
-          new maplibregl.Popup()
-            .setLngLat(coordinates)
-            .setHTML(`<p>${featureProperties.name}</p>`)
-            .addTo(newMap);
-        }
-      });
-      
-      newMap.on('mouseenter', 'water-pipeline-layer', () => {
-        newMap.getCanvas().style.cursor = 'pointer';
-      });
-      
-      newMap.on('mouseleave', 'water-pipeline-layer', () => {
-        newMap.getCanvas().style.cursor = '';
-      });
-      
+        newMap.on('click', 'water-pipeline-layer', (e) => {
+          const featureProperties = e.features[0].properties;
+          const coordinates = e.lngLat;
 
-      setMap(newMap);
+          if (featureProperties.name === 'waterpipe') {
+            new maplibregl.Popup()
+              .setLngLat(coordinates)
+              .setHTML(`<h3>Diameter</h3><p>${featureProperties.diameter} meter</p>`)
+              .addTo(newMap);
+          } else {
+            new maplibregl.Popup()
+              .setLngLat(coordinates)
+              .setHTML(`<p>${featureProperties.name}</p>`)
+              .addTo(newMap);
+          }
+        });
+
+        newMap.on('mouseenter', 'water-pipeline-layer', () => {
+          newMap.getCanvas().style.cursor = 'pointer';
+        });
+
+        newMap.on('mouseleave', 'water-pipeline-layer', () => {
+          newMap.getCanvas().style.cursor = '';
+        });
+
+        setMap(newMap);
+      });
     }
   }, [map, apiData]);
 
@@ -285,13 +323,18 @@ function OpenLayersMap({ apiData, onMapClick }) {
             showFilterPopup={showFilterPopup}
             apiData={apiData}
           />
-      
+          <div className="map-legends">
+  <div className="legend" style={{ backgroundColor: 'red'}}></div>
+  <span>Service Area</span>
+  <div className="legend" style={{ backgroundColor: 'blue' }}></div>
+  <span>Pipeline</span>
+</div>
+
         </>
+        
       )}
     </div>
   );
 }
 
 export default OpenLayersMap;
-
-

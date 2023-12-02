@@ -565,3 +565,29 @@ button[data-tooltip]:hover:after {
   background-color: #ff0000; /* Change this to your desired background color for the active item */
   color: #ffffff; /* Change this to your desired text color for the active item */
 }
+
+/* styles.css */
+
+
+.map-legends {
+  display: flex;
+  margin-top: 10px; /* Adjust the margin as needed */
+  position: absolute;
+  bottom: 0;
+  left: 150px;
+  background-color: white; /* Add a background color to make the legends more visible */
+  padding: 10px; /* Add padding for better spacing */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Add shadow effect */
+}
+
+.legend {
+  width: 20px; /* Adjust the width of the legend color box */
+  height: 20px; /* Adjust the height of the legend color box */
+  margin-right: 5px; /* Adjust the margin between legend items */
+
+}
+
+.map-legends span {
+  margin-right: 15px; /* Adjust the margin between legend color box and text */
+}
+
