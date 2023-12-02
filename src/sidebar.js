@@ -27,9 +27,9 @@ function Sidebar() {
         <i className="fas fa-tasks"></i>
       </div>
       <div
-        className={`tool-icon ${isToolSelected('Pipe Linkage Message') && 'selected'}`}
+        className={`tool-icon ${isToolSelected('Pipe Leakage Message') && 'selected'}`}
         data-tooltip="Pipe Linkage Message"
-        onClick={() => handleToolClick('Pipe Linkage Message')}
+        onClick={() => handleToolClick('Pipe Leakage Message')}
       >
         <i className="fas fa-exclamation-triangle"></i>
       </div>

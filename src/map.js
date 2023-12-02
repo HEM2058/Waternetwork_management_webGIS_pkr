@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './map.css';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
+import { NavigationControl } from 'maplibre-gl'; // Add this import
 import NetworkAnalysis from './Networkanalysis';
 
 function ButtonContainer({ map, resetFunction, exportMapImage, toggleBaseLayerPopup, showBaseLayerPopup, handleBaseLayerChange, toggleFilterPopup, showFilterPopup, apiData }) {
@@ -175,6 +176,8 @@ function OpenLayersMap({ apiData, onMapClick }) {
         center: [83.97517583929165, 28.214732103900108],
         zoom: 11.5,
       });
+       // Add navigation control to the map
+       newMap.addControl(new NavigationControl(), 'bottom-right');
 
       newMap.on('load', () => {
         newMap.addSource('water-pipeline', {
