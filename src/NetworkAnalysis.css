@@ -1,6 +1,6 @@
 .network-analysis-container {
     width: 300px; /* Adjust the width based on your layout */
-    height: 100%;
+    height: calc(100vh - 70px); 
     padding: 20px;
     box-sizing: border-box;
     position: absolute;

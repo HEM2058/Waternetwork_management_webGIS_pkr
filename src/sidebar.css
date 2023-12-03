@@ -1,62 +1,63 @@
 /* sidebar.css */
 
 .sidebar {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    align-items: center;
-    background: #e6e6e7; /* Gradient from left to right */
-    padding: 20px;
-    height: calc(100vh - 70px);
-    width: 40px;
-    position: fixed;
-    left: 0;
-  }
-  
-  .tool-icon {
-    font-size: 27px;
-    color: #4B0082;
-    margin-bottom: 20px;
-    cursor: pointer;
-    transition: transform 0.3s ease-in-out;
-    width: 30px; /* Set width to 30px for all tool icons */
-    height: 30px; /* Set height to 30px for all tool icons */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .tool-icon:hover {
-    transform: scale(1.2);
-  }
-  
-  .tool-icon.selected {
-    background-color: #d1ced3; /* Highlight color for selected tool */
-    width: 200%; /* Full-width for the selected tool */
-    height: 60px; /* Set height to 60px for the selected tool */
-    box-shadow: 0 0 10px rgba(207, 172, 172, 0.3); /* Shadow effect */
-    transition: width 0.3s ease-in-out, height 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Add transitions */
-  }
-  /* Tooltip */
-  .sidebar [data-tooltip] {
-    position: relative;
-  }
-  
-  .sidebar [data-tooltip]::before {
-    content: attr(data-tooltip);
-    position: absolute;
-    background-color: #333;
-    color: #fff;
-    padding: 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s;
-  }
-  
-  [data-tooltip]:hover::before {
-    opacity: 1;
-    visibility: visible;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+  background: #e6e6e7;
+  padding: 20px;
+  height: calc(100vh - 70px);
+  width: 40px;
+  position: fixed;
+  left: 0;
+  z-index: 999;
+}
+
+.tool-icon {
+  font-size: 27px;
+  color: #4B0082;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tool-icon:hover {
+  transform: scale(1.2);
+}
+
+.tool-icon.selected {
+  background-color: #d1ced3;
+  width: 200%;
+  height: 60px;
+  box-shadow: 0 0 10px rgba(207, 172, 172, 0.3);
+  transition: width 0.3s ease-in-out, height 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+/* Tooltip */
+.sidebar [data-tooltip] {
+  position: relative;
+}
+
+.sidebar [data-tooltip]::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  background-color: #333;
+  color: #fff;
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s;
+}
+
+[data-tooltip]:hover::before {
+  opacity: 1;
+  visibility: visible;
+}

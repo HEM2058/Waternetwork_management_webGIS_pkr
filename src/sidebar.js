@@ -1,66 +1,61 @@
-import React, { useState } from 'react';
+// Sidebar.js
+import React from 'react';
+import { NavLink } from 'react-router-dom'; // Use NavLink instead of Link
 import './sidebar.css';
 
-function Sidebar({  }) {
-//  onToolSelect('Network Analysis')
-  const [selectedTool, setSelectedTool] = useState('Network Analysis');
-  const handleToolClick = (tool) => {
-    setSelectedTool(tool);
-    // Notify the parent component about the selected tool
-    // onToolSelect(tool);
-  };
-
-
-  const isToolSelected = (tool) => tool === selectedTool;
-
+function Sidebar() {
   return (
     <div className="sidebar">
-      <div
-        className={`tool-icon ${isToolSelected('Network Analysis') && 'selected'}`}
+      <NavLink
+        to="/Networkanalysis"
+        activeClassName="selected" // Use activeClassName for active styling
+        className="tool-icon"
         data-tooltip="Network Analysis"
-        onClick={() => handleToolClick('Network Analysis')}
       >
         <i className="fas fa-network-wired"></i>
-      </div>
-      <div
-        className={`tool-icon ${isToolSelected('Task Splitting') && 'selected'}`}
+      </NavLink>
+      <NavLink
+        to="/task-splitting"
+        activeClassName="selected"
+        className="tool-icon"
         data-tooltip="Task Splitting"
-        onClick={() => handleToolClick('Task Splitting')}
       >
         <i className="fas fa-tasks"></i>
-      </div>
-      <div
-        className={`tool-icon ${isToolSelected('Pipe Leakage Message') && 'selected'}`}
+      </NavLink>
+      <NavLink
+        to="/Leakage"
+        activeClassName="selected"
+        className="tool-icon"
         data-tooltip="Pipe Leakage Message"
-        onClick={() => handleToolClick('Pipe Leakage Message')}
       >
         <i className="fas fa-exclamation-triangle"></i>
-      </div>
-      <div
-        className={`tool-icon ${isToolSelected('Edit Pipeline') && 'selected'}`}
+      </NavLink>
+      <NavLink
+        to="/edit-pipeline"
+        activeClassName="selected"
+        className="tool-icon"
         data-tooltip="Edit Pipeline"
-        onClick={() => handleToolClick('Edit Pipeline')}
       >
         <i className="fas fa-edit"></i>
-      </div>
-      <div
-        className={`tool-icon ${isToolSelected('Add Pipeline') && 'selected'}`}
+      </NavLink>
+      <NavLink
+        to="/add-pipeline"
+        activeClassName="selected"
+        className="tool-icon"
         data-tooltip="Add Pipeline"
-        onClick={() => handleToolClick('Add Pipeline')}
       >
         <i className="fas fa-plus-circle"></i>
-      </div>
-      <div
-        className={`tool-icon ${isToolSelected('Field Calculator') && 'selected'}`}
+      </NavLink>
+      <NavLink
+        to="/field-calculator"
+        activeClassName="selected"
+        className="tool-icon"
         data-tooltip="Field Calculator"
-        onClick={() => handleToolClick('Field Calculator')}
       >
         <i className="fas fa-calculator"></i>
-      </div>
+      </NavLink>
     </div>
   );
 }
 
 export default Sidebar;
-
-
