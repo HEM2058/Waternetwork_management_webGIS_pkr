@@ -1,8 +1,8 @@
 /* Styling for the map container */
 #map {
   position: relative;
-  left: 10%;
-    width: 90%; /* Set the desired width */
+  left: 80px;
+    width: calc(100%- 80px); 
     height: calc(100vh - 70px); 
     
   }
@@ -424,7 +424,7 @@ button[data-tooltip]:hover:after {
 
 .base-layer-popup {
   position: absolute;
-  top: 185px;
+  top: 225px;
   right: 4px;
   background: #007BFF;
   color: #fff;
@@ -489,7 +489,7 @@ button[data-tooltip]:hover:after {
 
 .filter-popup {
   position: absolute;
-  top: 185px;
+  top: 225px;
   right: 4px;
   background: #007BFF;
   color: #fff;

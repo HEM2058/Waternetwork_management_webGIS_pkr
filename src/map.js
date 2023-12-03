@@ -79,21 +79,62 @@ function ButtonContainer({ map, resetFunction, exportMapImage, toggleBaseLayerPo
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          const { latitude, longitude } = position.coords;
+          const { latitude, longitude, accuracy } = position.coords;
           map.flyTo({
-            center: [longitude, latitude], // Reversed order because Mapbox GL uses [lng, lat]
-            zoom: 15,
+            center: [longitude, latitude],
+            zoom: 25,
           });
+  
+          // Create a GeoJSON point feature for the current location
+          const pointFeature = {
+            type: 'Feature',
+            geometry: {
+              type: 'Point',
+              coordinates: [longitude, latitude],
+            },
+            properties: {
+              title: 'Current Location',
+              description: `Accuracy: ${accuracy} meters`,
+            },
+          };
+  
+          // Add the point feature source
+          map.addSource('current-location', {
+            type: 'geojson',
+            data: pointFeature,
+          });
+  
+          // Add a circle layer to represent the accuracy
+          map.addLayer({
+            id: 'current-location-circle',
+            type: 'circle',
+            source: 'current-location',
+            paint: {
+              'circle-radius': accuracy,
+              'circle-color': 'black',
+              'circle-opacity': 0.3,
+              'circle-stroke-color': 'black',
+              'circle-stroke-width': 1,
+            },
+          });
+  
+       
         },
         (error) => {
           console.error('Error getting current location:', error.message);
+        },
+        // Optional: Add options for better accuracy
+        {
+          enableHighAccuracy: true,
+          timeout: 5000,
+          maximumAge: 0,
         }
       );
     } else {
       console.error('Geolocation is not supported by your browser.');
     }
   };
-
+  
   return (
     <div className="button-container">
          <button onClick={getCurrentLocation} data-tooltip="Get Current Location">

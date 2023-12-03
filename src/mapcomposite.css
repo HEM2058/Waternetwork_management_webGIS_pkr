@@ -3,13 +3,15 @@
 display: flex;
 height: calc(100vh - 70px);
 
+
 }
 
 
 
 .map-container {
   position: relative;
-  width: 100%;
+
+  width: calc(100% - 80px); 
   height: calc(100vh - 70px);
 }
 

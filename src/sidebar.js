@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import './sidebar.css';
 
-function Sidebar() {
-  const [selectedTool, setSelectedTool] = useState(null);
-
+function Sidebar({  }) {
+//  onToolSelect('Network Analysis')
+  const [selectedTool, setSelectedTool] = useState('Network Analysis');
   const handleToolClick = (tool) => {
     setSelectedTool(tool);
+    // Notify the parent component about the selected tool
+    // onToolSelect(tool);
   };
+
 
   const isToolSelected = (tool) => tool === selectedTool;
 
@@ -28,7 +31,7 @@ function Sidebar() {
       </div>
       <div
         className={`tool-icon ${isToolSelected('Pipe Leakage Message') && 'selected'}`}
-        data-tooltip="Pipe Linkage Message"
+        data-tooltip="Pipe Leakage Message"
         onClick={() => handleToolClick('Pipe Leakage Message')}
       >
         <i className="fas fa-exclamation-triangle"></i>
@@ -59,3 +62,5 @@ function Sidebar() {
 }
 
 export default Sidebar;
+
+

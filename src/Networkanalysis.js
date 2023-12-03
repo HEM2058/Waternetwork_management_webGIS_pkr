@@ -3,11 +3,11 @@ import './NetworkAnalysis.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
-function NetworkAnalysis({ selectedCoordinate, onFillInputCallback }) {
+function NetworkAnalysis({ selectedCoordinate}) {
   const [inputValue, setInputValue] = useState('');
   const [fillInputMode, setFillInputMode] = useState(false);
   console.log(selectedCoordinate)
-  onFillInputCallback(fillInputMode)
+  // onFillInputCallback(fillInputMode)
   const [features, setFeatures] = useState([
     {
       id: 1,

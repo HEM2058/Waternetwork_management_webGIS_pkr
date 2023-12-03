@@ -1,37 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
-import Navbar from './Navbar'
-import LoginForm from './LoginForm'
-import OpenLayersMap from './map'
-import MapComposite  from './mapcomposite';
-import  LayerUploadForm from './shp_geojson';
-import PalikaDashboard from './PalikaDashboard';
-import Requests from './Requests';
-import Addplace from './Addplace';
+import React from 'react';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import Navbar from './Navbar';
 import Networkanalysis from './Networkanalysis';
 import Sidebar from './sidebar';
-import {Routes, Route} from 'react-router-dom';
-
+import MapComposite from './mapcomposite';
+import Leakage from './Leakage';
 
 function App() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Get the current route path
+  const currentPath = location.pathname;
+
+  // Function to dynamically render the component based on the current route
+  const renderComponent = () => {
+    switch (currentPath) {
+      case '/Networkanalysis':
+        return <Networkanalysis />;
+      case '/Leakage':
+        return <Leakage />;
+      default:
+        // Handle unknown routes or redirect to the default route
+        navigate('/');
+        return null;
+    }
+  };
+
   return (
-    <div className="App">
-      <Navbar />
- 
-          <Routes>
-            <Route path="/Log-in" element = { <LoginForm/>} />   
-            <Route path="/" element = { <MapComposite/>} />  
-            <Route path="/LayerUploadForm" element = { <LayerUploadForm/>} />  
-            <Route path="/palika_dashboard" element = {<PalikaDashboard/>}/>
-            <Route path="/palika_dashboard/requests" element= {<Requests/>}/>
-            <Route path="/palika_dashboard/Add_Place" element= {<Addplace/>}/>
-            <Route path="/Networkanalysis" element= {<Networkanalysis/>}/>
-            <Route path="/sidebar" element= {<Sidebar/>}/>
+    <div className="App" style={{ position: 'relative' }}>
 
-
-          </Routes>
       
-   
+            <Navbar />
+      <Sidebar />
+     
+      <Routes>
+        <Route path="/Networkanalysis" element={<Networkanalysis />} />
+        <Route path="/Leakage" element={<Leakage />} />
+      </Routes>
+
+        <MapComposite />
+  
     </div>
   );
 }

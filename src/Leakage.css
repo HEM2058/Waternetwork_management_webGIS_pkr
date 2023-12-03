@@ -1,0 +1,26 @@
+                                                                                                                                                                                                    /* Leakage.css */
+
+.leakage-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.message {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.pending {
+  background-color: #ffecb3;
+}
+
+.resolved {
+  background-color: #c8e6c9;
+}
+
+.status-icon {
+  font-weight: bold;
+  margin-right: 10px;
+}

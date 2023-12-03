@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import OpenLayersMap from './map';
 import './mapcomposite.css';
 import ApiDataFetcher from './ApiDataFetcher';
 import NetworkAnalysis from './Networkanalysis';
 import Sidebar from './sidebar';
-import { Link } from 'react-router-dom';
+import Leakage from './Leakage';
 
 function MapComposite() {
   const [apiData, setApiData] = useState([]);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [selectedCoordinate, setSelectedCoordinate] = useState(null);
   const [fillInputMode, setFillInputMode] = useState(false);
+  const [selectedTool, setSelectedTool] = useState(null);
+  const [renderedComponent, setRenderedComponent] = useState(null);
 
   const handleDataFetched = (data) => {
     setApiData(data);
@@ -19,37 +21,22 @@ function MapComposite() {
 
   const handleMapClick = (coordinate) => {
     setSelectedCoordinate(coordinate);
-    // setFillInputMode(true); // Set fillInputMode to true when the map is clicked
   };
 
   const handleFillInputCallback = (value) => {
-    // Handle the callback value from NetworkAnalysis
     setFillInputMode(value);
     console.log('Callback value from NetworkAnalysis:', value);
-    // Perform further actions based on the value if needed
   };
 
-  // Define a no-op function
-  const noOp = () => {};
-
+  
   return (
     <div className="map-composite-container">
 
-     
-      <div className="left-panel">
-      <Sidebar />
-        <NetworkAnalysis
-          selectedCoordinate={selectedCoordinate}
-          fillInputMode={fillInputMode}
-          onFillInputCallback={handleFillInputCallback}
-        />
-      </div>
+      {renderedComponent}
 
       <div className="map-container">
         <ApiDataFetcher onDataFetched={handleDataFetched} />
-        {isDataLoaded ? (
-          <OpenLayersMap apiData={apiData} onMapClick={handleMapClick} />
-        ) : null}
+        {isDataLoaded ? <OpenLayersMap apiData={apiData} onMapClick={handleMapClick} /> : null}
       </div>
     </div>
   );

@@ -3,10 +3,10 @@
     height: 100%;
     padding: 20px;
     box-sizing: border-box;
-    position: relative;
-    left: 90px;
-  
-   
+    position: absolute;
+    left: 80px;
+    background-color:white;
+    z-index: 999; /* Adjust the z-index value as needed */
 }
 
 .network-analysis {
