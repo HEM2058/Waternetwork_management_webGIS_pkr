@@ -574,7 +574,7 @@ button[data-tooltip]:hover:after {
   margin-top: 10px; /* Adjust the margin as needed */
   position: absolute;
   bottom: 0;
-  left: 150px;
+  left: 30%;
   background-color: white; /* Add a background color to make the legends more visible */
   padding: 10px; /* Add padding for better spacing */
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Add shadow effect */
