@@ -18,7 +18,7 @@ function Edit() {
   };
 
   return (
-    <div className="network-analysis-container">
+    <div className="edit-data-container ">
       <h2>Edit pipeline data</h2>
       <div className='editdata-feature-header'> <h3>ID</h3>
       <h3>Diameter</h3>
