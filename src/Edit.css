@@ -1,12 +1,36 @@
 /* Edit.css */
+.edit-data-container {
+    width: 300px; /* Adjust the width based on your layout */
+    height: calc(100vh - 70px); 
+    padding: 20px;
+    box-sizing: border-box;
+    position: absolute;
+    left: 80px;
+    background-color:white;
+    z-index: 999; /* Adjust the z-index value as needed */
+}
 
+.editdata-feature-header{
+    display: flex;
+
+    gap: 150px;
+   
+    
   
+  }
+.edit-data{
+    height: 100%;
+    overflow-y: auto;
+  
+}
+
 .feature-geo{
-border: 1px solid #ddd;
+    width: 85%;
+ border: 1px solid #ddd;
   margin-bottom: 10px;
   display: flex;
   flex-direction: row;
-  gap: 17px;
+  gap: 150px;
   padding: 9px;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -14,18 +38,9 @@ border: 1px solid #ddd;
 }
 
   
-  .column {
-    display: inline-block;
-    display: flex;
-    flex-direction: column;
-    vertical-align: top;
-    width: 30%; /* Adjust the width as needed */
-    margin-right: 10px; /* Add margin between columns */
-    white-space: nowrap; /* Prevent line breaks in columns */
-  }
+  
   
 
-  
  
   
 

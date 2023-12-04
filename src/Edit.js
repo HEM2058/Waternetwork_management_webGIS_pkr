@@ -20,7 +20,10 @@ function Edit() {
   return (
     <div className="network-analysis-container">
       <h2>Edit pipeline data</h2>
-      <div className="network-analysis">
+      <div className='editdata-feature-header'> <h3>ID</h3>
+      <h3>Diameter</h3>
+               </div>
+      <div className="edit-data">
       
         {/* Pass the callback function to ApiDataFetcher */}
         <ApiDataFetcher onDataFetched={handleDataFetched} />
@@ -29,9 +32,7 @@ function Edit() {
         {isDataLoaded && apiData.geojson && apiData.geojson.features && apiData.geojson.features.length > 0 ? (
           
           <div className="feature-geojson">
-             <div className='feature-header'> <h3>ID</h3>
-      <h3>Diameter</h3>
-               </div>
+            
            
             {filterFeaturesByName(apiData.geojson.features, 'waterpipe').map((feature, index) => (
              
@@ -43,7 +44,7 @@ function Edit() {
 
                 <div className="column">
                  
-                  <div>{feature.properties.diameter || ''}</div>
+                  <div className='diameter'>{feature.properties.diameter || ''}</div>
                 </div>
               </div>
             ))}
