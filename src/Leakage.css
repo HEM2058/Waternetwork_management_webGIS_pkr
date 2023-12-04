@@ -1,26 +1,70 @@
-                                                                                                                                                                                                    /* Leakage.css */
+/* Leakage.css */
 
 .leakage-list {
   list-style-type: none;
   padding: 0;
 }
 
-.message {
+.feature-lekage{
   margin-bottom: 20px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .pending {
-  background-color: #ffecb3;
+  background-color: #ffd966;
+  border-color: #ffcc00;
 }
 
 .resolved {
-  background-color: #c8e6c9;
+  background-color: #b3e6ac;
+  border-color: #00b300;
 }
 
 .status-icon {
   font-weight: bold;
-  margin-right: 10px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.feature-content {
+  flex: 1;
+}
+
+.message-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 15px;
+  color: #666;
+  font-size: 14px;
+}
+
+.date {
+  color: #777;
+}
+
+.calendar-icon {
+  margin-right: 5px;
+}
+
+.resolve-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 8px 12px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.resolve-button:hover {
+  background-color: #45a049;
 }

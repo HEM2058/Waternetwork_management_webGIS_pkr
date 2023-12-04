@@ -5,6 +5,7 @@ import Networkanalysis from './Networkanalysis';
 import Sidebar from './sidebar';
 import MapComposite from './mapcomposite';
 import Leakage from './Leakage';
+import Edit from './Edit';
 
 function App() {
   const navigate = useNavigate();
@@ -20,6 +21,9 @@ function App() {
         return <Networkanalysis />;
       case '/Leakage':
         return <Leakage />;
+        case '/Edit-pipeline':
+          
+        return <Edit />;
       default:
         // Handle unknown routes or redirect to the default route
         navigate('/');
@@ -31,12 +35,13 @@ function App() {
     <div className="App" >
 
       
-            <Navbar />
+           <Navbar />
       <Sidebar />
      
       <Routes>
         <Route path="/Networkanalysis" element={<Networkanalysis />} />
         <Route path="/Leakage" element={<Leakage />} />
+        <Route path="/Edit-pipeline" element={<Edit />} />
       </Routes>
 
         <MapComposite />

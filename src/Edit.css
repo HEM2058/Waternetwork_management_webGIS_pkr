@@ -1,0 +1,33 @@
+/* Edit.css */
+
+  
+.feature-geo{
+border: 1px solid #ddd;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 17px;
+  padding: 9px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  overflow: hidden;
+}
+
+  
+  .column {
+    display: inline-block;
+    display: flex;
+    flex-direction: column;
+    vertical-align: top;
+    width: 30%; /* Adjust the width as needed */
+    margin-right: 10px; /* Add margin between columns */
+    white-space: nowrap; /* Prevent line breaks in columns */
+  }
+  
+
+  
+ 
+  
+
+ 
+  
