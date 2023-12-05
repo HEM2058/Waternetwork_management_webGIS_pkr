@@ -10,6 +10,7 @@ function ButtonContainer({ map, resetFunction, exportMapImage, toggleBaseLayerPo
   const [isLoading, setIsLoading] = useState(false);
   const [selectedFilterLayer, setSelectedFilterLayer] = useState('');
   const [selectedListItemIndex, setSelectedListItemIndex] = useState(null);
+
   console.log(selectedListItemIndex)
 
   const handleItemClick = (feature, index) => {
@@ -158,9 +159,9 @@ function ButtonContainer({ map, resetFunction, exportMapImage, toggleBaseLayerPo
               id="DefaultMapToggle"
               name="baseLayer"
               checked={false}
-              onChange={() => handleBaseLayerChange('')}
+              onChange={() => handleBaseLayerChange('streets-v2')}
             />
-            <label htmlFor="googleSatelliteToggle">Default BaseMap</label>
+            <label htmlFor="googleSatelliteToggle">Street</label>
             <input
               type="radio"
               id="googleSatelliteToggle"
@@ -220,14 +221,15 @@ function OpenLayersMap({ apiData, onMapClick }) {
   const [showBaseLayerPopup, setShowBaseLayerPopup] = useState(false);
   const [baseLayerName, setBaseLayerName] = useState('');
   const [showFilterPopup, setShowFilterPopup] = useState(false);
+  const [baselayer, setBaselayer] = useState('https://api.maptiler.com/maps/streets-v2/style.json?key=Otbh9YhFMbwux7HyoffB')
 
   useEffect(() => {
-    if (!map && apiData && apiData.length > 0) {
+    if (apiData && apiData.length > 0) {
       const firstItem = apiData[0];
-
+      console.log(baselayer)
       const newMap = new maplibregl.Map({
         container: 'map',
-        style: 'https://api.maptiler.com/maps/streets-v2/style.json?key=Otbh9YhFMbwux7HyoffB',
+        style: baselayer,
         center: [83.97517583929165, 28.214732103900108],
         zoom: 11.5,
       });
@@ -320,7 +322,7 @@ function OpenLayersMap({ apiData, onMapClick }) {
         setMap(newMap);
       });
     }
-  }, [map, apiData]);
+  }, [apiData, baselayer]);
 
   const resetFunction = () => {
     map.flyTo({
@@ -340,10 +342,12 @@ function OpenLayersMap({ apiData, onMapClick }) {
 
   const handleBaseLayerChange = (layerName) => {
     setBaseLayerName(layerName);
-    const styleUrl = layerName
-      ? `https://api.maptiler.com/maps/${layerName}/style.json?key=Otbh9YhFMbwux7HyoffB`
-      : 'https://api.maptiler.com/maps/streets-v2/style.json?key=Otbh9YhFMbwux7HyoffB';
-    map.setStyle(styleUrl);
+    const styleUrl =  `https://api.maptiler.com/maps/${layerName}/style.json?key=Otbh9YhFMbwux7HyoffB`
+    setBaselayer(styleUrl);
+    // const styleUrl = layerName
+    //   ? `https://api.maptiler.com/maps/${layerName}/style.json?key=Otbh9YhFMbwux7HyoffB`
+    //   : 'https://api.maptiler.com/maps/${layerName}/style.json?key=Otbh9YhFMbwux7HyoffB';
+    // map.setStyle(styleUrl);
   };
 
   const toggleFilterPopup = () => {
