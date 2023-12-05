@@ -160,7 +160,7 @@ function ButtonContainer({ map, resetFunction, exportMapImage, toggleBaseLayerPo
               checked={baseLayerName === 'streets-v2'}
           onChange={() => handleBaseLayerChange('streets-v2')}
             />
-            <label htmlFor="googleSatelliteToggle">Street</label>
+            <label htmlFor="googleSatelliteToggle">Street Map</label>
             <input
               type="radio"
               id="googleSatelliteToggle"
@@ -168,7 +168,15 @@ function ButtonContainer({ map, resetFunction, exportMapImage, toggleBaseLayerPo
                 checked={baseLayerName === 'satellite'}
           onChange={() => handleBaseLayerChange('satellite')}
             />
-            <label htmlFor="googleSatelliteToggle">Satellite</label>
+            <label htmlFor="googleSatelliteToggle">Satellite Map</label>
+            <input
+              type="radio"
+              id="topo"
+              name="baseLayer"
+                checked={baseLayerName === 'topo-v2'}
+          onChange={() => handleBaseLayerChange('topo-v2')}
+            />
+            <label htmlFor="googleSatelliteToggle">Topographic Map</label>
           </>
         </div>
       )}
@@ -215,13 +223,13 @@ function ButtonContainer({ map, resetFunction, exportMapImage, toggleBaseLayerPo
   );
 }
 
-function OpenLayersMap({ apiData, onMapClick }) {
+function OpenLayersMap({ apiData, onMapClick,selectedMultistringGeometry }) {
   const [map, setMap] = useState(null);
   const [showBaseLayerPopup, setShowBaseLayerPopup] = useState(false);
   const [baseLayerName, setBaseLayerName] = useState('streets-v2');
   const [showFilterPopup, setShowFilterPopup] = useState(false);
   const [baselayer, setBaselayer] = useState('https://api.maptiler.com/maps/streets-v2/style.json?key=Otbh9YhFMbwux7HyoffB')
-
+  console.log(selectedMultistringGeometry)
   useEffect(() => {
     if (apiData && apiData.length > 0) {
       const firstItem = apiData[0];
@@ -232,13 +240,17 @@ function OpenLayersMap({ apiData, onMapClick }) {
         center: [83.97517583929165, 28.214732103900108],
         zoom: 11.5,
       });
+      
 
       newMap.addControl(new ScaleControl(), 'bottom-right');
       newMap.addControl(new NavigationControl(), 'bottom-right');
       newMap.addControl(new FullscreenControl(), 'top-right'); // Add FullscreenControl
 
       newMap.on('load', async () => {
+        
+    
         try {
+
           const response = await fetch('/data/servicearea.geojson');
           const localGeojsonData = await response.json();
           console.log(localGeojsonData);
@@ -309,6 +321,36 @@ function OpenLayersMap({ apiData, onMapClick }) {
               .addTo(newMap);
           }
         });
+        // Add the selected multistring geometry to the map as a GeoJSON layer
+        if (selectedMultistringGeometry) {
+          newMap.addSource('selected-multistring-geojson', {
+            type: 'geojson',
+            data: selectedMultistringGeometry,
+          });
+  
+          newMap.addLayer({
+            id: 'selected-multistring-layer',
+            type: 'line',
+            source: 'selected-multistring-geojson',
+            layout: {
+              'line-join': 'round',
+              'line-cap': 'round',
+            },
+            paint: {
+              'line-color': 'red', // You can adjust the color as needed
+              'line-width': 2,
+            },
+          });
+  
+          // Zoom to the extent of the selected-multistring-layer
+          const bounds = new maplibregl.LngLatBounds();
+          selectedMultistringGeometry.coordinates.forEach((coord) => {
+            bounds.extend(coord);
+          });
+  
+          newMap.fitBounds(bounds, { padding: 20 });
+        }
+ 
 
         newMap.on('mouseenter', 'water-pipeline-layer', () => {
           newMap.getCanvas().style.cursor = 'pointer';
@@ -321,7 +363,7 @@ function OpenLayersMap({ apiData, onMapClick }) {
         setMap(newMap);
       });
     }
-  }, [apiData, baselayer]);
+  }, [apiData, baselayer,selectedMultistringGeometry]);
 
   const resetFunction = () => {
     map.flyTo({
