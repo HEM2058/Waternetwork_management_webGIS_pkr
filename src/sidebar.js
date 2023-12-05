@@ -26,7 +26,7 @@ function Sidebar() {
       <NavLink
         to="/task-splitting"
         className="tool-icon"
-        data-tooltip="Task Splitting"
+        data-tooltip="Task Control"
         activeClassName="selected"
       >
         <i className="fas fa-tasks"></i>
@@ -34,7 +34,7 @@ function Sidebar() {
       <NavLink
         to="/Leakage"
         className="tool-icon"
-        data-tooltip="Pipe Leakage Message"
+        data-tooltip="Leak Alerts"
         activeClassName="selected"
       >
         <i className="fas fa-exclamation-triangle"></i>
