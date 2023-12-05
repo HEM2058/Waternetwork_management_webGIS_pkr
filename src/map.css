@@ -1,8 +1,9 @@
 /* Styling for the map container */
 #map {
+
   position: relative;
   left: 80px;
-    width: calc(100%- 80px); 
+  width: calc(100% - 80px); 
     height: calc(100vh - 70px); 
     
   }
@@ -322,8 +323,8 @@
 /* Styling for the base layer switching buttons */
 .button-container {
   position: absolute;
-  top: 55px;
-  right: -66px;
+  top: 150px;
+  right: 0px;
   z-index: 1000; /* Ensure it's above the map */
   background: rgba(255, 255, 255, 0.7);
   padding: 10px;

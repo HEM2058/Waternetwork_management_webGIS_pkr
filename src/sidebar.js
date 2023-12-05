@@ -6,6 +6,15 @@ import './sidebar.css';
 function Sidebar() {
   return (
     <div className="sidebar">
+         <NavLink
+        to="/"
+        exact
+        className="tool-icon"
+        data-tooltip="Home"
+        activeClassName="selected"
+      >
+        <i className="fas fa-home"></i>
+      </NavLink>
       <NavLink
         to="/Networkanalysis"
         className="tool-icon"

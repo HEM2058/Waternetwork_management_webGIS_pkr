@@ -14,29 +14,6 @@ height: calc(100vh - 70px);
   height: calc(100vh - 70px);
 }
 
-.filter-toggle {
-  position: absolute;
-  top: 5px;
-  right: 50px;
-  z-index: 999; /* Ensure the button appears on top of the map */
-}
-
-.filter-toggle button {
-  background: #007bff; /* Button background color */
-  border: none;
-  border-radius: 50%; /* Make it round */
-  padding: 10px;
-  color: #fff; /* Text color */
-  font-size: 20px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.filter-toggle.active button {
-  background: #ff9900; /* Change color when active */
-}
-
-
 
 /* MapComposite.css */
 /* Existing styles for button-container and other elements */
