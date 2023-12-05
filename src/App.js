@@ -8,6 +8,7 @@ import Leakage from './Leakage';
 import Edit from './Edit';
 import OpenLayersMap from './map';
 import Task from './Task';
+import FieldCalculator from './FieldCalculator';
 import ApiDataFetcher from './ApiDataFetcher';
 
 function App() {
@@ -44,6 +45,8 @@ function App() {
         return <Leakage />;
       case '/Edit-pipeline':
         return <Edit onMultistringClick={handleMultistringClick} />;
+        case '/field-calculator':
+          return <FieldCalculator />;
       default:
         navigate('/');
         return null;
@@ -63,6 +66,7 @@ function App() {
           path="/Edit-pipeline"
           element={<Edit onMultistringClick={handleMultistringClick} />}
         />
+        <Route path="/field-calculator" element={<FieldCalculator />} />
       </Routes>
 
       <ApiDataFetcher onDataFetched={handleDataFetched} />
