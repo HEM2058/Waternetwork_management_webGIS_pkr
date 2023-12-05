@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import './map.css';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
-import { NavigationControl, ScaleControl } from 'maplibre-gl';
+import { NavigationControl, ScaleControl, FullscreenControl } from 'maplibre-gl';
+
 
 function ButtonContainer({ map, resetFunction, exportMapImage, toggleBaseLayerPopup, showBaseLayerPopup, handleBaseLayerChange, toggleFilterPopup, showFilterPopup, apiData }) {
   const [filteredData, setFilteredData] = useState([]);
@@ -233,6 +234,7 @@ function OpenLayersMap({ apiData, onMapClick }) {
 
       newMap.addControl(new ScaleControl(), 'bottom-right');
       newMap.addControl(new NavigationControl(), 'bottom-right');
+      newMap.addControl(new FullscreenControl(), 'top-right'); // Add FullscreenControl
 
       newMap.on('load', async () => {
         try {
