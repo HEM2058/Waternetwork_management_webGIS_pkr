@@ -13,7 +13,10 @@
     left: 0;
     z-index: 999;
   }
-  
+  .sidebar .tool-icon.active{
+    color:red;
+   
+  }
   .tool-icon {
     font-size: 27px;
     color: #4B0082;
@@ -33,6 +36,7 @@
   a{
     text-decoration: none;
   }
+  
   
   .tool-icon.selected {
     background-color: #d1ced3; /* Highlight color for selected tool */
