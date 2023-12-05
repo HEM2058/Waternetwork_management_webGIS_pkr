@@ -5,13 +5,12 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 import { NavigationControl, ScaleControl, FullscreenControl } from 'maplibre-gl';
 
 
-function ButtonContainer({ map, resetFunction, exportMapImage, toggleBaseLayerPopup, showBaseLayerPopup, handleBaseLayerChange, toggleFilterPopup, showFilterPopup, apiData }) {
+function ButtonContainer({ map, resetFunction, exportMapImage, toggleBaseLayerPopup, showBaseLayerPopup, handleBaseLayerChange,baseLayerName, toggleFilterPopup, showFilterPopup, apiData }) {
   const [filteredData, setFilteredData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedFilterLayer, setSelectedFilterLayer] = useState('');
   const [selectedListItemIndex, setSelectedListItemIndex] = useState(null);
-
-  console.log(selectedListItemIndex)
+  console.log(baseLayerName)
 
   const handleItemClick = (feature, index) => {
     setSelectedListItemIndex(index);
@@ -158,16 +157,16 @@ function ButtonContainer({ map, resetFunction, exportMapImage, toggleBaseLayerPo
               type="radio"
               id="DefaultMapToggle"
               name="baseLayer"
-              checked={false}
-              onChange={() => handleBaseLayerChange('streets-v2')}
+              checked={baseLayerName === 'streets-v2'}
+          onChange={() => handleBaseLayerChange('streets-v2')}
             />
             <label htmlFor="googleSatelliteToggle">Street</label>
             <input
               type="radio"
               id="googleSatelliteToggle"
               name="baseLayer"
-              checked={false}
-              onChange={() => handleBaseLayerChange('satellite')}
+                checked={baseLayerName === 'satellite'}
+          onChange={() => handleBaseLayerChange('satellite')}
             />
             <label htmlFor="googleSatelliteToggle">Satellite</label>
           </>
@@ -219,7 +218,7 @@ function ButtonContainer({ map, resetFunction, exportMapImage, toggleBaseLayerPo
 function OpenLayersMap({ apiData, onMapClick }) {
   const [map, setMap] = useState(null);
   const [showBaseLayerPopup, setShowBaseLayerPopup] = useState(false);
-  const [baseLayerName, setBaseLayerName] = useState('');
+  const [baseLayerName, setBaseLayerName] = useState('streets-v2');
   const [showFilterPopup, setShowFilterPopup] = useState(false);
   const [baselayer, setBaselayer] = useState('https://api.maptiler.com/maps/streets-v2/style.json?key=Otbh9YhFMbwux7HyoffB')
 
@@ -344,10 +343,7 @@ function OpenLayersMap({ apiData, onMapClick }) {
     setBaseLayerName(layerName);
     const styleUrl =  `https://api.maptiler.com/maps/${layerName}/style.json?key=Otbh9YhFMbwux7HyoffB`
     setBaselayer(styleUrl);
-    // const styleUrl = layerName
-    //   ? `https://api.maptiler.com/maps/${layerName}/style.json?key=Otbh9YhFMbwux7HyoffB`
-    //   : 'https://api.maptiler.com/maps/${layerName}/style.json?key=Otbh9YhFMbwux7HyoffB';
-    // map.setStyle(styleUrl);
+    
   };
 
   const toggleFilterPopup = () => {
@@ -364,6 +360,7 @@ function OpenLayersMap({ apiData, onMapClick }) {
             resetFunction={resetFunction}
             exportMapImage={exportMapImage}
             toggleBaseLayerPopup={toggleBaseLayerPopup}
+            baseLayerName={baseLayerName}
             showBaseLayerPopup={showBaseLayerPopup}
             handleBaseLayerChange={handleBaseLayerChange}
             toggleFilterPopup={toggleFilterPopup}

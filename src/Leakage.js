@@ -25,9 +25,9 @@ function Leakage() {
   };
 
   return (
-    <div className="network-analysis-container">
+    <div className="Lekage-container">
       <h2>Pipe Leakage Messages</h2>
-      <div className="network-analysis">
+      <div className="Lekage">
         <ul className="leakage-list">
           {messages.map((message) => (
             <li key={message.id} className={`feature-lekage ${message.status}`}>

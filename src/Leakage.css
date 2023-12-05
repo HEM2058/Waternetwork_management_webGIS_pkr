@@ -1,5 +1,19 @@
 /* Leakage.css */
+.Lekage-container {
+  width: 300px; /* Adjust the width based on your layout */
+  height: calc(100vh - 70px); 
+  padding: 20px;
+  box-sizing: border-box;
+  position: absolute;
+  left: 80px;
+  background-color:white;
+  z-index: 999; /* Adjust the z-index value as needed */
+}
 
+.Lekage {
+  height: calc(100vh - 200px); 
+  overflow-y: auto;
+}
 .leakage-list {
   list-style-type: none;
   padding: 0;
