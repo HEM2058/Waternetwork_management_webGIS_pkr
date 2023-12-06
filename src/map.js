@@ -14,6 +14,7 @@ function ButtonContainer({ map, resetFunction, exportMapImage, toggleBaseLayerPo
   const [isLoading, setIsLoading] = useState(false);
   const [selectedFilterLayer, setSelectedFilterLayer] = useState('');
   const [selectedListItemIndex, setSelectedListItemIndex] = useState(null);
+  const [activeButton, setActiveButton] = useState('');
   console.log(baseLayerName)
 
   const handleItemClick = (feature, index) => {
@@ -139,6 +140,9 @@ function ButtonContainer({ map, resetFunction, exportMapImage, toggleBaseLayerPo
       console.error('Geolocation is not supported by your browser.');
     }
   };
+  const resetActiveButtonState = () => {
+    setActiveButton('');
+  };
   
   return (
     <div className="button-container">
@@ -233,7 +237,7 @@ function OpenLayersMap({ apiData, onMapClick,selectedMultistringGeometry }) {
   const [baselayer, setBaselayer] = useState('https://api.maptiler.com/maps/streets-v2/style.json?key=Otbh9YhFMbwux7HyoffB')
   console.log(selectedMultistringGeometry)
   useEffect(() => {
-    if (apiData && apiData.length > 0) {
+    if (!map) {
       const firstItem = apiData[0];
       console.log(baselayer)
       const newMap = new maplibregl.Map({
@@ -243,139 +247,153 @@ function OpenLayersMap({ apiData, onMapClick,selectedMultistringGeometry }) {
         zoom: 11.5,
       });
       
-
-      newMap.addControl(new ScaleControl(), 'bottom-right');
-      newMap.addControl(new NavigationControl(), 'bottom-right');
-      newMap.addControl(new FullscreenControl(), 'top-right'); // Add FullscreenControl
-      // add the plugin
-newMap.addControl(new MeasuresControl({ /** see options below for further tunning */}), "top-left");
-newMap.addControl(new MaplibreExportControl({
+      setMap(newMap);
+    }
+    if(map){
+    const firstItem = apiData[0];
+map.addControl(new ScaleControl(), 'bottom-right');
+map.addControl(new NavigationControl(), 'bottom-right');
+map.addControl(new FullscreenControl(), 'top-right'); // Add FullscreenControl
+// add the plugin
+map.addControl(new MeasuresControl({ /** see options below for further tunning */}), "top-right");
+map.addControl(new MaplibreExportControl({
   PageSize: Size.A3,
   PageOrientation: PageOrientation.Portrait,
   Format: Format.PNG,
   DPI: DPI[96],
   Crosshair: true,
   PrintableArea: true
-}), 'top-left');
+}), 'bottom-right');
 
-      newMap.on('load', async () => {
-        
-    
-        try {
+map.on('load', async () => {
 
-          const response = await fetch('/data/servicearea.geojson');
-          const localGeojsonData = await response.json();
-          console.log(localGeojsonData);
+  try {
 
-          newMap.addSource('local-geojson', {
-            type: 'geojson',
-            data: localGeojsonData,
-          });
+    const response = await fetch('/data/servicearea.geojson');
+    const localGeojsonData = await response.json();
+    console.log(localGeojsonData);
 
-          newMap.addLayer({
-            id: 'local-geojson-layer',
-            type: 'line',
-            source: 'local-geojson',
-            layout: {
-              'line-join': 'round',
-              'line-cap': 'round',
-            },
-            paint: {
-              'line-color': '#ff0000',
-              'line-width': 3,
-              'line-dasharray': [2, 2], // Adjust the numbers to change the pattern
-            },
-          });
-        } catch (error) {
-          console.error('Error loading local GeoJSON:', error);
-        }
+    map.addSource('local-geojson', {
+      type: 'geojson',
+      data: localGeojsonData,
+    });
 
-        newMap.addSource('water-pipeline', {
-          type: 'geojson',
-          data: firstItem.geojson,
-        });
+    map.addLayer({
+      id: 'local-geojson-layer',
+      type: 'line',
+      source: 'local-geojson',
+      layout: {
+        'line-join': 'round',
+        'line-cap': 'round',
+      },
+      paint: {
+        'line-color': '#ff0000',
+        'line-width': 3,
+        'line-dasharray': [2, 2], // Adjust the numbers to change the pattern
+      },
+    });
+  } catch (error) {
+    console.error('Error loading local GeoJSON:', error);
+  }
 
-        newMap.addLayer({
-          id: 'water-pipeline-layer',
-          type: 'line',
-          source: 'water-pipeline',
-          layout: {
-            'line-join': 'round',
-            'line-cap': 'round',
-          },
-          paint: {
-            'line-color': '#0080ff',
-            'line-width': 2,
-          },
-        });
+  map.addSource('water-pipeline', {
+    type: 'geojson',
+    data: firstItem.geojson,
+  });
 
-        newMap.on('click', (e) => {
-          if (onMapClick) {
-            const clickedCoordinate = newMap.unproject(e.point);
-            console.log(clickedCoordinate);
-            onMapClick(clickedCoordinate);
-          }
-        });
+  map.addLayer({
+    id: 'water-pipeline-layer',
+    type: 'line',
+    source: 'water-pipeline',
+    layout: {
+      'line-join': 'round',
+      'line-cap': 'round',
+    },
+    paint: {
+      'line-color': '#0080ff',
+      'line-width': 2,
+    },
+  });
 
-        newMap.on('click', 'water-pipeline-layer', (e) => {
-          const featureProperties = e.features[0].properties;
-          const coordinates = e.lngLat;
+  map.on('click', (e) => {
+    if (onMapClick) {
+      const clickedCoordinate = map.unproject(e.point);
+      console.log(clickedCoordinate);
+      onMapClick(clickedCoordinate);
+    }
+  });
 
-          if (featureProperties.name === 'waterpipe') {
-            new maplibregl.Popup()
-              .setLngLat(coordinates)
-              .setHTML(`<h3>Diameter</h3><p>${featureProperties.diameter} millimeter</p>`)
-              .addTo(newMap);
-          } else {
-            new maplibregl.Popup()
-              .setLngLat(coordinates)
-              .setHTML(`<p>${featureProperties.name}</p>`)
-              .addTo(newMap);
-          }
-        });
-        // Add the selected multistring geometry to the map as a GeoJSON layer
-        if (selectedMultistringGeometry) {
-          newMap.addSource('selected-multistring-geojson', {
-            type: 'geojson',
-            data: selectedMultistringGeometry,
-          });
-  
-          newMap.addLayer({
-            id: 'selected-multistring-layer',
-            type: 'line',
-            source: 'selected-multistring-geojson',
-            layout: {
-              'line-join': 'round',
-              'line-cap': 'round',
-            },
-            paint: {
-              'line-color': 'red', // You can adjust the color as needed
-              'line-width': 2,
-            },
-          });
-  
-          // Zoom to the extent of the selected-multistring-layer
-          const bounds = new maplibregl.LngLatBounds();
-          selectedMultistringGeometry.coordinates.forEach((coord) => {
-            bounds.extend(coord);
-          });
-  
-          newMap.fitBounds(bounds, { padding: 20 });
-        }
+  map.on('click', 'water-pipeline-layer', (e) => {
+    const featureProperties = e.features[0].properties;
+    const coordinates = e.lngLat;
+
+    if (featureProperties.name === 'waterpipe') {
+      new maplibregl.Popup()
+        .setLngLat(coordinates)
+        .setHTML(`<h3>Diameter</h3><p>${featureProperties.diameter} millimeter</p>`)
+        .addTo(map);
+    } else {
+      new maplibregl.Popup()
+        .setLngLat(coordinates)
+        .setHTML(`<p>${featureProperties.name}</p>`)
+        .addTo(map);
+    }
+  });
  
 
-        newMap.on('mouseenter', 'water-pipeline-layer', () => {
-          newMap.getCanvas().style.cursor = 'pointer';
-        });
 
-        newMap.on('mouseleave', 'water-pipeline-layer', () => {
-          newMap.getCanvas().style.cursor = '';
-        });
+  map.on('mouseenter', 'water-pipeline-layer', () => {
+    map.getCanvas().style.cursor = 'pointer';
+  });
 
-        setMap(newMap);
-      });
-    }
-  }, [apiData, baselayer,selectedMultistringGeometry]);
+  map.on('mouseleave', 'water-pipeline-layer', () => {
+    map.getCanvas().style.cursor = '';
+  });
+
+});
+
+  }
+    
+  }, [map,apiData, baselayer]);
+
+useEffect(()=>{ // Add the selected multistring geometry to the map as a GeoJSON layer
+  if(map){
+  if (selectedMultistringGeometry) {
+   // Check if the source already exists
+   const existingSource = map.getSource('selected-multistring-geojson');
+   if (existingSource) {
+     map.removeLayer('selected-multistring-layer');
+     map.removeSource('selected-multistring-geojson');
+   }
+    map.addSource('selected-multistring-geojson', {
+      type: 'geojson',
+      data: selectedMultistringGeometry,
+    });
+
+    map.addLayer({
+      id: 'selected-multistring-layer',
+      type: 'line',
+      source: 'selected-multistring-geojson',
+      layout: {
+        'line-join': 'round',
+        'line-cap': 'round',
+      },
+      paint: {
+        'line-color': 'red', // You can adjust the color as needed
+        'line-width': 2,
+      },
+    });
+
+    // Zoom to the extent of the selected-multistring-layer
+    const bounds = new maplibregl.LngLatBounds();
+    selectedMultistringGeometry.coordinates.forEach((coord) => {
+      bounds.extend(coord);
+    });
+
+    map.fitBounds(bounds, { padding: 20 });
+  }
+}
+}, [selectedMultistringGeometry]);
 
   const resetFunction = () => {
     map.flyTo({

@@ -339,7 +339,7 @@ button[data-tooltip]:hover:after {
   padding-left: 5px; /* Space for the custom radio indicator */
   cursor: pointer;
   font-size: 12px;
-  left: 15px;
+  left: 20px;
 
 }
 
@@ -461,3 +461,9 @@ button[data-tooltip]:hover:after {
   margin-right: 15px; /* Adjust the margin between legend color box and text */
 }
 
+.maplibregl-measures {
+  display: flex;
+  position:relative;
+  top: -39px;
+  right: 50%;
+}
