@@ -312,7 +312,7 @@ function OpenLayersMap({ apiData, onMapClick,selectedMultistringGeometry }) {
           if (featureProperties.name === 'waterpipe') {
             new maplibregl.Popup()
               .setLngLat(coordinates)
-              .setHTML(`<h3>Diameter</h3><p>${featureProperties.diameter} meter</p>`)
+              .setHTML(`<h3>Diameter</h3><p>${featureProperties.diameter} Centimeter</p>`)
               .addTo(newMap);
           } else {
             new maplibregl.Popup()

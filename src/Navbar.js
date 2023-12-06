@@ -27,12 +27,13 @@ function Navbar() {
               {/* Relief Request Button */}
               <div
                 className={`icon-container ${
-                  location.pathname === '/places' ? 'active' : ''
+                  location.pathname === '/user-manual' ? 'active' : ''
                 }`}
-                data-tooltip="स्थानहरू"
+                data-tooltip="User Manual"
               >
-                <Link to="/places">
-                  <i className="fas fa-database"></i> <span>Database</span>
+                <Link to="/user-manual">
+                <i className="fas fa-book"></i> <span>User Manual</span>
+
                 </Link>
               </div>
 
@@ -58,7 +59,7 @@ function Navbar() {
                   data-tooltip="पालिका लगइन"
                 >
                   <Link to="/Log-in">
-                    <i className="fas fa-sign-in-alt"></i><span> Metro Login</span>
+                    <i className="fas fa-sign-in-alt"></i><span> Login</span>
                   </Link>
                 </div>
               )}

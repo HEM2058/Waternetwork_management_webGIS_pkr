@@ -37,6 +37,14 @@ function NetworkAnalysis({ selectedCoordinate}) {
       description: 'Find the shortest route between two points in the network.',
       isExpanded: false,
     },
+    {
+      "id": 4,
+      "uniqueName": "alternativeroutetodestination",
+      "name": "Alternative Route",
+      "description": "Identify an alternative route to the destination in the event of a pipe burst or leakage.",
+      "isExpanded": false
+    }
+    
   ]);
 
   const handleFeatureClick = (uniqueName) => {
