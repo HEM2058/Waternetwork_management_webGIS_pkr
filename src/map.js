@@ -148,9 +148,7 @@ function ButtonContainer({ map, resetFunction, exportMapImage, toggleBaseLayerPo
       <button id="reset-button" onClick={() => resetFunction()} data-tooltip="Reset Map View">
         <i className="fas fa-undo"></i>
       </button>
-      <button onClick={() => exportMapImage()} data-tooltip="Export Map">
-        <i className="fa fa-print"></i>
-      </button>
+  
       <button className={showBaseLayerPopup ? 'active' : ''} onClick={() => toggleBaseLayerPopup()} data-tooltip="Base Layers">
         <i className="fas fa-globe"></i>
       </button>

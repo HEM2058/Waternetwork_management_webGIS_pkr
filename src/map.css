@@ -147,79 +147,13 @@
 
 /* Filter.css */
 /* Filter.css */
-.filter-container {
-  position: absolute;
-  top: 240px;
-  right: 10px;
-  background: #007BFF;
-  color: #fff;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  width: 150px;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-}
+
 
 /* Style for the search input */
-.filter-search {
-  margin: 10px;
-}
 
-.filter-search input {
-  width: 100%;
-  padding: 10px;
-  background: #fff;
-  border: 1px solid #007BFF;
-  border-radius: 5px;
-  color: #007BFF;
-}
 
 /* Style for the filter controls */
-.filter-palika-toggle {
-  width: 100%;
-  margin: 10px;
-}
 
-.filter-container label {
-  font-size: 16px;
-  font-weight: bold;
-  font-size: 12px;
-}
-
-.filter-container .filter select {
-  padding: 10px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  width: 90%;
-}
-
-.filter-container .filter select:hover {
-  border-color: #007BFF;
-}
-
-.filter-container .filter select:focus {
-  outline: none;
-  border-color: #007BFF;
-  box-shadow: 0 0 4px rgba(0, 123, 255, 0.4);
-}
-
-/* Style for the "Apply" button */
-.filter-container .filter-apply-button {
-  background: #007BFF;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  padding: 10px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.filter-container .filter-apply-button:hover {
-  background: #0056b3;
-}
 
 /* Styling for the search container */
 
@@ -234,61 +168,7 @@
   
 }
 
-/* Default styling for search input container */
-.filter-search {
-  display: flex;
-  align-items: center;
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  padding: 6px;
-  background-color: #fff;
-  margin-top: 10px;
-  transition: background-color 0.3s;
-  border: 2px solid #007BFF;;
-}
 
-/* Default styling for search input */
-.filter-search input[type="text"] {
-  width: 100%;
-  padding: 5px;
-  border: none;
-  font-size: 14px;
-  color: #333;
-  outline: none;
-}
-
-/* Default styling for search icon */
-.filter-search i {
-  color: #007bff;
-  font-size: 20px;
-  margin-right: 10px;
-}
-
-/* Default styling for search results */
-/* Styling for Search Results */
-#search-results {
-  list-style-type: none;
-  padding: 0;
-  margin: 12px 0; /* Adjusted top margin */
-  background-color: #fff; /* Keep the background white */
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
-  max-height: 390px;
-  overflow-y: hidden;
-}
-
-/* Styling for Search Result Items */
-#search-results li {
-  padding: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  color: #333;
-  font-family: 'Times New Roman', Times, serif;
-}
-
-#search-results li:hover {
-  background-color: #E3F2FD; /* Highlight background color on hover */
-}
 
 /* Media query for screens smaller than 768px */
 @media (max-width: 768px) {
@@ -425,33 +305,20 @@ button[data-tooltip]:hover:after {
 
 .base-layer-popup {
   position: absolute;
-  top: 225px;
+  top: 190px;
   right: 4px;
   background: #007BFF;
   color: #fff;
   z-index: 2;
   display: flex;
   flex-direction: column;
-  width: 145px;
-  height: 100px;
+  width: 155px;
+  height: auto;
   border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
-.base-layer-popup button {
-  font-size: 15px;
-  padding: 10px;
-  background-color: transparent;
-  color: #fff;
-  border: none;
-  border-bottom: 1px solid #fff;
-  transition: background-color 0.3s ease;
-}
-
-.base-layer-popup button:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
 
 /* Style for the radio buttons */
 .base-layer-popup input[type="radio"] {
@@ -462,7 +329,9 @@ button[data-tooltip]:hover:after {
   position: relative;
   top: 14px;
 }
-
+.base-layer-popup label{
+  width: 84px;
+}
 /* Style for the custom radio indicator */
 .base-layer-popup input[type="radio"] + label {
 /* Hide the labels */
@@ -470,7 +339,7 @@ button[data-tooltip]:hover:after {
   padding-left: 5px; /* Space for the custom radio indicator */
   cursor: pointer;
   font-size: 12px;
-  left: 20px;
+  left: 15px;
 
 }
 
@@ -490,7 +359,7 @@ button[data-tooltip]:hover:after {
 
 .filter-popup {
   position: absolute;
-  top: 225px;
+  top: 190px;
   right: 4px;
   background: #007BFF;
   color: #fff;
