@@ -2,6 +2,10 @@ import React, { useEffect, useState } from 'react';
 import './map.css';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
+// Import it into your code
+import MeasuresControl from 'maplibre-gl-measures';
+import { MaplibreExportControl, Size, PageOrientation, Format, DPI} from "@watergis/maplibre-gl-export";
+import '@watergis/maplibre-gl-export/dist/maplibre-gl-export.css';
 import { NavigationControl, ScaleControl, FullscreenControl } from 'maplibre-gl';
 
 
@@ -245,6 +249,16 @@ function OpenLayersMap({ apiData, onMapClick,selectedMultistringGeometry }) {
       newMap.addControl(new ScaleControl(), 'bottom-right');
       newMap.addControl(new NavigationControl(), 'bottom-right');
       newMap.addControl(new FullscreenControl(), 'top-right'); // Add FullscreenControl
+      // add the plugin
+newMap.addControl(new MeasuresControl({ /** see options below for further tunning */}), "top-left");
+newMap.addControl(new MaplibreExportControl({
+  PageSize: Size.A3,
+  PageOrientation: PageOrientation.Portrait,
+  Format: Format.PNG,
+  DPI: DPI[96],
+  Crosshair: true,
+  PrintableArea: true
+}), 'top-left');
 
       newMap.on('load', async () => {
         
@@ -312,7 +326,7 @@ function OpenLayersMap({ apiData, onMapClick,selectedMultistringGeometry }) {
           if (featureProperties.name === 'waterpipe') {
             new maplibregl.Popup()
               .setLngLat(coordinates)
-              .setHTML(`<h3>Diameter</h3><p>${featureProperties.diameter} Centimeter</p>`)
+              .setHTML(`<h3>Diameter</h3><p>${featureProperties.diameter} millimeter</p>`)
               .addTo(newMap);
           } else {
             new maplibregl.Popup()
