@@ -6,11 +6,12 @@ function ApiDataFetcher({ onDataFetched }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:2500/api/geojson-features');
+        const response = await fetch('http://127.0.0.1:8000/api/geo-json/');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
+        console.log(data)
         setApiData(data);
         onDataFetched(data); // Forward the data to the parent component
       } catch (error) {

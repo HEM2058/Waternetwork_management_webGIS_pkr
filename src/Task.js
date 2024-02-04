@@ -5,9 +5,9 @@ import './Task.css';
 function Task() {
   const [tasks, setTasks] = useState([
     { id: 1, name: 'Pipeline Installation (Mahendrapool)', assignedTo: ['Ram', 'Hari'] },
-    { id: 2, name: 'Pipeline Installation (Lamachaour)', assignedTo: ['Laxman', 'Bharat'] },
-    { id: 3, name: 'Pipeline Installation (Batulechour)', assignedTo: ['Laxman', 'Bharat'] },
-    { id: 3, name: 'Pipeline Installation (Batulechour)', assignedTo: ['Laxman', 'Bharat'] },
+    { id: 2, name: 'Pipeline Installation (Lamachaur)', assignedTo: ['Laxman', 'Bharat'] },
+    { id: 3, name: 'Pipeline Installation (Batulechaur)', assignedTo: ['Laxman', 'Bharat'] },
+    { id: 3, name: 'Pipeline Installation (Batulechaur)', assignedTo: ['Laxman', 'Bharat'] },
   ]);
 
   const handleAddTask = () => {

@@ -65,11 +65,9 @@ function ButtonContainer({ map, resetFunction, exportMapImage, toggleBaseLayerPo
     const fetchDataForLayer = async (layerName) => {
       setIsLoading(true);
 
-      const filteredFeatures = apiData.flatMap(item => {
-        const features = item.geojson.features.filter(feature => feature.properties.name.endsWith(layerName));
-        return features;
-      });
-
+      const filteredFeatures = apiData.features
+      .filter(feature => feature.geometry.type === 'Polygon');
+    
       setFilteredData(filteredFeatures);
       setIsLoading(false);
     };
@@ -238,7 +236,7 @@ function OpenLayersMap({ apiData, onMapClick,selectedMultistringGeometry }) {
   console.log(selectedMultistringGeometry)
   useEffect(() => {
     if (!map) {
-      const firstItem = apiData[0];
+ 
       console.log(baselayer)
       const newMap = new maplibregl.Map({
         container: 'map',
@@ -249,8 +247,12 @@ function OpenLayersMap({ apiData, onMapClick,selectedMultistringGeometry }) {
       
       setMap(newMap);
     }
+    
+  }, [map,apiData, baselayer]);
+  useEffect(() => {
+    
     if(map){
-    const firstItem = apiData[0];
+ 
 map.addControl(new ScaleControl(), 'bottom-right');
 map.addControl(new NavigationControl(), 'bottom-right');
 map.addControl(new FullscreenControl(), 'top-right'); // Add FullscreenControl
@@ -298,7 +300,7 @@ map.on('load', async () => {
 
   map.addSource('water-pipeline', {
     type: 'geojson',
-    data: firstItem.geojson,
+    data: apiData,
   });
 
   map.addLayer({
@@ -354,7 +356,7 @@ map.on('load', async () => {
 
   }
     
-  }, [map,apiData, baselayer]);
+  }, [map,apiData]);
 
 useEffect(()=>{ // Add the selected multistring geometry to the map as a GeoJSON layer
   if(map){
