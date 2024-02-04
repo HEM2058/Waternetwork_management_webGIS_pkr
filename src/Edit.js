@@ -9,7 +9,7 @@ function Edit({ onMultistringClick }) {
 
   // Callback function to handle data fetched by ApiDataFetcher
   const handleDataFetched = (data) => {
-    setApiData(data[0]);
+    setApiData(data);
     setIsDataLoaded(true);
   };
 
@@ -37,9 +37,9 @@ function Edit({ onMultistringClick }) {
         <ApiDataFetcher onDataFetched={handleDataFetched} />
 
         {/* Check if data is loaded */}
-        {isDataLoaded && apiData.geojson && apiData.geojson.features && apiData.geojson.features.length > 0 ? (
+        {isDataLoaded && apiData && apiData.features && apiData.features.length > 0 ? (
           <div className="feature-geojson">
-            {filterFeaturesByName(apiData.geojson.features, 'waterpipe').map((feature, index) => (
+            {filterFeaturesByName(apiData.features, 'waterpipe').map((feature, index) => (
               // Attach the click event handler to the feature-geo container
               <div
                 key={index}

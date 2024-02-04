@@ -59,7 +59,10 @@ function App() {
       <Sidebar />
 
       <Routes>
-        <Route path="/Networkanalysis" element={<Networkanalysis />} />
+  <Route
+    path="/Networkanalysis"
+    element={<Networkanalysis apiData={apiData} />}
+  />
         <Route path="/task-splitting" element={<Task />} />
         <Route path="/Leakage" element={<Leakage />} />
         <Route

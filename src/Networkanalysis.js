@@ -1,51 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './NetworkAnalysis.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
-function NetworkAnalysis({ selectedCoordinate}) {
+function NetworkAnalysis({ selectedCoordinate, apiData }) {
   const [inputValue, setInputValue] = useState('');
   const [fillInputMode, setFillInputMode] = useState(false);
-  console.log(selectedCoordinate)
-  // onFillInputCallback(fillInputMode)
-  const [features, setFeatures] = useState([
-    {
-      id: 1,
-      uniqueName: 'shortestRouteReservoir',
-      name: 'Shortest Route to Reservoir',
-      description: 'Find the shortest route to the reservoir.',
+  const [features, setFeatures] = useState([]);
+
+  useEffect(() => {
+    // Extract unique names from apiData for each feature type
+    const uniqueNames = {
+      reservoir: apiData.features
+        .filter((feature) => feature.properties.name.toLowerCase().includes('reservoir'))
+        .map((feature) => feature.properties.name),
+      tubewell: apiData.features
+        .filter((feature) => feature.properties.name.toLowerCase().includes('tubewell'))
+        .map((feature) => feature.properties.name),
+      overheadtank: apiData.features
+        .filter((feature) => feature.properties.name.toLowerCase().includes('overhead'))
+        .map((feature) => feature.properties.name),
+    };
+
+    // Generate features array based on unique names
+    const generatedFeatures = Object.keys(uniqueNames).map((type, index) => ({
+      id: index + 1,
+      uniqueName: `shortestRoute${type.charAt(0).toUpperCase() + type.slice(1)}`,
+      name: `Shortest Route to ${type.charAt(0).toUpperCase() + type.slice(1)}`,
+      description: `Find the shortest route to the ${type}.`,
       isExpanded: false,
-    },
-    {
-      id: 2,
-      uniqueName: 'shortestRouteTubeWell',
-      name: 'Shortest Route to Tubewell',
-      description: 'Find the shortest route to the tubewell.',
-      isExpanded: false,
-    },
-    {
-      id: 3,
-      uniqueName: 'shortestRouteOverheadTank',
-      name: 'Shortest Route to Overhead Tank',
-      description: 'Find the shortest route to the overhead tank.',
-      isExpanded: false,
-    },
-    {
-      id: 4,
-      uniqueName: 'shortestRouteBetweenPoints',
-      name: 'Shortest Route Between Two Points',
-      description: 'Find the shortest route between two points in the network.',
-      isExpanded: false,
-    },
-    {
-      "id": 4,
-      "uniqueName": "alternativeroutetodestination",
-      "name": "Alternative Route",
-      "description": "Identify an alternative route to the destination in the event of a pipe burst or leakage.",
-      "isExpanded": false
-    }
-    
-  ]);
+      options: uniqueNames[type],
+    }));
+
+    setFeatures(generatedFeatures);
+  }, [apiData]);
 
   const handleFeatureClick = (uniqueName) => {
     setFeatures((prevFeatures) =>
@@ -69,8 +57,7 @@ function NetworkAnalysis({ selectedCoordinate}) {
 
   const handleInputClick = () => {
     setFillInputMode(true);
-    if(selectedCoordinate )
-    console.log(true)
+    if (selectedCoordinate) console.log(true);
   };
 
   const handleMapClick = () => {
@@ -101,12 +88,14 @@ function NetworkAnalysis({ selectedCoordinate}) {
             {feature.isExpanded && (
               <div className="feature-content">
                 <div className="input-group">
-                  <label>Input Coordinate:</label>
-                  <input
-                    type="text"
-                    value={fillInputMode ? 'Click on the map' : inputValue}
-                    onClick={handleInputClick}
-                  />
+                  <label>Select {feature.name.split(' ')[3]}:</label>
+                  <select>
+                    {feature.options.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 <button onClick={() => handleApplyAnalysis(feature.uniqueName)}>
                   Apply Analysis
