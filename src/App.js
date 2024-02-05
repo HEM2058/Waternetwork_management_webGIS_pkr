@@ -16,8 +16,15 @@ function App() {
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [selectedCoordinate, setSelectedCoordinate] = useState(null);
   const [selectedMultistringGeometry, setSelectedMultistringGeometry] = useState(null);
+  const [routeData, setRouteData] = useState(null);
+  console.log(routeData)
   const navigate = useNavigate();
   const location = useLocation();
+
+  const handleRouteData = (data) => {
+    setRouteData(data);
+  };
+  
 
   const handleDataFetched = (data) => {
     setApiData(data);
@@ -59,10 +66,11 @@ function App() {
       <Sidebar />
 
       <Routes>
-  <Route
-    path="/Networkanalysis"
-    element={<Networkanalysis apiData={apiData} />}
-  />
+      <Route
+  path="/Networkanalysis"
+  element={<Networkanalysis apiData={apiData} onRouteData={handleRouteData} />}
+/>
+
         <Route path="/task-splitting" element={<Task />} />
         <Route path="/Leakage" element={<Leakage />} />
         <Route
@@ -78,6 +86,7 @@ function App() {
           apiData={apiData}
           onMapClick={handleMapClick}
           selectedMultistringGeometry={selectedMultistringGeometry}
+          routeData = {routeData}
         />
       ) : null}
     </div>

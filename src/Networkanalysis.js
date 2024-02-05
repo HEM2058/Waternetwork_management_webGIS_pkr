@@ -2,11 +2,21 @@ import React, { useState, useEffect } from 'react';
 import './NetworkAnalysis.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import * as turf from '@turf/turf';
 
-function NetworkAnalysis({ selectedCoordinate, apiData }) {
+function NetworkAnalysis({ apiData, onRouteData }) {
   const [inputValue, setInputValue] = useState('');
   const [fillInputMode, setFillInputMode] = useState(false);
   const [features, setFeatures] = useState([]);
+  const [userLocation, setUserLocation] = useState(null);
+  const [selectedFeature, setSelectedFeature] = useState(null);
+  const [selectedOption, setSelectedOption] = useState('');
+  console.log(selectedOption);
+
+  const handleOptionChange = (event) => {
+    console.log(event);
+    setSelectedOption(event.target.value);
+  };
 
   useEffect(() => {
     // Extract unique names from apiData for each feature type
@@ -50,19 +60,95 @@ function NetworkAnalysis({ selectedCoordinate, apiData }) {
     // You can implement further actions, such as displaying a modal with detailed information
   };
 
-  const handleApplyAnalysis = (uniqueName) => {
-    console.log(`Applying network analysis for feature: ${uniqueName}`);
-    // Implement the logic for applying network analysis based on the selected feature
+  const getCurrentLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setUserLocation({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
+        },
+        (error) => {
+          console.error('Error getting user location:', error);
+        }
+      );
+    } else {
+      console.error('Geolocation is not supported by this browser.');
+    }
   };
+
+  useEffect(() => {
+    getCurrentLocation();
+    console.log(userLocation)
+  }, []); // Run only once on component mount
+
+  const handleApplyAnalysis = async (selectedName) => {
+    try {
+      // Encode the selected name
+      const encodedName = encodeURIComponent(selectedName);
+  
+      // Construct the API URL for centroid
+      const centroidApiUrl = `http://localhost:8000/api/centroid?selectedName=${encodedName}`;
+      console.log(centroidApiUrl);
+  
+      // Make the API call to get the centroid
+      const centroidResponse = await fetch(centroidApiUrl);
+      
+      if (centroidResponse.ok) {
+        const centroidData = await centroidResponse.json();
+        console.log('Centroid Data:', centroidData);
+  
+        // Extract the centroid coordinates
+        const centroidCoordinates = extractCoordinates(centroidData.centroid);
+  
+        // Use the user's location stored in the state (userLocation)
+        console.log('User Location:', userLocation);
+  
+        // Check if both the centroid and user's position are available
+        if (centroidCoordinates && userLocation) {
+          // Calculate the route using the routing API
+          const routeApiUrl = `https://route-init.gallimap.com/api/v1/routing?mode=driving&srcLat=${userLocation.lat}&srcLng=${userLocation.lng}&dstLat=${centroidCoordinates.lat}&dstLng=${centroidCoordinates.lng}&accessToken=1b0d6442-4806-4a6c-90bb-5437128096eb`;
+          console.log(routeApiUrl);
+  
+          // Make the API call to get the route
+          const routeResponse = await fetch(routeApiUrl);
+  
+          if (routeResponse.ok) {
+            const routeData = await routeResponse.json();
+            console.log('Route Data:', routeData);
+              // Pass the routeData to the callback function in App.js
+              onRouteData(routeData);
+  
+            // Handle the route data as needed
+          } else {
+            console.error(`Error fetching route data. Status: ${routeResponse.status}`);
+          }
+        }
+      } else {
+        console.error(`Error fetching centroid data. Status: ${centroidResponse.status}`);
+      }
+    } catch (error) {
+      console.error('Error in handleApplyAnalysis:', error);
+    }
+  };
+  
+  const extractCoordinates = (pointString) => {
+    const matches = pointString.match(/\((-?\d+\.\d+) (-?\d+\.\d+)\)/);
+    if (matches && matches.length === 3) {
+      return { lat: parseFloat(matches[2]), lng: parseFloat(matches[1]) };
+    }
+    return null;
+  };
+  
 
   const handleInputClick = () => {
     setFillInputMode(true);
-    if (selectedCoordinate) console.log(true);
   };
 
   const handleMapClick = () => {
     if (fillInputMode) {
-      setInputValue(`${selectedCoordinate.lng}, ${selectedCoordinate.lat}`);
+      setInputValue('Click on the map');
       setFillInputMode(false); // Turn off "click to fill" mode
     }
   };
@@ -89,7 +175,7 @@ function NetworkAnalysis({ selectedCoordinate, apiData }) {
               <div className="feature-content">
                 <div className="input-group">
                   <label>Select {feature.name.split(' ')[3]}:</label>
-                  <select>
+                  <select onChange={handleOptionChange} value={selectedOption}>
                     {feature.options.map((option) => (
                       <option key={option} value={option}>
                         {option}
@@ -97,7 +183,7 @@ function NetworkAnalysis({ selectedCoordinate, apiData }) {
                     ))}
                   </select>
                 </div>
-                <button onClick={() => handleApplyAnalysis(feature.uniqueName)}>
+                <button onClick={() => handleApplyAnalysis(selectedOption)}>
                   Apply Analysis
                 </button>
               </div>

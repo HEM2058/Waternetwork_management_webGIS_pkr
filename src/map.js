@@ -227,13 +227,14 @@ function ButtonContainer({ map, resetFunction, exportMapImage, toggleBaseLayerPo
   );
 }
 
-function OpenLayersMap({ apiData, onMapClick,selectedMultistringGeometry }) {
+function OpenLayersMap({ apiData, onMapClick,selectedMultistringGeometry, routeData }) {
   const [map, setMap] = useState(null);
   const [showBaseLayerPopup, setShowBaseLayerPopup] = useState(false);
   const [baseLayerName, setBaseLayerName] = useState('streets-v2');
   const [showFilterPopup, setShowFilterPopup] = useState(false);
   const [baselayer, setBaselayer] = useState('https://api.maptiler.com/maps/streets-v2/style.json?key=Otbh9YhFMbwux7HyoffB')
   console.log(selectedMultistringGeometry)
+  console.log(routeData)
   useEffect(() => {
     if (!map) {
  
@@ -357,6 +358,54 @@ map.on('load', async () => {
   }
     
   }, [map,apiData]);
+  useEffect(() => {
+    if (map && routeData && routeData.success && routeData.data && routeData.data.success) {
+      const routeCoordinates = routeData.data.data[0].latlngs.map(point => [point[0], point[1]]);
+     
+      // Check if the source already exists
+      const existingSource = map.getSource('route-geojson');
+      if (existingSource) {
+        map.removeLayer('route-layer');
+        map.removeSource('route-geojson');
+      }
+  
+      map.addSource('route-geojson', {
+        type: 'geojson',
+        data: {
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'LineString',
+            coordinates: routeCoordinates,
+          },
+        },
+      });
+  
+      map.addLayer({
+        id: 'route-layer',
+        type: 'line',
+        source: 'route-geojson',
+        layout: {
+          'line-join': 'round',
+          'line-cap': 'round',
+        },
+        paint: {
+          'line-color': 'green', // Adjust the color as needed
+          'line-width': 4,
+        },
+      });
+  
+      // Fit the map to the bounds of the added route layer
+      const routeBounds = routeCoordinates.reduce(
+        (bounds, coord) => bounds.extend(coord),
+        new maplibregl.LngLatBounds()
+      );
+  
+      map.fitBounds(routeBounds, { padding: 50 });
+    }
+  }, [map, routeData]);
+  
+  
 
 useEffect(()=>{ // Add the selected multistring geometry to the map as a GeoJSON layer
   if(map){
