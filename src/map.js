@@ -227,7 +227,7 @@ function ButtonContainer({ map, resetFunction, exportMapImage, toggleBaseLayerPo
   );
 }
 
-function OpenLayersMap({ apiData, onMapClick,selectedMultistringGeometry, routeData }) {
+function OpenLayersMap({ pipelineData, storageUnitData, gateValveData, tubeWellData, onMapClick, selectedMultistringGeometry, routeData }) {
   const [map, setMap] = useState(null);
   const [showBaseLayerPopup, setShowBaseLayerPopup] = useState(false);
   const [baseLayerName, setBaseLayerName] = useState('streets-v2');
@@ -249,7 +249,7 @@ function OpenLayersMap({ apiData, onMapClick,selectedMultistringGeometry, routeD
       setMap(newMap);
     }
     
-  }, [map,apiData, baselayer]);
+  }, [map, baselayer]);
   useEffect(() => {
     
     if(map){
@@ -301,7 +301,7 @@ map.on('load', async () => {
 
   map.addSource('water-pipeline', {
     type: 'geojson',
-    data: apiData,
+    data: pipelineData,
   });
 
   map.addLayer({
@@ -317,6 +317,55 @@ map.on('load', async () => {
       'line-width': 2,
     },
   });
+
+  map.addSource('storage-unit', {
+    type: 'geojson',
+    data: storageUnitData,
+  });
+  
+  map.addLayer({
+    id: 'storage-unit-layer',
+    type: 'fill',
+    source: 'storage-unit',
+    paint: {
+      'fill-color': '#FFA500', // Adjust the color as needed
+      'fill-opacity': 0.5, // Adjust the opacity as needed
+    },
+  });
+  
+  map.addSource('gate-valve', {
+    type: 'geojson',
+    data: gateValveData,
+  });
+  
+  map.addLayer({
+    id: 'gate-valve-layer',
+    type: 'circle',
+    source: 'gate-valve',
+    paint: {
+      'circle-color': '#FF0000', // Adjust the color as needed
+      'circle-radius': 6, // Adjust the radius as needed
+      'circle-stroke-width': 2,
+      'circle-stroke-color': '#FFFFFF', // Adjust the stroke color as needed
+    },
+  });
+  map.addSource('tubewell', {
+    type: 'geojson',
+    data: tubeWellData,
+  });
+  
+  map.addLayer({
+    id: 'tubewell-layer',
+    type: 'circle',
+    source: 'tubewell',
+    paint: {
+      'circle-color': '#00FF00', // Adjust the color as needed
+      'circle-radius': 6, // Adjust the radius as needed
+      'circle-stroke-width': 2,
+      'circle-stroke-color': '#FFFFFF', // Adjust the stroke color as needed
+    },
+  });
+    
 
   map.on('click', (e) => {
     if (onMapClick) {
@@ -357,7 +406,7 @@ map.on('load', async () => {
 
   }
     
-  }, [map,apiData]);
+  }, [map,pipelineData]);
   useEffect(() => {
     if (map && routeData && routeData.success && routeData.data && routeData.data.success) {
       const routeCoordinates = routeData.data.data[0].latlngs.map(point => [point[0], point[1]]);
@@ -488,7 +537,7 @@ useEffect(()=>{ // Add the selected multistring geometry to the map as a GeoJSON
             handleBaseLayerChange={handleBaseLayerChange}
             toggleFilterPopup={toggleFilterPopup}
             showFilterPopup={showFilterPopup}
-            apiData={apiData}
+            apiData={pipelineData}
           />
           <div className="map-legends">
   <div className="legend" style={{ backgroundColor: 'red'}}></div>

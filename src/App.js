@@ -1,4 +1,4 @@
-import { useState, React } from 'react';
+import React, { useState } from 'react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import Navbar from './Navbar';
 import Networkanalysis from './Networkanalysis';
@@ -12,7 +12,10 @@ import FieldCalculator from './FieldCalculator';
 import ApiDataFetcher from './ApiDataFetcher';
 
 function App() {
-  const [apiData, setApiData] = useState([]);
+  const [pipelineData, setPipelineData] = useState([]);
+  const [storageUnitData, setStorageUnitData] = useState([]);
+  const [gateValveData, setGateValveData] = useState([]);
+  const [tubeWellData, setTubeWellData] = useState([]);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [selectedCoordinate, setSelectedCoordinate] = useState(null);
   const [selectedMultistringGeometry, setSelectedMultistringGeometry] = useState(null);
@@ -24,10 +27,12 @@ function App() {
   const handleRouteData = (data) => {
     setRouteData(data);
   };
-  
 
-  const handleDataFetched = (data) => {
-    setApiData(data);
+  const handleDataFetched = ({ pipelineData, storageUnitData, gateValveData, tubeWellData }) => {
+    setPipelineData(pipelineData);
+    setStorageUnitData(storageUnitData);
+    setGateValveData(gateValveData);
+    setTubeWellData(tubeWellData);
     setIsDataLoaded(true);
   };
 
@@ -46,14 +51,14 @@ function App() {
     switch (currentPath) {
       case '/Networkanalysis':
         return <Networkanalysis />;
-        case '/task-splitting':
-          return <Task />;
+      case '/task-splitting':
+        return <Task />;
       case '/Leakage':
         return <Leakage />;
       case '/Edit-pipeline':
         return <Edit onMultistringClick={handleMultistringClick} />;
-        case '/field-calculator':
-          return <FieldCalculator />;
+      case '/field-calculator':
+        return <FieldCalculator />;
       default:
         navigate('/');
         return null;
@@ -64,13 +69,11 @@ function App() {
     <div className="App">
       <Navbar />
       <Sidebar />
-
       <Routes>
-      <Route
-  path="/Networkanalysis"
-  element={<Networkanalysis apiData={apiData} onRouteData={handleRouteData} />}
-/>
-
+        <Route
+          path="/Networkanalysis"
+          element={<Networkanalysis apiData={pipelineData} onRouteData={handleRouteData} />}
+        />
         <Route path="/task-splitting" element={<Task />} />
         <Route path="/Leakage" element={<Leakage />} />
         <Route
@@ -83,10 +86,13 @@ function App() {
       <ApiDataFetcher onDataFetched={handleDataFetched} />
       {isDataLoaded ? (
         <OpenLayersMap
-          apiData={apiData}
+          pipelineData={pipelineData}
+          storageUnitData={storageUnitData}
+          gateValveData={gateValveData}
+          tubeWellData={tubeWellData}
           onMapClick={handleMapClick}
           selectedMultistringGeometry={selectedMultistringGeometry}
-          routeData = {routeData}
+          routeData={routeData}
         />
       ) : null}
     </div>
