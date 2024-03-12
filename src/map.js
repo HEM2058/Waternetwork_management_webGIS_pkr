@@ -232,268 +232,155 @@ function OpenLayersMap({ pipelineData, storageUnitData, gateValveData, tubeWellD
   const [showBaseLayerPopup, setShowBaseLayerPopup] = useState(false);
   const [baseLayerName, setBaseLayerName] = useState('streets-v2');
   const [showFilterPopup, setShowFilterPopup] = useState(false);
-  const [baselayer, setBaselayer] = useState('https://api.maptiler.com/maps/streets-v2/style.json?key=Otbh9YhFMbwux7HyoffB')
-  console.log(selectedMultistringGeometry)
-  console.log(routeData)
+  const [baselayer, setBaselayer] = useState('https://api.maptiler.com/maps/streets-v2/style.json?key=Otbh9YhFMbwux7HyoffB');
+  const [layerVisibility, setLayerVisibility] = useState({
+    pipeline: false,
+    storageUnit: false,
+    gateValve: false,
+    tubeWell: false,
+  });
+
   useEffect(() => {
     if (!map) {
- 
-      console.log(baselayer)
       const newMap = new maplibregl.Map({
         container: 'map',
         style: baselayer,
         center: [83.97517583929165, 28.214732103900108],
         zoom: 11.5,
       });
+      newMap.addControl(new ScaleControl(), 'bottom-right');
+      newMap.addControl(new NavigationControl(), 'bottom-right');
+      newMap.addControl(new FullscreenControl(), 'top-right');
+      // map.addControl(new MeasuresControl(), 'top-right');
+      newMap.addControl(new MaplibreExportControl(), 'bottom-right');
       
       setMap(newMap);
     }
-    
   }, [map, baselayer]);
+
   useEffect(() => {
-    
-    if(map){
- 
-map.addControl(new ScaleControl(), 'bottom-right');
-map.addControl(new NavigationControl(), 'bottom-right');
-map.addControl(new FullscreenControl(), 'top-right'); // Add FullscreenControl
-// add the plugin
-map.addControl(new MeasuresControl({ /** see options below for further tunning */}), "top-right");
-map.addControl(new MaplibreExportControl({
-  PageSize: Size.A3,
-  PageOrientation: PageOrientation.Portrait,
-  Format: Format.PNG,
-  DPI: DPI[96],
-  Crosshair: true,
-  PrintableArea: true
-}), 'bottom-right');
+    if (map) {
+      console.log("hello world")
+   console.log(layerVisibility)
 
-map.on('load', async () => {
+      // map.on('load', async () => {
+      //   console.log("inside loading function")
+        // try {
+        //   const response = await fetch('/data/servicearea.geojson');
+        //   const localGeojsonData = await response.json();
 
-  try {
+        //   map.addSource('local-geojson', {
+        //     type: 'geojson',
+        //     data: localGeojsonData,
+        //   });
 
-    const response = await fetch('/data/servicearea.geojson');
-    const localGeojsonData = await response.json();
-    console.log(localGeojsonData);
+        //   map.addLayer({
+        //     id: 'local-geojson-layer',
+        //     type: 'line',
+        //     source: 'local-geojson',
+        //     layout: {
+        //       'line-join': 'round',
+        //       'line-cap': 'round',
+        //     },
+        //     paint: {
+        //       'line-color': '#ff0000',
+        //       'line-width': 3,
+        //       'line-dasharray': [2, 2],
+        //     },
+        //   });
+        // } catch (error) {
+        //   console.error('Error loading local GeoJSON:', error);
+        // }
+if(layerVisibility.pipeline){
+        map.addSource('water-pipeline', {
+          type: 'geojson',
+          data: pipelineData,
+        });
 
-    map.addSource('local-geojson', {
-      type: 'geojson',
-      data: localGeojsonData,
-    });
-
-    map.addLayer({
-      id: 'local-geojson-layer',
-      type: 'line',
-      source: 'local-geojson',
-      layout: {
-        'line-join': 'round',
-        'line-cap': 'round',
-      },
-      paint: {
-        'line-color': '#ff0000',
-        'line-width': 3,
-        'line-dasharray': [2, 2], // Adjust the numbers to change the pattern
-      },
-    });
-  } catch (error) {
-    console.error('Error loading local GeoJSON:', error);
-  }
-
-  map.addSource('water-pipeline', {
-    type: 'geojson',
-    data: pipelineData,
-  });
-
-  map.addLayer({
-    id: 'water-pipeline-layer',
-    type: 'line',
-    source: 'water-pipeline',
-    layout: {
-      'line-join': 'round',
-      'line-cap': 'round',
-    },
-    paint: {
-      'line-color': '#0080ff',
-      'line-width': 2,
-    },
-  });
-
-  map.addSource('storage-unit', {
-    type: 'geojson',
-    data: storageUnitData,
-  });
-  
-  map.addLayer({
-    id: 'storage-unit-layer',
-    type: 'fill',
-    source: 'storage-unit',
-    paint: {
-      'fill-color': '#FFA500', // Adjust the color as needed
-      'fill-opacity': 0.5, // Adjust the opacity as needed
-    },
-  });
-  
-  map.addSource('gate-valve', {
-    type: 'geojson',
-    data: gateValveData,
-  });
-  
-  map.addLayer({
-    id: 'gate-valve-layer',
-    type: 'circle',
-    source: 'gate-valve',
-    paint: {
-      'circle-color': '#FF0000', // Adjust the color as needed
-      'circle-radius': 6, // Adjust the radius as needed
-      'circle-stroke-width': 2,
-      'circle-stroke-color': '#FFFFFF', // Adjust the stroke color as needed
-    },
-  });
-  map.addSource('tubewell', {
-    type: 'geojson',
-    data: tubeWellData,
-  });
-  
-  map.addLayer({
-    id: 'tubewell-layer',
-    type: 'circle',
-    source: 'tubewell',
-    paint: {
-      'circle-color': '#00FF00', // Adjust the color as needed
-      'circle-radius': 6, // Adjust the radius as needed
-      'circle-stroke-width': 2,
-      'circle-stroke-color': '#FFFFFF', // Adjust the stroke color as needed
-    },
-  });
-    
-
-  map.on('click', (e) => {
-    if (onMapClick) {
-      const clickedCoordinate = map.unproject(e.point);
-      console.log(clickedCoordinate);
-      onMapClick(clickedCoordinate);
-    }
-  });
-
-  map.on('click', 'water-pipeline-layer', (e) => {
-    const featureProperties = e.features[0].properties;
-    const coordinates = e.lngLat;
-
-    if (featureProperties.name === 'waterpipe') {
-      new maplibregl.Popup()
-        .setLngLat(coordinates)
-        .setHTML(`<h3>Diameter</h3><p>${featureProperties.diameter} millimeter</p>`)
-        .addTo(map);
-    } else {
-      new maplibregl.Popup()
-        .setLngLat(coordinates)
-        .setHTML(`<p>${featureProperties.name}</p>`)
-        .addTo(map);
-    }
-  });
- 
-
-
-  map.on('mouseenter', 'water-pipeline-layer', () => {
-    map.getCanvas().style.cursor = 'pointer';
-  });
-
-  map.on('mouseleave', 'water-pipeline-layer', () => {
-    map.getCanvas().style.cursor = '';
-  });
-
-});
-
-  }
-    
-  }, [map,pipelineData]);
-  useEffect(() => {
-    if (map && routeData && routeData.success && routeData.data && routeData.data.success) {
-      const routeCoordinates = routeData.data.data[0].latlngs.map(point => [point[0], point[1]]);
-     
-      // Check if the source already exists
-      const existingSource = map.getSource('route-geojson');
-      if (existingSource) {
-        map.removeLayer('route-layer');
-        map.removeSource('route-geojson');
-      }
-  
-      map.addSource('route-geojson', {
-        type: 'geojson',
-        data: {
-          type: 'Feature',
-          properties: {},
-          geometry: {
-            type: 'LineString',
-            coordinates: routeCoordinates,
+        map.addLayer({
+          id: 'water-pipeline-layer',
+          type: 'line',
+          source: 'water-pipeline',
+          layout: {
+            'line-join': 'round',
+            'line-cap': 'round',
           },
-        },
-      });
-  
-      map.addLayer({
-        id: 'route-layer',
-        type: 'line',
-        source: 'route-geojson',
-        layout: {
-          'line-join': 'round',
-          'line-cap': 'round',
-        },
-        paint: {
-          'line-color': 'green', // Adjust the color as needed
-          'line-width': 4,
-        },
-      });
-  
-      // Fit the map to the bounds of the added route layer
-      const routeBounds = routeCoordinates.reduce(
-        (bounds, coord) => bounds.extend(coord),
-        new maplibregl.LngLatBounds()
-      );
-  
-      map.fitBounds(routeBounds, { padding: 50 });
+          paint: {
+            'line-color': '#0080ff',
+            'line-width': 2,
+          },
+       
+        });
+      }
+      if(layerVisibility.storageUnit){
+        map.addSource('storage-unit', {
+          type: 'geojson',
+          data: storageUnitData,
+        });
+        
+        map.addLayer({
+          id: 'storage-unit-layer',
+          type: 'fill',
+          source: 'storage-unit',
+          paint: {
+            'fill-color': '#FFA500',
+            'fill-opacity': 0.5,
+          },
+       
+        });
+      }
+      if(layerVisibility.gateValve){
+        map.addSource('gate-valve', {
+          type: 'geojson',
+          data: gateValveData,
+        });
+        
+        map.addLayer({
+          id: 'gate-valve-layer',
+          type: 'circle',
+          source: 'gate-valve',
+          paint: {
+            'circle-color': '#FF0000',
+            'circle-radius': 6,
+            'circle-stroke-width': 2,
+            'circle-stroke-color': '#FFFFFF',
+          },
+          
+        });
+      }
+      if(layerVisibility.tubeWell){
+        map.addSource('tubewell', {
+          type: 'geojson',
+          data: tubeWellData,
+        });
+        
+        map.addLayer({
+          id: 'tubewell-layer',
+          type: 'circle',
+          source: 'tubewell',
+          paint: {
+            'circle-color': '#00FF00',
+            'circle-radius': 6,
+            'circle-stroke-width': 2,
+            'circle-stroke-color': '#FFFFFF',
+          },
+   
+        });
+      }
+    
+
+   
+        
+      // });
     }
-  }, [map, routeData]);
-  
-  
+  }, [map, pipelineData, storageUnitData, gateValveData, tubeWellData, layerVisibility]);
 
-useEffect(()=>{ // Add the selected multistring geometry to the map as a GeoJSON layer
-  if(map){
-  if (selectedMultistringGeometry) {
-   // Check if the source already exists
-   const existingSource = map.getSource('selected-multistring-geojson');
-   if (existingSource) {
-     map.removeLayer('selected-multistring-layer');
-     map.removeSource('selected-multistring-geojson');
-   }
-    map.addSource('selected-multistring-geojson', {
-      type: 'geojson',
-      data: selectedMultistringGeometry,
+  const handleLayerToggle = (layer) => {
+    setLayerVisibility({
+      ...layerVisibility,
+      [layer]: !layerVisibility[layer],
     });
-
-    map.addLayer({
-      id: 'selected-multistring-layer',
-      type: 'line',
-      source: 'selected-multistring-geojson',
-      layout: {
-        'line-join': 'round',
-        'line-cap': 'round',
-      },
-      paint: {
-        'line-color': 'red', // You can adjust the color as needed
-        'line-width': 2,
-      },
-    });
-
-    // Zoom to the extent of the selected-multistring-layer
-    const bounds = new maplibregl.LngLatBounds();
-    selectedMultistringGeometry.coordinates.forEach((coord) => {
-      bounds.extend(coord);
-    });
-
-    map.fitBounds(bounds, { padding: 20 });
-  }
-}
-}, [selectedMultistringGeometry]);
+  };
 
   const resetFunction = () => {
     map.flyTo({
@@ -513,9 +400,8 @@ useEffect(()=>{ // Add the selected multistring geometry to the map as a GeoJSON
 
   const handleBaseLayerChange = (layerName) => {
     setBaseLayerName(layerName);
-    const styleUrl =  `https://api.maptiler.com/maps/${layerName}/style.json?key=Otbh9YhFMbwux7HyoffB`
+    const styleUrl = `https://api.maptiler.com/maps/${layerName}/style.json?key=Otbh9YhFMbwux7HyoffB`;
     setBaselayer(styleUrl);
-    
   };
 
   const toggleFilterPopup = () => {
@@ -540,17 +426,62 @@ useEffect(()=>{ // Add the selected multistring geometry to the map as a GeoJSON
             apiData={pipelineData}
           />
           <div className="map-legends">
-  <div className="legend" style={{ backgroundColor: 'red'}}></div>
-  <span>Service Area</span>
-  <div className="legend" style={{ backgroundColor: 'blue' }}></div>
-  <span>Pipeline</span>
-</div>
-
+            <div className='legends'>
+              <input
+                type="checkbox"
+                id="serviceAreaCheckbox"
+                checked
+                
+              />
+              <div className="legend" style={{ backgroundColor: 'red'}}></div>
+              <label htmlFor="serviceAreaCheckbox">Service Area</label>
+            </div>
+            <div className='legends'>
+              <input
+                type="checkbox"
+                id="pipelineCheckbox"
+                checked={layerVisibility.pipeline}
+                onChange={() => handleLayerToggle('pipeline')}
+              />
+              <div className="legend" style={{ backgroundColor: 'blue' }}></div>
+              <label htmlFor="pipelineCheckbox">Pipeline</label>
+            </div>
+            <div className='legends'>
+              <input
+                type="checkbox"
+                id="storageUnitCheckbox"
+                checked={layerVisibility.storageUnit}
+                onChange={() => handleLayerToggle('storageUnit')}
+              />
+              <div className="legend" style={{ backgroundColor: '#FFA500' }}></div>
+              <label htmlFor="storageUnitCheckbox">Storage Unit</label>
+            </div>
+            <div className='legends'>
+              <input
+                type="checkbox"
+                id="gateValveCheckbox"
+                checked={layerVisibility.gateValve}
+                onChange={() => handleLayerToggle('gateValve')}
+              />
+              <div className="legend" style={{ backgroundColor: '#FF0000' }}></div>
+              <label htmlFor="gateValveCheckbox">Gate Valve</label>
+            </div>
+            <div className='legends'>
+              <input
+                type="checkbox"
+                id="tubeWellCheckbox"
+                checked={layerVisibility.tubeWell}
+                onChange={() => handleLayerToggle('tubeWell')}
+              />
+              <div className="legend" style={{ backgroundColor: '#00FF00' }}></div>
+              <label htmlFor="tubeWellCheckbox">Tubewell</label>
+            </div>
+          </div>
         </>
-        
       )}
     </div>
   );
 }
+
 
 export default OpenLayersMap;

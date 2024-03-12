@@ -72,7 +72,7 @@ function App() {
       <Routes>
         <Route
           path="/Networkanalysis"
-          element={<Networkanalysis apiData={pipelineData} onRouteData={handleRouteData} />}
+          element={<Networkanalysis pipelineData={pipelineData} onRouteData={handleRouteData} />}
         />
         <Route path="/task-splitting" element={<Task />} />
         <Route path="/Leakage" element={<Leakage />} />

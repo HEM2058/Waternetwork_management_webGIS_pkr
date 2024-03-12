@@ -441,15 +441,21 @@ button[data-tooltip]:hover:after {
 
 .map-legends {
   display: flex;
+  flex-direction: column;
+  gap: 20px;
   margin-top: 10px; /* Adjust the margin as needed */
   position: absolute;
-  bottom: 5px;
-  left: 30%;
+  top: 10%;
+  left: 6%;
   background-color: white; /* Add a background color to make the legends more visible */
   padding: 10px; /* Add padding for better spacing */
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Add shadow effect */
 }
-
+.legends{
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+}
 .legend {
   width: 20px; /* Adjust the width of the legend color box */
   height: 20px; /* Adjust the height of the legend color box */
