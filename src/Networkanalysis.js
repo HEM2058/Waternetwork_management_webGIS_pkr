@@ -20,7 +20,7 @@ function NetworkAnalysis({ pipelineData, onRouteData }) {
         return;
       }
 
-      const routeApiUrl = `https://route-init.gallimap.com/api/v1/routing?mode=${selectedMode}&src=${source}&dst=${destination}&accessToken=1b0d6442-4806-4a6c-90bb-5437128096eb`;
+      const routeApiUrl = `https://route-init.gallimap.com/api/v1/routing?mode=driving&srcLat=28.290542670399482&srcLng=83.9302649664827&dstLat=28.265296395004025&dstLng=83.96562720874844&accessToken=1b0d6442-4806-4a6c-90bb-5437128096eb`;
       const routeResponse = await fetch(routeApiUrl);
 
       if (routeResponse.ok) {
@@ -58,7 +58,7 @@ function NetworkAnalysis({ pipelineData, onRouteData }) {
         {routeData && (
           <div className="result">
             <h3>Route Details</h3>
-            <p>Total Distance: {routeData.data.data[0].distance} meters</p>
+            <p>Pipe Length: {routeData.data.data[0].distance} meters</p>
             <p>Total Duration: {routeData.data.data[0].duration} minutes</p>
           </div>
         )}
