@@ -16,9 +16,9 @@ function Navbar() {
         <div className="navbar-brand">
           <Link to="/">
             <div className="logo1-container">
-                <h2>AquaMapper</h2>
+                <h2>AquaMapper(PWNDMS)</h2>
                 <div className='sub-title'>
-                <p>Pokhara's Water Distribution Management system</p>
+                <p>Pokhara's Water Network Distribution Management system</p>
                 <div className='border-bottom'></div>
                 </div>
             

@@ -26,7 +26,7 @@ function Leakage() {
 
   return (
     <div className="Lekage-container">
-      <h2>Pipe Leakage Messages</h2>
+      <h2>Messages</h2>
       <div className="Lekage">
         <ul className="leakage-list">
           {messages.map((message) => (
