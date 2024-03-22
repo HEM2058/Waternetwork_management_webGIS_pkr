@@ -151,76 +151,11 @@ function ButtonContainer({ map, resetFunction, exportMapImage, toggleBaseLayerPo
         <i className="fas fa-undo"></i>
       </button>
   
-      <button className={showBaseLayerPopup ? 'active' : ''} onClick={() => toggleBaseLayerPopup()} data-tooltip="Base Layers">
-        <i className="fas fa-globe"></i>
-      </button>
-      {showBaseLayerPopup && (
-        <div className={`base-layer-popup`}>
-          <>
-            <input
-              type="radio"
-              id="DefaultMapToggle"
-              name="baseLayer"
-              checked={baseLayerName === 'streets-v2'}
-          onChange={() => handleBaseLayerChange('streets-v2')}
-            />
-            <label htmlFor="googleSatelliteToggle">Street Map</label>
-            <input
-              type="radio"
-              id="googleSatelliteToggle"
-              name="baseLayer"
-                checked={baseLayerName === 'satellite'}
-          onChange={() => handleBaseLayerChange('satellite')}
-            />
-            <label htmlFor="googleSatelliteToggle">Satellite Map</label>
-            <input
-              type="radio"
-              id="topo"
-              name="baseLayer"
-                checked={baseLayerName === 'topo-v2'}
-          onChange={() => handleBaseLayerChange('topo-v2')}
-            />
-            <label htmlFor="googleSatelliteToggle">Topographic Map</label>
-          </>
-        </div>
-      )}
+   
+    
 
-      <button onClick={() => toggleFilterPopup()} className={showFilterPopup ? 'active' : ''} data-tooltip="Filter">
-        <i className="fas fa-filter"></i>
-      </button>
+   
 
-      {showFilterPopup && (
-        <div className={`filter-popup`}>
-          <select value={selectedFilterLayer} onChange={(e) => setSelectedFilterLayer(e.target.value)}>
-            <option value="" disabled>Select a Layer</option>
-            <option value="Reservoir">Reservoir</option>
-            <option value="Tubewell">Tubewell</option>
-            <option value="tank">tank</option>
-          </select>
-
-          {selectedFilterLayer && (
-            <>
-              {isLoading && <p>Loading...</p>}
-              {filteredData.length > 0 && (
-                <div>
-                  <label>Filtered Data:</label>
-                  <ul>
-                    {filteredData.map((feature, index) => (
-                      <li
-                        key={index}
-                        onClick={() => handleItemClick(feature, index)}
-                        className={selectedListItemIndex === index ? 'active' : ''}
-                      >
-                        {feature.properties.name}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </>
-          )}
-        </div>
-      )}
 
    
     </div>
@@ -410,8 +345,7 @@ if(layerVisibility.pipeline){
 
   return (
     <div>
-      <div id="map"></div>
-      {map && (
+      <div id="map">  {map && (
         <>
           <ButtonContainer
             map={map}
@@ -478,7 +412,8 @@ if(layerVisibility.pipeline){
             </div>
           </div>
         </>
-      )}
+      )}</div>
+    
     </div>
   );
 }
