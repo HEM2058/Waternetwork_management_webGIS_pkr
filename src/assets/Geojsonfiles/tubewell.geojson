@@ -1,0 +1,23 @@
+{
+"type": "FeatureCollection",
+"name": "tubewell",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "OBJECTID": 12, "Name": "Majheripatan Deeptube well no 1", "Pump_Type": null, "Depth": 0.0, "Flow_Rate": 0.0, "Condition": null }, "geometry": { "type": "Point", "coordinates": [ 84.022714653000037, 28.178278228000067 ] } },
+{ "type": "Feature", "properties": { "OBJECTID": 13, "Name": "Majheripatan Deepwell tube no 2", "Pump_Type": null, "Depth": 0.0, "Flow_Rate": 0.0, "Condition": null }, "geometry": { "type": "Point", "coordinates": [ 84.025360865000039, 28.173208723000073 ] } },
+{ "type": "Feature", "properties": { "OBJECTID": 14, "Name": "Khahare Deeptube well", "Pump_Type": null, "Depth": 0.0, "Flow_Rate": 0.0, "Condition": null }, "geometry": { "type": "Point", "coordinates": [ 83.958619050000038, 28.222500324000066 ] } },
+{ "type": "Feature", "properties": { "OBJECTID": 15, "Name": "Pardi NWSC Office deep tube well", "Pump_Type": null, "Depth": 0.0, "Flow_Rate": 0.0, "Condition": null }, "geometry": { "type": "Point", "coordinates": [ 83.971182096000064, 28.205096153000056 ] } },
+{ "type": "Feature", "properties": { "OBJECTID": 16, "Name": "Guest House Deep Tube well no 1", "Pump_Type": null, "Depth": 0.0, "Flow_Rate": 0.0, "Condition": null }, "geometry": { "type": "Point", "coordinates": [ 83.97122405500005, 28.199048599000037 ] } },
+{ "type": "Feature", "properties": { "OBJECTID": 17, "Name": "Guest house Tubewell no 2", "Pump_Type": null, "Depth": 0.0, "Flow_Rate": 0.0, "Condition": null }, "geometry": { "type": "Point", "coordinates": [ 83.971005902000059, 28.199483366000038 ] } },
+{ "type": "Feature", "properties": { "OBJECTID": 18, "Name": "Himal Tole deep tube well", "Pump_Type": null, "Depth": 0.0, "Flow_Rate": 0.0, "Condition": null }, "geometry": { "type": "Point", "coordinates": [ 83.975513155000044, 28.193319982000048 ] } },
+{ "type": "Feature", "properties": { "OBJECTID": 19, "Name": "Mahatgauda Deep tube well", "Pump_Type": null, "Depth": 0.0, "Flow_Rate": 0.0, "Condition": null }, "geometry": { "type": "Point", "coordinates": [ 83.982338240000047, 28.183277233000069 ] } },
+{ "type": "Feature", "properties": { "OBJECTID": 20, "Name": "Thulimajuwa Deep tubewell", "Pump_Type": null, "Depth": 0.0, "Flow_Rate": 0.0, "Condition": null }, "geometry": { "type": "Point", "coordinates": [ 84.001773961000083, 28.178382901000077 ] } },
+{ "type": "Feature", "properties": { "OBJECTID": 21, "Name": "Chauthe Deep Tubewell", "Pump_Type": null, "Depth": 0.0, "Flow_Rate": 0.0, "Condition": null }, "geometry": { "type": "Point", "coordinates": [ 84.026332607000086, 28.18790664900007 ] } },
+{ "type": "Feature", "properties": { "OBJECTID": 22, "Name": "Kundahar Deep tubewell", "Pump_Type": null, "Depth": 0.0, "Flow_Rate": 0.0, "Condition": null }, "geometry": { "type": "Point", "coordinates": [ 84.003456632000052, 28.204147326000054 ] } },
+{ "type": "Feature", "properties": { "OBJECTID": 24, "Name": "Matepani Deep tubewell", "Pump_Type": null, "Depth": 0.0, "Flow_Rate": 0.0, "Condition": null }, "geometry": { "type": "Point", "coordinates": [ 84.002352866000081, 28.21437830900004 ] } },
+{ "type": "Feature", "properties": { "OBJECTID": 25, "Name": "Rato Danda Deep Tubewell", "Pump_Type": null, "Depth": 0.0, "Flow_Rate": 0.0, "Condition": null }, "geometry": { "type": "Point", "coordinates": [ 84.019132465000041, 28.209925553000062 ] } },
+{ "type": "Feature", "properties": { "OBJECTID": 26, "Name": "FUL Baari Deep Tubewell", "Pump_Type": null, "Depth": 0.0, "Flow_Rate": 0.0, "Condition": null }, "geometry": { "type": "Point", "coordinates": [ 83.999676222000062, 28.229854261000071 ] } },
+{ "type": "Feature", "properties": { "OBJECTID": 27, "Name": "Lovely Danda Deep Tubewell", "Pump_Type": null, "Depth": 0.0, "Flow_Rate": 0.0, "Condition": null }, "geometry": { "type": "Point", "coordinates": [ 83.970498770000063, 28.233165196000073 ] } },
+{ "type": "Feature", "properties": { "OBJECTID": 28, "Name": "Shree Krishna Chowk Deep tubewell", "Pump_Type": null, "Depth": 0.0, "Flow_Rate": 0.0, "Condition": null }, "geometry": { "type": "Point", "coordinates": [ 83.992676492000044, 28.201679396000031 ] } }
+]
+}

@@ -11,6 +11,7 @@ import streetBaselayer from './assets/streets-v2.png';
 import satelliteBaselayer from './assets/satellite.png';
 
 
+
 function ButtonContainer({ map, resetFunction, exportMapImage, toggleBaseLayerPopup, showBaseLayerPopup, handleBaseLayerChange,baseLayerName, toggleFilterPopup, showFilterPopup, apiData }) {
   const [filteredData, setFilteredData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -171,7 +172,12 @@ function OpenLayersMap({ pipelineData, storageUnitData, gateValveData, tubeWellD
   const [baseLayerName, setBaseLayerName] = useState('streets-v2');
   const [showFilterPopup, setShowFilterPopup] = useState(false);
   const [activeBaselayer, setActiveBaselayer] = useState('default');
+  
   const [style, setStyle] = useState('https://api.maptiler.com/maps/streets-v2/style.json?key=Otbh9YhFMbwux7HyoffB')
+
+
+
+
 
   const [layerVisibility, setLayerVisibility] = useState({
     pipeline: false,
@@ -186,6 +192,7 @@ function OpenLayersMap({ pipelineData, storageUnitData, gateValveData, tubeWellD
    }
   },[style]);
 
+
   useEffect(() => {
     if (!map) {
       const newMap = new maplibregl.Map({
@@ -197,12 +204,28 @@ function OpenLayersMap({ pipelineData, storageUnitData, gateValveData, tubeWellD
       newMap.addControl(new ScaleControl(), 'bottom-right');
       newMap.addControl(new NavigationControl(), 'bottom-right');
       newMap.addControl(new FullscreenControl(), 'top-right');
-      // map.addControl(new MeasuresControl(), 'top-right');
+      newMap.addControl(new MeasuresControl(), 'top-right');
       newMap.addControl(new MaplibreExportControl(), 'bottom-right');
+      
+    
       
       setMap(newMap);
     }
   }, [map, style]);
+
+
+
+  const updateArea =(e) =>{
+    console.log(e)
+    }
+  if(map){
+    map.on('draw.create', updateArea);
+    map.on('draw.delete', updateArea);
+    map.on('draw.update', updateArea);
+
+  }
+
+
 
   useEffect(() => {
     if (map) {
