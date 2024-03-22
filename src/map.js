@@ -7,6 +7,8 @@ import MeasuresControl from 'maplibre-gl-measures';
 import { MaplibreExportControl, Size, PageOrientation, Format, DPI} from "@watergis/maplibre-gl-export";
 import '@watergis/maplibre-gl-export/dist/maplibre-gl-export.css';
 import { NavigationControl, ScaleControl, FullscreenControl } from 'maplibre-gl';
+import streetBaselayer from './assets/streets-v2.png';
+import satelliteBaselayer from './assets/satellite.png';
 
 
 function ButtonContainer({ map, resetFunction, exportMapImage, toggleBaseLayerPopup, showBaseLayerPopup, handleBaseLayerChange,baseLayerName, toggleFilterPopup, showFilterPopup, apiData }) {
@@ -15,7 +17,8 @@ function ButtonContainer({ map, resetFunction, exportMapImage, toggleBaseLayerPo
   const [selectedFilterLayer, setSelectedFilterLayer] = useState('');
   const [selectedListItemIndex, setSelectedListItemIndex] = useState(null);
   const [activeButton, setActiveButton] = useState('');
-  console.log(baseLayerName)
+
+
 
   const handleItemClick = (feature, index) => {
     setSelectedListItemIndex(index);
@@ -167,19 +170,27 @@ function OpenLayersMap({ pipelineData, storageUnitData, gateValveData, tubeWellD
   const [showBaseLayerPopup, setShowBaseLayerPopup] = useState(false);
   const [baseLayerName, setBaseLayerName] = useState('streets-v2');
   const [showFilterPopup, setShowFilterPopup] = useState(false);
-  const [baselayer, setBaselayer] = useState('https://api.maptiler.com/maps/streets-v2/style.json?key=Otbh9YhFMbwux7HyoffB');
+  const [activeBaselayer, setActiveBaselayer] = useState('default');
+  const [style, setStyle] = useState('https://api.maptiler.com/maps/streets-v2/style.json?key=Otbh9YhFMbwux7HyoffB')
+
   const [layerVisibility, setLayerVisibility] = useState({
     pipeline: false,
     storageUnit: false,
     gateValve: false,
     tubeWell: false,
   });
+  let activePopup = null;
+  useEffect(() => {
+   if(map){ 
+   setMap(null)
+   }
+  },[style]);
 
   useEffect(() => {
     if (!map) {
       const newMap = new maplibregl.Map({
         container: 'map',
-        style: baselayer,
+        style: style,
         center: [83.97517583929165, 28.214732103900108],
         zoom: 11.5,
       });
@@ -191,7 +202,7 @@ function OpenLayersMap({ pipelineData, storageUnitData, gateValveData, tubeWellD
       
       setMap(newMap);
     }
-  }, [map, baselayer]);
+  }, [map, style]);
 
   useEffect(() => {
     if (map) {
@@ -333,14 +344,19 @@ if(layerVisibility.pipeline){
     setShowBaseLayerPopup(!showBaseLayerPopup);
   };
 
-  const handleBaseLayerChange = (layerName) => {
-    setBaseLayerName(layerName);
-    const styleUrl = `https://api.maptiler.com/maps/${layerName}/style.json?key=Otbh9YhFMbwux7HyoffB`;
-    setBaselayer(styleUrl);
-  };
+
 
   const toggleFilterPopup = () => {
     setShowFilterPopup(!showFilterPopup);
+  };
+  const handleBaselayerToggle = (baselayer) => {
+    setActiveBaselayer(baselayer);
+    if (baselayer === 'street') {
+      setStyle('https://api.maptiler.com/maps/streets-v2/style.json?key=Otbh9YhFMbwux7HyoffB');
+  
+    } else if (baselayer === 'satellite') {
+      setStyle('https://api.maptiler.com/maps/satellite/style.json?key=Otbh9YhFMbwux7HyoffB');
+    }
   };
 
   return (
@@ -351,12 +367,6 @@ if(layerVisibility.pipeline){
             map={map}
             resetFunction={resetFunction}
             exportMapImage={exportMapImage}
-            toggleBaseLayerPopup={toggleBaseLayerPopup}
-            baseLayerName={baseLayerName}
-            showBaseLayerPopup={showBaseLayerPopup}
-            handleBaseLayerChange={handleBaseLayerChange}
-            toggleFilterPopup={toggleFilterPopup}
-            showFilterPopup={showFilterPopup}
             apiData={pipelineData}
           />
           <div className="map-legends">
@@ -411,6 +421,21 @@ if(layerVisibility.pipeline){
               <label htmlFor="tubeWellCheckbox">Tubewell</label>
             </div>
           </div>
+          <div className='baselayer_toggle'>
+     
+      <button  title='switch to street baselayer'
+        className={activeBaselayer === 'street' ? 'active' : ''}
+        onClick={() => handleBaselayerToggle('street')}
+      >
+        <img src={streetBaselayer} alt="Street Baselayer" />
+      </button>
+      <button  title='switch to satellite baselayer'
+        className={activeBaselayer === 'satellite' ? 'active' : ''}
+        onClick={() => handleBaselayerToggle('satellite')}
+      >
+        <img src={satelliteBaselayer} alt="Satellite Baselayer" />
+      </button>
+      </div>
         </>
       )}</div>
     
