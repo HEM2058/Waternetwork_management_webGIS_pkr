@@ -155,71 +155,25 @@
 /* Style for the filter controls */
 
 
-/* Styling for the search container */
-
-.search-container {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  max-width: 300px;
-  
-}
-
-
-
-/* Media query for screens smaller than 768px */
-@media (max-width: 768px) {
-  .search-container {
-    top: 5px;
-    left: 10px;
-    max-width: 50%;
-  }
-  
-  .filter-search {
-    margin-top: 5px;
-  }
-}
-
-/* Media query for screens smaller than 480px */
-@media (max-width: 480px) {
-  .search-container {
-    top: 10px;
-    left: 5px;
-    padding: 5px;
-  }
-  
-  .filter-search {
-    margin-top: 3px;
-  }
-  
-  .filter-search i {
-    font-size: 16px;
-    margin-right: 5px;
-  }
-}
 /* Styling for the base layer switching buttons */
 .button-container {
   position: absolute;
-  top: 150px;
+  top: 50px;
   right: 0px;
   z-index: 1000; /* Ensure it's above the map */
-  background: rgba(255, 255, 255, 0.7);
   padding: 10px;
   border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  
 }
 
 .button-container button {
   display: block;
   margin-bottom: 10px;
-  background: #007BFF;
-  color: #fff;
+  background: #fff;
+  color:black;
   border: none;
   border-radius: 5px;
-  padding: 8px 12px;
+  padding: 8px 11px;
   cursor: pointer;
   transition: background 0.3s ease;
   font-size: 10px;
@@ -228,7 +182,11 @@
 
 
 .button-container button:hover {
-  background: #0056b3;
+  background: #d9d6d6;
+}
+
+.button-container i{
+  font-size: 11px;
 }
 
 
@@ -253,41 +211,7 @@
 
 }
 
-/* Add this CSS to style the tooltips */
-/* Default tooltip styling */
-button[data-tooltip]:hover:after {
-  content: attr(data-tooltip);
-  position: relative;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 5px;
-  z-index: 1;
-  pointer-events: none;
-  font-size: 14px;
-  white-space: nowrap;
-}
 
-/* Media query for smaller screens (adjust max-width as needed) */
-@media (max-width: 768px) {
-  button[data-tooltip]:hover:after {
-    display: none; /* Hide the tooltip on smaller screens */
-  }
-}
-
-.loading::after {
-  content: '';
-  position: relative;
-  top: 50%;
-  right: 10px; /* Adjust the distance from the input field */
-  transform: translateY(-50%);
-  width: 25px;
-  height: 25px;
-  border: 3px solid transparent;
-  border-top-color: #007bff; /* Initial color before 180 degrees */
-  border-radius: 50%;
-  color: black;
-  animation: rotate 1s linear infinite;
-}
 
 @keyframes rotate {
   0% {

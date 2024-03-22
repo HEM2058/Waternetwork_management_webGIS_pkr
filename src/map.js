@@ -147,10 +147,10 @@ function ButtonContainer({ map, resetFunction, exportMapImage, toggleBaseLayerPo
   
   return (
     <div className="button-container">
-         <button onClick={getCurrentLocation} data-tooltip="Get Current Location">
+         <button onClick={getCurrentLocation} title="Get Current Location">
         <i className="fas fa-location-arrow"></i>
       </button>
-      <button id="reset-button" onClick={() => resetFunction()} data-tooltip="Reset Map View">
+      <button id="reset-button" onClick={() => resetFunction()} title="Reset Map View">
         <i className="fas fa-undo"></i>
       </button>
   

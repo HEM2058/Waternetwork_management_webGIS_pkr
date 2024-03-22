@@ -34,29 +34,30 @@ function Sidebar() {
         <i className="fas fa-tasks"></i>
       </NavLink>
       <NavLink
-        to="/Leakage"
-        className={`tool-icon ${location.pathname === '/Leakage' ? 'active' : ''}`}
-        data-tooltip="Leak Alerts"
-        activeClassName="selected"
-      >
-        <i className="fas fa-exclamation-triangle"></i>
-      </NavLink>
-      <NavLink
+  to="/Leakage"
+  className={`tool-icon ${location.pathname === '/Leakage' ? 'active' : ''}`}
+  data-tooltip="Leak Alerts"
+  activeClassName="selected"
+>
+  <i className="fas fa-comment"></i> {/* Replace with messenger icon */}
+</NavLink>
+
+      {/* <NavLink
         to="/edit-pipeline"
         className={`tool-icon ${location.pathname === '/edit-pipeline' ? 'active' : ''}`}
         data-tooltip="Edit Pipeline"
         activeClassName="selected"
       >
         <i className="fas fa-edit"></i>
-      </NavLink>
-      <NavLink
+      </NavLink> */}
+      {/* <NavLink
         to="/add-pipeline"
         className={`tool-icon ${location.pathname === '/add-pipeline' ? 'active' : ''}`}
         data-tooltip="Add Pipeline"
         activeClassName="selected"
       >
         <i className="fas fa-plus-circle"></i>
-      </NavLink>
+      </NavLink> */}
       <NavLink
         to="/field-calculator"
         className={`tool-icon ${location.pathname === '/field-calculator' ? 'active' : ''}`}

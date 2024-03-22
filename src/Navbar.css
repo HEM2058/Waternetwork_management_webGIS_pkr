@@ -6,7 +6,7 @@
   justify-content: space-between;
   align-items: center;
   height: 70px;
-  background:  #4B0082; /* Gradient from left to right */
+  background:  #e6e6e7; /* Gradient from left to right */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   position: relative;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -14,47 +14,27 @@
   animation: colorMove 5s infinite linear;
 }
 
-@keyframes colorMove {
-  0% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: 100% 50%;
-  }
-}
 
-/* @keyframes colorChange {
-  0% {
-    background: linear-gradient(135deg, #857e19, #4B0082);
-  }
-  
-  100% {
-    background: linear-gradient(135deg, #4B0082, #857e19);
-  }
-} */
 
 /* Rest of your CSS remains the same... */
-
+.logo1-container{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  padding: 0 20px;
+}
 .logo1-container h2 {
   font-size: 25px;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  color: white;
-  animation: headerAnimation 5s linear infinite alternate;
-}
+  color: #bc681f;
 
-@keyframes headerAnimation {
-  0% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(1.05);
-  }
 }
 
 
-.navbar-brand a {
+
+.navbar-brand p {
   text-decoration: none;
   font-size: 18px;
+  border-bottom:1px solid red ;
   font-family: 'Clambo', sans-serif;
 }
 
@@ -63,10 +43,7 @@
   align-items: center;
 }
 
-.logo1-container {
-  display: flex;
-  align-items: center;
-}
+
 
 .logo1 {
   width: 60px;
@@ -113,8 +90,8 @@
 
   position: relative; /* Create a stacking context for the shadow */
   padding: 7px 10px; /* Add padding for a larger clickable area */
-  background: linear-gradient(135deg, #FFD700, #FFA500); /* Gradient background */
-  border-radius: 5px; /* Rounded corners */
+  background: #fff; /* Gradient background */
+  border-radius: 8px; /* Rounded corners */
   transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
   cursor: pointer;
   display: flex;
@@ -126,15 +103,14 @@
   display: flex;
   gap: 6px;
   place-content: center;
-
+ 
 }
 .icon-container span{
  margin-top:4px ;
 
 }
 .icon-container:hover {
-  background: linear-gradient(135deg, #FFA500, #FFD700); /* Gradient background on hover */
-  transform: translateY(-2px); /* Lift the button slightly on hover */
+  background: #f5f1f1;
 }
 
 
@@ -145,39 +121,25 @@
 
 /* Tooltip styles */
 
-
-
-.icon-container::after {
-  content: attr(data-tooltip);
+.noti-count {
   position: absolute;
-  top: 100%;
-  left: 0;
-  transform: translateX(-50%);
-  white-space: nowrap;
-  background: rgba(0, 0, 0, 0.7);
+  left: 40%;
   color: #fff;
-  padding: 5px 10px;
-  border-radius: 5px;
-  font-size: 14px;
-  opacity: 0;
-  transition: opacity 0.2s, transform 0.2s;
-  pointer-events: none;
+  font-weight: bold;
+  top: 4px;
 }
 
-.icon-container:hover::after {
-  opacity: 1;
-  transform: translateX(-50%) translateY(-10px);
-}
+
 
 /* Navbar.css */
 .icon-container.active {
-  background:rgb(188, 106, 12);
+  background-color: rgb(197, 185, 185);
+  border-radius: 6px;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.3); 
+  transition: width 0.3s ease-in-out, height 0.3s ease-in-out, box-shadow 0.3s ease-in-out; 
 
 }
-.icon-container.active i{
-  color:#6c0f0f;
 
-}
 
 
 /* Responsive styles */
@@ -189,12 +151,8 @@
   .icon-container a{
     gap: 4px;
   }
-  .icon-container span{
-    font-size: 15px;
-   }
-  .icon-container i{
-    font-size: 25px;
-  }
+
+ 
   .logo1-container h2{
     font-size:25px ;
   }
@@ -231,14 +189,7 @@
     
   }
 
-  .icon-container i{
-    font-size: 25px;
- 
-  }
-  .icon-container span{
-  
-    display: none;
-   }
+
 }
 
 @media (max-width: 468px) {
@@ -269,13 +220,6 @@
   .icon-container   {
     padding: 4px 8px; /* Adjust padding for smaller screens */
   }
-  
-.icon-container i{
-  font-size: 20px;
-}
-.icon-container span{
 
-  display: none;
- }
 
 }
