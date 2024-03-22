@@ -1,44 +1,58 @@
-/* Task.css */
 .task-container {
-    width: 300px;
-    height: calc(100vh - 70px);
-    padding: 20px;
-    box-sizing: border-box;
-    position: absolute;
-    left: 80px;
-    background-color: white;
-    z-index: 999;
-  }
-  
-  .add-task-button {
-    display: flex;
-    align-items: center;
-    padding: 8px;
-    margin-bottom: 10px;
-    cursor: pointer;
-  }
-  
-  .add-task-button i {
-    margin-right: 8px;
-  }
-  
-  .tasks {
-    height: calc(100vh - 210px); 
-    overflow-y: auto;
-  }
-  
-  .task-item {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 10px;
-    padding: 10px;
-  }
-  
-  .task-item h3 {
-    margin-bottom: 5px;
-  }
-  
-  .task-item p {
-    font-size: 0.8rem;
-    color: #777;
-  }
-  
+  width: 300px;
+  height: calc(100vh - 70px);
+  padding: 20px;
+  box-sizing: border-box;
+  position: absolute;
+  left: 80px;
+  background-color: white;
+  z-index: 999;
+}
+
+.add-task-button {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.add-task-button i {
+  margin-right: 8px;
+}
+
+.tasks {
+  height: calc(100vh - 210px);
+  overflow-y: auto;
+}
+
+.task-item {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+.task-item h3 {
+  margin-bottom: 5px;
+}
+
+.task-item p {
+  font-size: 0.8rem;
+  color: #777;
+}
+
+.view-more-button,
+.view-map-button {
+  margin-top: 10px;
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.view-map-button {
+  margin-left: 10px;
+  background-color: #28a745;
+}
