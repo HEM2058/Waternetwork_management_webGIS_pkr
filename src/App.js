@@ -20,7 +20,7 @@ function App() {
   const [selectedCoordinate, setSelectedCoordinate] = useState(null);
   const [selectedMultistringGeometry, setSelectedMultistringGeometry] = useState(null);
   const [routeData, setRouteData] = useState(null);
-  console.log(routeData)
+  const [taskGeometry, setTaskGeometry] = useState(null); // State to store task geometry
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -45,6 +45,11 @@ function App() {
     setSelectedMultistringGeometry(geometry);
   };
 
+  const handleViewMap = (geometry) => {
+    // Set the task geometry
+    setTaskGeometry(geometry);
+  };
+
   const currentPath = location.pathname;
 
   const renderComponent = () => {
@@ -52,7 +57,7 @@ function App() {
       case '/Networkanalysis':
         return <Networkanalysis />;
       case '/task-splitting':
-        return <Task />;
+        return <Task onViewMap={handleViewMap} />;
       case '/Leakage':
         return <Leakage />;
       case '/Edit-pipeline':
@@ -74,7 +79,7 @@ function App() {
           path="/Networkanalysis"
           element={<Networkanalysis pipelineData={pipelineData} onRouteData={handleRouteData} />}
         />
-        <Route path="/task-splitting" element={<Task />} />
+        <Route path="/task-splitting" element={<Task onViewMap={handleViewMap} />} />
         <Route path="/Leakage" element={<Leakage />} />
         <Route
           path="/Edit-pipeline"
@@ -93,6 +98,7 @@ function App() {
           onMapClick={handleMapClick}
           selectedMultistringGeometry={selectedMultistringGeometry}
           routeData={routeData}
+          taskGeometry={taskGeometry} // Pass task geometry to OpenLayersMap
         />
       ) : null}
     </div>

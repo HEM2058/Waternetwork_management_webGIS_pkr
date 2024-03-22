@@ -9,6 +9,7 @@ import '@watergis/maplibre-gl-export/dist/maplibre-gl-export.css';
 import { NavigationControl, ScaleControl, FullscreenControl } from 'maplibre-gl';
 import streetBaselayer from './assets/streets-v2.png';
 import satelliteBaselayer from './assets/satellite.png';
+import serviceAreaGeoJSON from './assets/servicearea.geojson'; // Import local GeoJSON file
 
 
 
@@ -166,10 +167,8 @@ function ButtonContainer({ map, resetFunction, exportMapImage, toggleBaseLayerPo
   );
 }
 
-function OpenLayersMap({ pipelineData, storageUnitData, gateValveData, tubeWellData, onMapClick, selectedMultistringGeometry, routeData }) {
+function OpenLayersMap({ pipelineData, storageUnitData, gateValveData, tubeWellData, onMapClick, selectedMultistringGeometry, routeData,  taskGeometry }) {
   const [map, setMap] = useState(null);
-  const [showBaseLayerPopup, setShowBaseLayerPopup] = useState(false);
-  const [baseLayerName, setBaseLayerName] = useState('streets-v2');
   const [showFilterPopup, setShowFilterPopup] = useState(false);
   const [activeBaselayer, setActiveBaselayer] = useState('default');
   
@@ -177,15 +176,9 @@ function OpenLayersMap({ pipelineData, storageUnitData, gateValveData, tubeWellD
 
 
 
+console.log(taskGeometry)
 
 
-  const [layerVisibility, setLayerVisibility] = useState({
-    pipeline: false,
-    storageUnit: false,
-    gateValve: false,
-    tubeWell: false,
-  });
-  let activePopup = null;
   useEffect(() => {
    if(map){ 
    setMap(null)
@@ -225,131 +218,154 @@ function OpenLayersMap({ pipelineData, storageUnitData, gateValveData, tubeWellD
 
   }
 
-
-
   useEffect(() => {
     if (map) {
-      console.log("hello world")
-   console.log(layerVisibility)
-
-      // map.on('load', async () => {
-      //   console.log("inside loading function")
-        // try {
-        //   const response = await fetch('/data/servicearea.geojson');
-        //   const localGeojsonData = await response.json();
-
-        //   map.addSource('local-geojson', {
-        //     type: 'geojson',
-        //     data: localGeojsonData,
-        //   });
-
-        //   map.addLayer({
-        //     id: 'local-geojson-layer',
-        //     type: 'line',
-        //     source: 'local-geojson',
-        //     layout: {
-        //       'line-join': 'round',
-        //       'line-cap': 'round',
-        //     },
-        //     paint: {
-        //       'line-color': '#ff0000',
-        //       'line-width': 3,
-        //       'line-dasharray': [2, 2],
-        //     },
-        //   });
-        // } catch (error) {
-        //   console.error('Error loading local GeoJSON:', error);
-        // }
-if(layerVisibility.pipeline){
-        map.addSource('water-pipeline', {
-          type: 'geojson',
-          data: pipelineData,
-        });
-
-        map.addLayer({
-          id: 'water-pipeline-layer',
-          type: 'line',
-          source: 'water-pipeline',
-          layout: {
-            'line-join': 'round',
-            'line-cap': 'round',
-          },
-          paint: {
-            'line-color': '#0080ff',
-            'line-width': 2,
-          },
-       
-        });
-      }
-      if(layerVisibility.storageUnit){
-        map.addSource('storage-unit', {
-          type: 'geojson',
-          data: storageUnitData,
-        });
-        
-        map.addLayer({
-          id: 'storage-unit-layer',
-          type: 'fill',
-          source: 'storage-unit',
-          paint: {
-            'fill-color': '#FFA500',
-            'fill-opacity': 0.5,
-          },
-       
-        });
-      }
-      if(layerVisibility.gateValve){
-        map.addSource('gate-valve', {
-          type: 'geojson',
-          data: gateValveData,
-        });
-        
-        map.addLayer({
-          id: 'gate-valve-layer',
-          type: 'circle',
-          source: 'gate-valve',
-          paint: {
-            'circle-color': '#FF0000',
-            'circle-radius': 6,
-            'circle-stroke-width': 2,
-            'circle-stroke-color': '#FFFFFF',
-          },
-          
-        });
-      }
-      if(layerVisibility.tubeWell){
-        map.addSource('tubewell', {
-          type: 'geojson',
-          data: tubeWellData,
-        });
-        
-        map.addLayer({
-          id: 'tubewell-layer',
-          type: 'circle',
-          source: 'tubewell',
-          paint: {
-            'circle-color': '#00FF00',
-            'circle-radius': 6,
-            'circle-stroke-width': 2,
-            'circle-stroke-color': '#FFFFFF',
-          },
-   
-        });
-      }
-    
-
-   
-        
-      // });
+      // Listen for the style.load event
+      map.once('style.load', () => {
+        // Add vector layers after the style has loaded
+        if (serviceAreaGeoJSON) {
+          // Add service area layer
+          map.addSource('service-area-data', {
+            type: 'geojson',
+            data: serviceAreaGeoJSON,
+          });
+      
+          map.addLayer({
+            id: 'service-area-layer',
+            type: 'fill',
+            source: 'service-area-data',
+            paint: {
+              'fill-color': 'red', // Adjust color as needed
+              'fill-opacity': 0.2,
+            },
+          });
+        }
+        // Add pipeline data as a linestring layer
+        if (pipelineData) {
+          map.addSource('pipeline-data', {
+            type: 'geojson',
+            data: pipelineData,
+          });
+  
+          map.addLayer({
+            id: 'pipeline-layer',
+            type: 'line',
+            source: 'pipeline-data',
+            paint: {
+              'line-color': 'blue', // Adjust color as needed
+              'line-opacity': 0.8,
+              'line-width': 2,
+            },
+          });
+        }
+  
+        // Add storage unit data as a polygon layer
+        if (storageUnitData) {
+          map.addSource('storage-unit-data', {
+            type: 'geojson',
+            data: storageUnitData,
+          });
+  
+          map.addLayer({
+            id: 'storage-unit-layer',
+            type: 'fill',
+            source: 'storage-unit-data',
+            paint: {
+              'fill-color': '#FFA500', // Adjust color as needed
+              'fill-opacity': 0.5,
+            },
+          });
+        }
+  
+        // Add gate valve data as a point layer
+        if (gateValveData) {
+          map.addSource('gate-valve-data', {
+            type: 'geojson',
+            data: gateValveData,
+          });
+  
+          map.addLayer({
+            id: 'gate-valve-layer',
+            type: 'circle',
+            source: 'gate-valve-data',
+            paint: {
+              'circle-color': '#FF0000', // Adjust color as needed
+              'circle-radius': 5,
+              'circle-opacity': 0.8,
+            },
+          });
+        }
+  
+        // Add tube well data as a point layer
+        if (tubeWellData) {
+          map.addSource('tube-well-data', {
+            type: 'geojson',
+            data: tubeWellData,
+          });
+  
+          map.addLayer({
+            id: 'tube-well-layer',
+            type: 'circle',
+            source: 'tube-well-data',
+            paint: {
+              'circle-color': '#00FF00', // Adjust color as needed
+              'circle-radius': 5,
+              'circle-opacity': 0.8,
+            },
+          });
+        }
+      });
     }
-  }, [map, pipelineData, storageUnitData, gateValveData, tubeWellData, layerVisibility]);
+  }, [map, pipelineData, storageUnitData, gateValveData, tubeWellData]);
+  
 
-  const handleLayerToggle = (layer) => {
-    setLayerVisibility({
-      ...layerVisibility,
-      [layer]: !layerVisibility[layer],
-    });
-  };
+  useEffect(() => {
+    if (map && taskGeometry) {
+      const geometryString = taskGeometry.split(';')[1]; // Extracting the geometry string
+      const coordinates = geometryString
+        .replace('POLYGON ((', '')
+        .replace('))', '')
+        .split(', ')
+        .map(coord => {
+          const [lng, lat] = coord.split(' ');
+          return [parseFloat(lng), parseFloat(lat)];
+        });
+     // Remove existing source and layer if they already exist
+     if (map.getSource('task-geometry')) {
+      map.removeLayer('task-geometry-layer');
+      map.removeSource('task-geometry');
+    }
+      map.addSource('task-geometry', {
+        type: 'geojson',
+        data: {
+          type: 'Feature',
+          geometry: {
+            type: 'Polygon',
+            coordinates: [coordinates],
+          },
+        },
+      });
+  
+      map.addLayer({
+        id: 'task-geometry-layer',
+        type: 'fill',
+        source: 'task-geometry',
+        paint: {
+          'fill-color': '#FF0000',
+          'fill-opacity': 0.5,
+        },
+      });
+  
+      // Zoom to the task geometry
+      const bounds = coordinates.reduce((bounds, coord) => {
+        return bounds.extend(coord);
+      }, new maplibregl.LngLatBounds(coordinates[0], coordinates[0]));
+      map.fitBounds(bounds, { padding: 50 });
+    }
+  }, [map, taskGeometry]);
+  
+
+ 
 
   const resetFunction = () => {
     map.flyTo({
@@ -363,15 +379,8 @@ if(layerVisibility.pipeline){
     console.log('Exported Map Image:', dataURL);
   };
 
-  const toggleBaseLayerPopup = () => {
-    setShowBaseLayerPopup(!showBaseLayerPopup);
-  };
+  
 
-
-
-  const toggleFilterPopup = () => {
-    setShowFilterPopup(!showFilterPopup);
-  };
   const handleBaselayerToggle = (baselayer) => {
     setActiveBaselayer(baselayer);
     if (baselayer === 'street') {
@@ -394,52 +403,27 @@ if(layerVisibility.pipeline){
           />
           <div className="map-legends">
             <div className='legends'>
-              <input
-                type="checkbox"
-                id="serviceAreaCheckbox"
-                checked
-                
-              />
+           
               <div className="legend" style={{ backgroundColor: 'red'}}></div>
               <label htmlFor="serviceAreaCheckbox">Service Area</label>
             </div>
             <div className='legends'>
-              <input
-                type="checkbox"
-                id="pipelineCheckbox"
-                checked={layerVisibility.pipeline}
-                onChange={() => handleLayerToggle('pipeline')}
-              />
+          
               <div className="legend" style={{ backgroundColor: 'blue' }}></div>
               <label htmlFor="pipelineCheckbox">Pipeline</label>
             </div>
             <div className='legends'>
-              <input
-                type="checkbox"
-                id="storageUnitCheckbox"
-                checked={layerVisibility.storageUnit}
-                onChange={() => handleLayerToggle('storageUnit')}
-              />
+             
               <div className="legend" style={{ backgroundColor: '#FFA500' }}></div>
               <label htmlFor="storageUnitCheckbox">Storage Unit</label>
             </div>
             <div className='legends'>
-              <input
-                type="checkbox"
-                id="gateValveCheckbox"
-                checked={layerVisibility.gateValve}
-                onChange={() => handleLayerToggle('gateValve')}
-              />
+           
               <div className="legend" style={{ backgroundColor: '#FF0000' }}></div>
               <label htmlFor="gateValveCheckbox">Gate Valve</label>
             </div>
             <div className='legends'>
-              <input
-                type="checkbox"
-                id="tubeWellCheckbox"
-                checked={layerVisibility.tubeWell}
-                onChange={() => handleLayerToggle('tubeWell')}
-              />
+             
               <div className="legend" style={{ backgroundColor: '#00FF00' }}></div>
               <label htmlFor="tubeWellCheckbox">Tubewell</label>
             </div>

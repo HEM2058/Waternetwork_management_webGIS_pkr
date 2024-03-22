@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Task.css';
 import axios from 'axios'; // Import Axios for making HTTP requests
 
-function Task() {
+function Task({ onViewMap }) {
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
@@ -24,6 +24,11 @@ function Task() {
     console.log('Add Task clicked');
   };
 
+  const handleViewMap = (geometry) => {
+    // Call the parent component's function with task geometry
+    onViewMap(geometry);
+  };
+
   return (
     <div className="task-container">
       <h2>Task Manager</h2>
@@ -35,13 +40,9 @@ function Task() {
           {tasks.map((task) => (
             <div key={task.id} className="task-item">
               <h3>{task.task_name}</h3>
-              <p>Description: {task.description}</p>
-              <p>Status: {task.status}</p>
               <p>Assigned to: {task.assigned_to}</p>
-              <p>Start Date: {new Date(task.start_date).toLocaleDateString()}</p>
-              <p>Deadline: {new Date(task.deadline).toLocaleDateString()}</p>
-              <button className="view-more-button">Edit Task</button>
-              <button className="view-map-button">View on Map</button>
+              <button className="view-more-button">View More</button>
+              <button className="view-map-button" onClick={() => handleViewMap(task.geometry)}>View on Map</button>
             </div>
           ))}
         </div>
