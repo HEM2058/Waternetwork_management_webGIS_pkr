@@ -5,8 +5,10 @@
     box-sizing: border-box;
     position: absolute;
     left: 80px;
-    background-color:white;
+    background-color: white;
     z-index: 999; /* Adjust the z-index value as needed */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
 }
 
 .network-analysis {
@@ -30,4 +32,68 @@
 
 .info-icon:hover {
     color: #2980b9;
+}
+
+/* Additional styles to make each component unique */
+
+.network-analysis-container {
+    background-color: #f9f9f9; /* Light gray background */
+}
+
+
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.text-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.mode-select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+.find-route-button, .find-elevation-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.find-route-button:hover {
+    background-color: #0056b3;
+}
+.find-elevation-button:hover{
+    background-color: #0056b3;  
+}
+.result {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.result h3 {
+    margin-top: 0;
+}
+
+.result p {
+    margin: 5px 0;
 }

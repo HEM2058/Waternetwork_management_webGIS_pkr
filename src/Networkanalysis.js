@@ -9,6 +9,7 @@ function NetworkAnalysis({ pipelineData, onRouteData, SelectedCoordinate }) {
   const [selectedMode, setSelectedMode] = useState('driving');
   const [routeData, setRouteData] = useState(null);
   const [clickedTextArea, setClickedTextArea] = useState(null);
+
   useEffect(() => {
     if (SelectedCoordinate && clickedTextArea) {
       const { lng, lat } = SelectedCoordinate;
@@ -36,7 +37,6 @@ function NetworkAnalysis({ pipelineData, onRouteData, SelectedCoordinate }) {
       }
 
       const routeApiUrl = `https://route-init.gallimap.com/api/v1/routing?mode=${selectedMode}&srcLat=${source.split(',')[0]}&srcLng=${source.split(',')[1]}&dstLat=${destination.split(',')[0]}&dstLng=${destination.split(',')[1]}&accessToken=1b0d6442-4806-4a6c-90bb-5437128096eb`;
-     console.log(routeApiUrl)
       const routeResponse = await fetch(routeApiUrl);
 
       if (routeResponse.ok) {
@@ -51,13 +51,19 @@ function NetworkAnalysis({ pipelineData, onRouteData, SelectedCoordinate }) {
     }
   };
 
+  const handleFindElevation = () => {
+    // Logic to handle finding elevation
+    console.log('Finding elevation...');
+  };
+
   return (
     <div className="network-analysis-container">
       <h2>Network Analysis</h2>
       <div className="network-analysis">
         <div className="input-group">
-          <label>Enter Source:</label>
+          <label>Enter Source Pipeline:</label>
           <input
+            className="text-input"
             type="text"
             value={source}
             onChange={(e) => setSource(e.target.value)}
@@ -67,28 +73,21 @@ function NetworkAnalysis({ pipelineData, onRouteData, SelectedCoordinate }) {
         <div className="input-group">
           <label>Enter Destination:</label>
           <input
+            className="text-input"
             type="text"
             value={destination}
             onChange={(e) => setDestination(e.target.value)}
             onClick={() => handleTextAreaClick('destination')}
           />
         </div>
-        <div className="input-group">
-          <label>Select Mode:</label>
-          <select onChange={handleModeChange} value={selectedMode}>
-            <option value="driving">Driving</option>
-            <option value="walking">Walking</option>
-            <option value="cycling">Cycling</option>
-          </select>
-        </div>
+        <button className="find-route-button" onClick={handleApplyAnalysis}>Find Route</button>
         {routeData && (
           <div className="result">
             <h3>Route Details</h3>
-            <p>Pipe Length: {routeData.data.data[0].distance} meters</p>
-            <p>Total Duration: {routeData.data.data[0].duration} minutes</p>
+            <p>Pipe Length Required: {routeData.data.data[0].distance} meters</p>
+            <button className="find-elevation-button" onClick={handleFindElevation}>Find Elevation</button>
           </div>
         )}
-        <button onClick={handleApplyAnalysis}>Find Route</button>
       </div>
     </div>
   );
