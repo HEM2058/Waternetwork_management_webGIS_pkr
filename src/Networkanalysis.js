@@ -8,6 +8,7 @@ function NetworkAnalysis({ pipelineData, onRouteData, SelectedCoordinate }) {
   const [destination, setDestination] = useState('');
   const [selectedMode, setSelectedMode] = useState('driving');
   const [routeData, setRouteData] = useState(null);
+  const [loadingElevation, setLoadingElevation] = useState(false); // New state for loading elevation data
   const [clickedTextArea, setClickedTextArea] = useState(null);
 
   useEffect(() => {
@@ -57,7 +58,9 @@ function NetworkAnalysis({ pipelineData, onRouteData, SelectedCoordinate }) {
         console.error('Route data not available.');
         return;
       }
-  
+
+      setLoadingElevation(true); // Set loading state to true when fetching elevation data
+
       // Extract coordinates from routeData
       const coordinates = routeData.data.data[0].latlngs.map(point => [point[0], point[1]]);
       
@@ -80,9 +83,10 @@ function NetworkAnalysis({ pipelineData, onRouteData, SelectedCoordinate }) {
       }
     } catch (error) {
       console.error('Error in handleFindElevation:', error);
+    } finally {
+      setLoadingElevation(false); // Set loading state to false after fetching elevation data
     }
   };
-  
 
   return (
     <div className="network-analysis-container">
@@ -114,6 +118,7 @@ function NetworkAnalysis({ pipelineData, onRouteData, SelectedCoordinate }) {
             <h3>Route Details</h3>
             <p>Pipe Length Required: {routeData.data.data[0].distance} meters</p>
             <button className="find-elevation-button" onClick={handleFindElevation}>Find Elevation</button>
+            {loadingElevation && <div className="preloader"></div>} {/* Render preloader animation while loading elevation */}
           </div>
         )}
       </div>
