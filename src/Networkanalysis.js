@@ -36,7 +36,7 @@ function NetworkAnalysis({ pipelineData, onRouteData, SelectedCoordinate }) {
       }
 
       const routeApiUrl = `https://route-init.gallimap.com/api/v1/routing?mode=${selectedMode}&srcLat=${source.split(',')[0]}&srcLng=${source.split(',')[1]}&dstLat=${destination.split(',')[0]}&dstLng=${destination.split(',')[1]}&accessToken=1b0d6442-4806-4a6c-90bb-5437128096eb`;
-
+     console.log(routeApiUrl)
       const routeResponse = await fetch(routeApiUrl);
 
       if (routeResponse.ok) {

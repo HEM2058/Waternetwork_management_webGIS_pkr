@@ -178,7 +178,7 @@ function OpenLayersMap({ pipelineData, storageUnitData, gateValveData, tubeWellD
 
   const location = useLocation(); // Use useLocation hook to get current path
   const currentPath = location.pathname; // Get the current path
-
+  console.log(routeData)
 console.log(taskGeometry)
 
 
@@ -322,6 +322,44 @@ console.log(taskGeometry)
       });
     }
   }, [map, pipelineData, storageUnitData, gateValveData, tubeWellData]);
+  useEffect(() => {
+    if (map && routeData) {
+      console.log(routeData.data.data[0].latlngs)
+      const coordinates = routeData.data.data[0].latlngs.map(point => [point[0], point[1]]); // Extracting coordinates from routeData
+      // Remove existing source and layer if they already exist
+      if (map.getSource('route-geometry')) {
+        map.removeLayer('route-layer');
+        map.removeSource('route-geometry');
+      }
+      // Add route data as a linestring layer
+      map.addSource('route-geometry', {
+        type: 'geojson',
+        data: {
+          type: 'Feature',
+          geometry: {
+            type: 'LineString',
+            coordinates: coordinates,
+          },
+        },
+      });
+  
+      map.addLayer({
+        id: 'route-layer',
+        type: 'line',
+        source: 'route-geometry',
+        paint: {
+          'line-color': 'green', // Adjust color as needed
+          'line-width': 5,
+        },
+      });
+  
+      // Optionally, zoom to the route geometry
+      const bounds = coordinates.reduce((bounds, coord) => {
+        return bounds.extend(coord);
+      }, new maplibregl.LngLatBounds(coordinates[0], coordinates[0]));
+      map.fitBounds(bounds, { padding: 50 });
+    }
+  }, [map, routeData]);
   
 
   useEffect(() => {

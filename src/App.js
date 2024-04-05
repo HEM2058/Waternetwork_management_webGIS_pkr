@@ -24,7 +24,7 @@ function App() {
 
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(selectedCoordinate)
+  console.log(routeData)
 
   const handleRouteData = (data) => {
     setRouteData(data);
