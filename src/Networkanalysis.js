@@ -3,14 +3,29 @@ import './NetworkAnalysis.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
-function NetworkAnalysis({ pipelineData, onRouteData }) {
+function NetworkAnalysis({ pipelineData, onRouteData, SelectedCoordinate }) {
   const [source, setSource] = useState('');
   const [destination, setDestination] = useState('');
   const [selectedMode, setSelectedMode] = useState('driving');
   const [routeData, setRouteData] = useState(null);
+  const [clickedTextArea, setClickedTextArea] = useState(null);
+  useEffect(() => {
+    if (SelectedCoordinate && clickedTextArea) {
+      const { lng, lat } = SelectedCoordinate;
+      if (clickedTextArea === 'source') {
+        setSource(`${lat},${lng}`);
+      } else if (clickedTextArea === 'destination') {
+        setDestination(`${lat},${lng}`);
+      }
+    }
+  }, [SelectedCoordinate, clickedTextArea]);
 
   const handleModeChange = (event) => {
     setSelectedMode(event.target.value);
+  };
+
+  const handleTextAreaClick = (area) => {
+    setClickedTextArea(area);
   };
 
   const handleApplyAnalysis = async () => {
@@ -20,7 +35,8 @@ function NetworkAnalysis({ pipelineData, onRouteData }) {
         return;
       }
 
-      const routeApiUrl = `https://route-init.gallimap.com/api/v1/routing?mode=driving&srcLat=28.290542670399482&srcLng=83.9302649664827&dstLat=28.265296395004025&dstLng=83.96562720874844&accessToken=1b0d6442-4806-4a6c-90bb-5437128096eb`;
+      const routeApiUrl = `https://route-init.gallimap.com/api/v1/routing?mode=${selectedMode}&srcLat=${source.split(',')[0]}&srcLng=${source.split(',')[1]}&dstLat=${destination.split(',')[0]}&dstLng=${destination.split(',')[1]}&accessToken=1b0d6442-4806-4a6c-90bb-5437128096eb`;
+
       const routeResponse = await fetch(routeApiUrl);
 
       if (routeResponse.ok) {
@@ -41,11 +57,21 @@ function NetworkAnalysis({ pipelineData, onRouteData }) {
       <div className="network-analysis">
         <div className="input-group">
           <label>Enter Source:</label>
-          <input type="text" value={source} onChange={(e) => setSource(e.target.value)} />
+          <input
+            type="text"
+            value={source}
+            onChange={(e) => setSource(e.target.value)}
+            onClick={() => handleTextAreaClick('source')}
+          />
         </div>
         <div className="input-group">
           <label>Enter Destination:</label>
-          <input type="text" value={destination} onChange={(e) => setDestination(e.target.value)} />
+          <input
+            type="text"
+            value={destination}
+            onChange={(e) => setDestination(e.target.value)}
+            onClick={() => handleTextAreaClick('destination')}
+          />
         </div>
         <div className="input-group">
           <label>Select Mode:</label>

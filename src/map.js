@@ -3,6 +3,7 @@ import './map.css';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 // Import it into your code
+import { useLocation } from 'react-router-dom'; // Import useLocation
 import MeasuresControl from 'maplibre-gl-measures';
 import { MaplibreExportControl, Size, PageOrientation, Format, DPI} from "@watergis/maplibre-gl-export";
 import '@watergis/maplibre-gl-export/dist/maplibre-gl-export.css';
@@ -10,6 +11,7 @@ import { NavigationControl, ScaleControl, FullscreenControl } from 'maplibre-gl'
 import streetBaselayer from './assets/streets-v2.png';
 import satelliteBaselayer from './assets/satellite.png';
 import serviceAreaGeoJSON from './assets/servicearea.geojson'; // Import local GeoJSON file
+import { event } from 'jquery';
 
 
 
@@ -167,21 +169,24 @@ function ButtonContainer({ map, resetFunction, exportMapImage, toggleBaseLayerPo
   );
 }
 
-function OpenLayersMap({ pipelineData, storageUnitData, gateValveData, tubeWellData, onMapClick, selectedMultistringGeometry, routeData,  taskGeometry }) {
+function OpenLayersMap({ pipelineData, storageUnitData, gateValveData, tubeWellData, onMapClick, selectedMultistringGeometry, routeData,  taskGeometry}) {
   const [map, setMap] = useState(null);
   const [showFilterPopup, setShowFilterPopup] = useState(false);
-  const [activeBaselayer, setActiveBaselayer] = useState('default');
+  const [activeBaselayer, setActiveBaselayer] = useState('street');
   
   const [style, setStyle] = useState('https://api.maptiler.com/maps/streets-v2/style.json?key=Otbh9YhFMbwux7HyoffB')
 
-
+  const location = useLocation(); // Use useLocation hook to get current path
+  const currentPath = location.pathname; // Get the current path
 
 console.log(taskGeometry)
 
 
   useEffect(() => {
    if(map){ 
+    console.log("Style changed")
    setMap(null)
+  
    }
   },[style]);
 
@@ -362,7 +367,7 @@ console.log(taskGeometry)
       }, new maplibregl.LngLatBounds(coordinates[0], coordinates[0]));
       map.fitBounds(bounds, { padding: 50 });
     }
-  }, [map, taskGeometry]);
+  }, [map, taskGeometry, style]);
   
 
  
@@ -391,6 +396,16 @@ console.log(taskGeometry)
     }
   };
 
+  if (map && currentPath === '/Networkanalysis') {
+  
+    map.on('click', (event) => {
+        console.log(currentPath)
+      console.log(event.lngLat);
+      onMapClick(event.lngLat);
+    });
+  }
+  
+
   return (
     <div>
       <div id="map">  {map && (
@@ -403,7 +418,6 @@ console.log(taskGeometry)
           />
           <div className="map-legends">
             <div className='legends'>
-           
               <div className="legend" style={{ backgroundColor: 'red'}}></div>
               <label htmlFor="serviceAreaCheckbox">Service Area</label>
             </div>
