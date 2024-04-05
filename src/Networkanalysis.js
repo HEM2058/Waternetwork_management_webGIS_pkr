@@ -2,14 +2,16 @@ import React, { useState, useEffect } from 'react';
 import './NetworkAnalysis.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import Elevation from './Elevation'; // Import the Elevation component
 
 function NetworkAnalysis({ pipelineData, onRouteData, SelectedCoordinate }) {
   const [source, setSource] = useState('');
   const [destination, setDestination] = useState('');
   const [selectedMode, setSelectedMode] = useState('driving');
   const [routeData, setRouteData] = useState(null);
-  const [loadingElevation, setLoadingElevation] = useState(false); // New state for loading elevation data
+  const [loadingElevation, setLoadingElevation] = useState(false);
   const [clickedTextArea, setClickedTextArea] = useState(null);
+  const [elevationData, setElevationData] = useState(null); // State to store elevation data
 
   useEffect(() => {
     if (SelectedCoordinate && clickedTextArea) {
@@ -59,13 +61,10 @@ function NetworkAnalysis({ pipelineData, onRouteData, SelectedCoordinate }) {
         return;
       }
 
-      setLoadingElevation(true); // Set loading state to true when fetching elevation data
+      setLoadingElevation(true);
 
-      // Extract coordinates from routeData
       const coordinates = routeData.data.data[0].latlngs.map(point => [point[0], point[1]]);
-      
-      // Send coordinates to the API to fetch elevation data
-      const elevationApiUrl = 'http://127.0.0.1:8000/api/elevation/'; // Replace with your actual elevation API URL
+      const elevationApiUrl = 'http://127.0.0.1:8000/api/elevation/';
       const elevationResponse = await fetch(elevationApiUrl, {
         method: 'POST',
         headers: {
@@ -76,15 +75,14 @@ function NetworkAnalysis({ pipelineData, onRouteData, SelectedCoordinate }) {
        
       if (elevationResponse.ok) {
         const elevationData = await elevationResponse.json();
-        console.log('Elevation data:', elevationData);
-        // Handle elevation data as needed
+        setElevationData(elevationData); // Set elevation data to state
       } else {
         console.error(`Error fetching elevation data. Status: ${elevationResponse.status}`);
       }
     } catch (error) {
       console.error('Error in handleFindElevation:', error);
     } finally {
-      setLoadingElevation(false); // Set loading state to false after fetching elevation data
+      setLoadingElevation(false);
     }
   };
 
@@ -118,7 +116,8 @@ function NetworkAnalysis({ pipelineData, onRouteData, SelectedCoordinate }) {
             <h3>Route Details</h3>
             <p>Pipe Length Required: {routeData.data.data[0].distance} meters</p>
             <button className="find-elevation-button" onClick={handleFindElevation}>Find Elevation</button>
-            {loadingElevation && <div className="preloader"></div>} {/* Render preloader animation while loading elevation */}
+            {loadingElevation && <div className="preloader"></div>}
+            {elevationData && <Elevation elevation_data={elevationData} />} {/* Render Elevation component with elevation data */}
           </div>
         )}
       </div>
