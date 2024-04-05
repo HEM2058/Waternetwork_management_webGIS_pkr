@@ -51,10 +51,38 @@ function NetworkAnalysis({ pipelineData, onRouteData, SelectedCoordinate }) {
     }
   };
 
-  const handleFindElevation = () => {
-    // Logic to handle finding elevation
-    console.log('Finding elevation...');
+  const handleFindElevation = async () => {
+    try {
+      if (!routeData) {
+        console.error('Route data not available.');
+        return;
+      }
+  
+      // Extract coordinates from routeData
+      const coordinates = routeData.data.data[0].latlngs.map(point => [point[0], point[1]]);
+      
+      // Send coordinates to the API to fetch elevation data
+      const elevationApiUrl = 'http://127.0.0.1:8000/api/elevation/'; // Replace with your actual elevation API URL
+      const elevationResponse = await fetch(elevationApiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ coordinates })
+      });
+       
+      if (elevationResponse.ok) {
+        const elevationData = await elevationResponse.json();
+        console.log('Elevation data:', elevationData);
+        // Handle elevation data as needed
+      } else {
+        console.error(`Error fetching elevation data. Status: ${elevationResponse.status}`);
+      }
+    } catch (error) {
+      console.error('Error in handleFindElevation:', error);
+    }
   };
+  
 
   return (
     <div className="network-analysis-container">
