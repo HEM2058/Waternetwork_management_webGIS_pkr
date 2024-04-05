@@ -12,6 +12,7 @@ function NetworkAnalysis({ pipelineData, onRouteData, SelectedCoordinate }) {
   const [loadingElevation, setLoadingElevation] = useState(false);
   const [clickedTextArea, setClickedTextArea] = useState(null);
   const [elevationData, setElevationData] = useState(null); // State to store elevation data
+  const [showElevationChart, setShowElevationChart] = useState(false); // State to track visibility of elevation chart
 
   useEffect(() => {
     if (SelectedCoordinate && clickedTextArea) {
@@ -76,6 +77,7 @@ function NetworkAnalysis({ pipelineData, onRouteData, SelectedCoordinate }) {
       if (elevationResponse.ok) {
         const elevationData = await elevationResponse.json();
         setElevationData(elevationData); // Set elevation data to state
+        setShowElevationChart(true); // Show elevation chart after fetching data
       } else {
         console.error(`Error fetching elevation data. Status: ${elevationResponse.status}`);
       }
@@ -84,6 +86,10 @@ function NetworkAnalysis({ pipelineData, onRouteData, SelectedCoordinate }) {
     } finally {
       setLoadingElevation(false);
     }
+  };
+
+  const handleCloseElevationChart = () => {
+    setShowElevationChart(false); // Close elevation chart
   };
 
   return (
@@ -117,7 +123,11 @@ function NetworkAnalysis({ pipelineData, onRouteData, SelectedCoordinate }) {
             <p>Pipe Length Required: {routeData.data.data[0].distance} meters</p>
             <button className="find-elevation-button" onClick={handleFindElevation}>Find Elevation</button>
             {loadingElevation && <div className="preloader"></div>}
-            {elevationData && <Elevation elevation_data={elevationData} />} {/* Render Elevation component with elevation data */}
+            {showElevationChart && (
+              
+                <Elevation elevation_data={elevationData} onClose={handleCloseElevationChart} />
+               
+            )}
           </div>
         )}
       </div>
