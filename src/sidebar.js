@@ -39,7 +39,8 @@ function Sidebar() {
   data-tooltip="Leak Alerts"
   activeClassName="selected"
 >
-  <i className="fas fa-comment"></i> {/* Replace with messenger icon */}
+<i className="fas fa-exclamation-circle"></i>
+ 
 </NavLink>
 
       {/* <NavLink

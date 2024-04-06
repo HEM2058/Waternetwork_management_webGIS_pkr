@@ -7,7 +7,7 @@ function Elevation({ elevation_data, onClose }) {
 
   useEffect(() => {
     if (elevation_data && elevation_data.elevation_data && elevation_data.elevation_data.length > 0) {
-      const margin = { top: 20, right: 30, bottom: 40, left: 40 };
+      const margin = { top: 20, right: 40, bottom: 50, left: 60 };
       const width = 500 - margin.left - margin.right;
       const height = 300 - margin.top - margin.bottom;
 
@@ -42,20 +42,24 @@ function Elevation({ elevation_data, onClose }) {
 
       svg.append('g')
         .attr('transform', `translate(0, ${height})`)
-        .call(d3.axisBottom(x).tickFormat((d, i) => `Sample ${i}`)) // Add x-axis label
+        .call(d3.axisBottom(x).tickFormat((d, i) => `${i}`)) // Add x-axis label
+        .selectAll('text')
+        .attr('dy', '0.5em') // Add spacing between label and axis
 
       svg.append('text')
         .attr('text-anchor', 'middle')
-        .attr('transform', `translate(${width / 2}, ${height + margin.top + 10})`)
+        .attr('transform', `translate(${width / 2}, ${height + margin.top + 20})`)
         .text('Sample Location'); // Add x-axis label
 
       svg.append('g')
-        .call(d3.axisLeft(y));
+        .call(d3.axisLeft(y))
+        .selectAll('text')
+        .attr('dx', '-0.5em') // Add spacing between label and axis
 
       svg.append('text')
         .attr('text-anchor', 'middle')
         .attr('transform', `translate(${-margin.left + 10}, ${height / 2}) rotate(-90)`)
-        .text('Elevation'); // Add y-axis label
+        .text('Elevation(meters)'); // Add y-axis label
 
       const closeButton = d3.select(chartContainer.current)
         .append('button')
