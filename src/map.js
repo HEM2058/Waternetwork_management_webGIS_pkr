@@ -382,13 +382,14 @@ console.log(taskGeometry)
   }, [map, pipelineData, storageUnitData, gateValveData, tubeWellData]);
   useEffect(() => {
     if (map && routeData) {
-      console.log(routeData.data.data[0].latlngs)
       const coordinates = routeData.data.data[0].latlngs.map(point => [point[0], point[1]]); // Extracting coordinates from routeData
+  
       // Remove existing source and layer if they already exist
       if (map.getSource('route-geometry')) {
         map.removeLayer('route-layer');
         map.removeSource('route-geometry');
       }
+  
       // Add route data as a linestring layer
       map.addSource('route-geometry', {
         type: 'geojson',
@@ -411,6 +412,38 @@ console.log(taskGeometry)
         },
       });
   
+      // Add point labels
+      coordinates.forEach((coord, index) => {
+        const label = `Point ${index + 1}`;
+        console.log(label)
+        map.addLayer({
+          id: `point-label-${index}`,
+          type: 'symbol',
+          source: {
+            type: 'geojson',
+            data: {
+              type: 'Feature',
+              geometry: {
+                type: 'Point',
+                coordinates: coord,
+              },
+              properties: {
+                label: label,
+              },
+            },
+          },
+          layout: {
+            'text-field': ['get', 'label'],
+            'text-font': ['Open Sans Regular'], // Adjust font family as needed
+            'text-size': 12,
+            'text-anchor': 'top',
+          },
+          paint: {
+            'text-color': '#000000', // Adjust text color as needed
+          },
+        });
+      });
+  
       // Optionally, zoom to the route geometry
       const bounds = coordinates.reduce((bounds, coord) => {
         return bounds.extend(coord);
@@ -418,6 +451,9 @@ console.log(taskGeometry)
       map.fitBounds(bounds, { padding: 50 });
     }
   }, [map, routeData]);
+  
+  
+  
   
 
   useEffect(() => {
