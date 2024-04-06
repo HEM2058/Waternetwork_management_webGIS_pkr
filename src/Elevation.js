@@ -42,7 +42,7 @@ function Elevation({ elevation_data, onClose }) {
 
       svg.append('g')
         .attr('transform', `translate(0, ${height})`)
-        .call(d3.axisBottom(x).tickFormat((d, i) => `${i}`)) // Add x-axis label
+        .call(d3.axisBottom(x).tickFormat((d, i) => `${i+1}`)) // Add x-axis label
         .selectAll('text')
         .attr('dy', '0.5em') // Add spacing between label and axis
 
