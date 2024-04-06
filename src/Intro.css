@@ -1,0 +1,57 @@
+.intro-container {
+    width: 300px;
+    height: calc(100vh - 70px); 
+    padding: 20px;
+    box-sizing: border-box;
+    position: absolute;
+    left: 80px;
+    background-color: white;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.issue-details,
+.task-details{
+    height:50%;
+    margin-bottom: 5px;
+    padding: 10px;
+    border: 1px solid #ccc; /* Border color for each section */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-radius: 15px;
+}
+
+.pie-chart .legend {
+    position: relative;
+    left: 50px;
+}
+
+.shadow {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adjust the shadow as needed */
+}
+.legend {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.legend-color {
+    width: 12px;
+    height: 12px;
+    margin-right: 5px;
+}
+
+.legend-text {
+    font-size: 11px;
+
+}

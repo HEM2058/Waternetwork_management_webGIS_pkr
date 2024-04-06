@@ -319,6 +319,64 @@ console.log(taskGeometry)
             },
           });
         }
+      
+    // Add click event listener to show popup for pipelines
+    map.on('mouseenter', 'pipeline-layer', (e) => {
+      map.getCanvas().style.cursor = 'pointer'; // Set cursor to pointer
+    })
+    map.on('click', 'pipeline-layer', (e) => {
+      map.getCanvas().style.cursor = 'pointer'; // Set cursor to pointer
+      const coordinates = e.features[0].geometry.coordinates.slice();
+      console.log(coordinates[0])
+       const properties = e.features[0].properties;
+       console.log(properties)
+     
+      const description = `Diameter: ${properties.diameter_m}<br>Material:${properties.material} Pipe<br>Pipe Length:${properties.length_m} meters`;
+
+      // Ensure that if the map is zoomed out such that multiple copies of the feature are visible,
+      
+
+      new maplibregl.Popup()
+        .setLngLat(coordinates[0])
+        .setHTML(description)
+        .addTo(map);
+    });
+
+    // Add mouseleave event listener to remove cursor change and popup
+    map.on('mouseleave', 'pipeline-layer', () => {
+      map.getCanvas().style.cursor = '';
+      map.getCanvas().style.cursor = '';
+    });
+
+     // Add click event listener to show popup for storage units
+        // Add click event listener to show popup
+        map.on('mouseenter', 'storage-unit-layer', (e) => {
+          map.getCanvas().style.cursor = 'pointer'; // Set cursor to pointer
+        })
+        map.on('click', 'storage-unit-layer', (e) => {
+          map.getCanvas().style.cursor = 'pointer'; // Set cursor to pointer
+          const coordinates = e.features[0].geometry.coordinates[0].slice(); 
+          console.log(coordinates)
+           const properties = e.features[0].properties;
+           console.log(properties)
+         
+          const description = `${properties.Name} ${properties.Type}`;
+    
+          // Ensure that if the map is zoomed out such that multiple copies of the feature are visible,
+          // the popup appears over the copy being pointed to.
+         
+    
+          new maplibregl.Popup()
+            .setLngLat(coordinates[0])
+            .setHTML(description)
+            .addTo(map);
+        });
+    
+        // Add mouseleave event listener to remove cursor change and popup
+        map.on('mouseleave', 'storage-unit-layer', () => {
+          map.getCanvas().style.cursor = '';
+          map.getCanvas().style.cursor = '';
+        });
       });
     }
   }, [map, pipelineData, storageUnitData, gateValveData, tubeWellData]);

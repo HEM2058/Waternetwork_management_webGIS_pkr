@@ -94,7 +94,7 @@ function NetworkAnalysis({ pipelineData, onRouteData, SelectedCoordinate }) {
 
   return (
     <div className="network-analysis-container">
-      <h2>Network Analysis</h2>
+      <h2>Pipeline Route Analysis</h2>
       <div className="network-analysis">
         <div className="input-group">
           <label>Enter Source Pipeline:</label>

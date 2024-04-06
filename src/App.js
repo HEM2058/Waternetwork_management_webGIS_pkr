@@ -10,7 +10,7 @@ import OpenLayersMap from './map';
 import Task from './Task';
 import FieldCalculator from './FieldCalculator';
 import ApiDataFetcher from './ApiDataFetcher';
-
+import Intro from './Intro';
 function App() {
   const [pipelineData, setPipelineData] = useState([]);
   const [storageUnitData, setStorageUnitData] = useState([]);
@@ -61,6 +61,7 @@ function App() {
       <Navbar />
       <Sidebar />
       <Routes>
+      <Route path="/" element={<Intro />} />
         <Route
           path="/Networkanalysis"
           element={<Networkanalysis pipelineData={pipelineData} onRouteData={handleRouteData} SelectedCoordinate={selectedCoordinate}  />}
