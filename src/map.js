@@ -196,8 +196,9 @@ console.log(taskGeometry)
       const newMap = new maplibregl.Map({
         container: 'map',
         style: style,
-        center: [83.97517583929165, 28.214732103900108],
-        zoom: 11.5,
+        center: [83.97517583929165, 28.204732103900108],
+        zoom: 12,
+        pitch: 35, // Set pitch to 45 degrees
       });
       newMap.addControl(new ScaleControl(), 'bottom-right');
       newMap.addControl(new NavigationControl(), 'bottom-right');
