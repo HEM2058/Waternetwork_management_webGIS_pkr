@@ -548,32 +548,30 @@ console.log(taskGeometry)
             exportMapImage={exportMapImage}
             apiData={pipelineData}
           />
-          <div className="map-legends">
-            <div className='legends'>
-              <div className="legend" style={{ backgroundColor: 'red'}}></div>
-              <label htmlFor="serviceAreaCheckbox">Service Area</label>
-            </div>
-            <div className='legends'>
-          
-              <div className="legend" style={{ backgroundColor: 'blue' }}></div>
-              <label htmlFor="pipelineCheckbox">Pipeline</label>
-            </div>
-            <div className='legends'>
-             
-              <div className="legend" style={{ backgroundColor: '#FFA500' }}></div>
-              <label htmlFor="storageUnitCheckbox">Storage Unit</label>
-            </div>
-            <div className='legends'>
-           
-              <div className="legend" style={{ backgroundColor: '#FF0000' }}></div>
-              <label htmlFor="gateValveCheckbox">Gate Valve</label>
-            </div>
-            <div className='legends'>
-             
-              <div className="legend" style={{ backgroundColor: '#00FF00' }}></div>
-              <label htmlFor="tubeWellCheckbox">Tubewell</label>
-            </div>
-          </div>
+         <div className="map-legends">
+  <div className='legends'>
+  <div className="legend" style={{ backgroundColor: 'red', width: '20px', height: '20px', opacity: '0.2' }}></div>
+
+    <label htmlFor="serviceAreaCheckbox">Service Area</label>
+  </div>
+  <div className='legends'>
+    <div className="legend" style={{ backgroundColor: 'blue', width: '20px', height: '5px' }}></div>
+    <label htmlFor="pipelineCheckbox">Pipeline</label>
+  </div>
+  <div className='legends'>
+    <div className="legend" style={{ backgroundColor: '#FFA500', width: '20px', height: '20px' }}></div>
+    <label htmlFor="storageUnitCheckbox">Storage Unit</label>
+  </div>
+  <div className='legends'>
+    <div className="legend" style={{ backgroundColor: '#FF0000', borderRadius: '50%' }}></div>
+    <label htmlFor="gateValveCheckbox">Gate Valve</label>
+  </div>
+  <div className='legends'>
+    <div className="legend" style={{ backgroundColor: '#00FF00', borderRadius: '50%' }}></div>
+    <label htmlFor="tubeWellCheckbox">Tubewell</label>
+  </div>
+</div>
+
           <div className='baselayer_toggle'>
      
       <button  title='switch to street baselayer'
