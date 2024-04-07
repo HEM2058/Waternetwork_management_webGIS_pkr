@@ -65,6 +65,7 @@ function Elevation({ elevation_data, onClose }) {
         .append('button')
         .text('Close')
         .style('position', 'absolute')
+        .style('cursor','pointer')
         .style('top', '10px')
         .style('right', '10px')
         .on('click', onClose);

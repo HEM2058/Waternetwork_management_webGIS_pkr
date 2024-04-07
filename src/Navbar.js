@@ -16,9 +16,9 @@ function Navbar() {
         <div className="navbar-brand">
           <Link to="/">
             <div className="logo1-container">
-                <h2>AquaMapper(PWNDMS)</h2>
+                <h2>AquaMapper(PWDMS)</h2>
                 <div className='sub-title'>
-                <p>Pokhara's Water Network Distribution Management system</p>
+                <p>Pokhara Water Distribution Management system</p>
                 <div className='border-bottom'></div>
                 </div>
             
@@ -27,17 +27,7 @@ function Navbar() {
           </Link>
           <div className="logo2-container">
   <div className="horizontal-container">
-      {/* Notification Icon */}
-      <div
-      className={`icon-container ${
-        location.pathname === '/notifications' ? 'active' : ''
-      }`}
-      data-tooltip="Notifications"
-    >
-      <Link to="/notifications">
-        <i className="fas fa-bell"></i><span className='noti-count'>5</span> 
-      </Link>
-    </div>
+    
     {/* Profile Icon */}
     <div
       className={`icon-container ${

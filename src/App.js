@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
-import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Navbar from './Navbar';
 import Networkanalysis from './Networkanalysis';
 import Sidebar from './sidebar';
-import MapComposite from './mapcomposite';
 import Leakage from './Leakage';
 import Edit from './Edit';
 import OpenLayersMap from './map';
@@ -11,20 +10,42 @@ import Task from './Task';
 import FieldCalculator from './FieldCalculator';
 import ApiDataFetcher from './ApiDataFetcher';
 import Intro from './Intro';
+import ClientPage from './ClientPage';
+
 function App() {
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [pipelineData, setPipelineData] = useState([]);
   const [storageUnitData, setStorageUnitData] = useState([]);
   const [gateValveData, setGateValveData] = useState([]);
   const [tubeWellData, setTubeWellData] = useState([]);
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [selectedCoordinate, setSelectedCoordinate] = useState(null);
   const [selectedMultistringGeometry, setSelectedMultistringGeometry] = useState(null);
   const [routeData, setRouteData] = useState(null);
-  const [taskGeometry, setTaskGeometry] = useState(null); // State to store task geometry
+  const [taskGeometry, setTaskGeometry] = useState(null);
+  
+  useEffect(() => {
+    const checkIsAuthenticatedAdmin = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:8000/auth/users/me/', {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}` // Assuming you store the token in localStorage after login
+          }
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setIsAdmin(data.is_superuser); // Assuming 'is_superuser' indicates admin status
+        } else {
+          setIsAdmin(false);
+        }
+      } catch (error) {
+        console.error('Error checking authentication status:', error);
+        setIsAdmin(false);
+      }
+    };
 
-  const navigate = useNavigate();
-  const location = useLocation();
-  console.log(routeData)
+    checkIsAuthenticatedAdmin();
+  }, []);
 
   const handleRouteData = (data) => {
     setRouteData(data);
@@ -43,40 +64,52 @@ function App() {
   };
 
   const handleMultistringClick = (geometry) => {
-    // Set the selected multistring geometry
     setSelectedMultistringGeometry(geometry);
   };
 
   const handleViewMap = (geometry) => {
-    // Set the task geometry
     setTaskGeometry(geometry);
   };
 
-
-  const currentPath = location.pathname;
-
-
   return (
     <div className="App">
-      <Navbar />
-      <Sidebar />
+       <Navbar />
+      {isAdmin && (
+        <React.Fragment>
+         
+          <Sidebar />
+        </React.Fragment>
+      )}
       <Routes>
-      <Route path="/" element={<Intro />} />
-        <Route
-          path="/Networkanalysis"
-          element={<Networkanalysis pipelineData={pipelineData} onRouteData={handleRouteData} SelectedCoordinate={selectedCoordinate}  />}
-        />
-        <Route path="/task-splitting" element={<Task onViewMap={handleViewMap} />} />
-        <Route path="/Leakage" element={<Leakage />} />
-        <Route
-          path="/Edit-pipeline"
-          element={<Edit onMultistringClick={handleMultistringClick} />}
-        />
-        <Route path="/field-calculator" element={<FieldCalculator />} />
+      {isAdmin && (
+        <Route path="/" element={<Intro />} />
+      )}
+        {isAdmin && (
+          <Route
+            path="/Networkanalysis"
+            element={<Networkanalysis pipelineData={pipelineData} onRouteData={handleRouteData} SelectedCoordinate={selectedCoordinate} />}
+          />
+        )}
+        {isAdmin && (
+          <Route path="/task-splitting" element={<Task onViewMap={handleViewMap} />} />
+        )}
+        {isAdmin && (
+          <Route path="/Leakage" element={<Leakage />} />
+        )}
+        {isAdmin && (
+          <Route
+            path="/Edit-pipeline"
+            element={<Edit onMultistringClick={handleMultistringClick} />}
+          />
+        )}
+        {isAdmin && (
+          <Route path="/field-calculator" element={<FieldCalculator />} />
+        )}
+        <Route path="/" element={<ClientPage />} />
       </Routes>
 
       <ApiDataFetcher onDataFetched={handleDataFetched} />
-      {isDataLoaded ? (
+      {isAdmin && isDataLoaded && (
         <OpenLayersMap
           pipelineData={pipelineData}
           storageUnitData={storageUnitData}
@@ -85,10 +118,9 @@ function App() {
           onMapClick={handleMapClick}
           selectedMultistringGeometry={selectedMultistringGeometry}
           routeData={routeData}
-          taskGeometry={taskGeometry} // Pass task geometry to OpenLayersMap
-          
+          taskGeometry={taskGeometry}
         />
-      ) : null}
+      )}
     </div>
   );
 }
