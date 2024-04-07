@@ -13,7 +13,6 @@ import Intro from './Intro';
 import ClientPage from './ClientPage';
 
 function App() {
-  const [isAdmin, setIsAdmin] = useState(false);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [pipelineData, setPipelineData] = useState([]);
   const [storageUnitData, setStorageUnitData] = useState([]);
@@ -23,29 +22,32 @@ function App() {
   const [selectedMultistringGeometry, setSelectedMultistringGeometry] = useState(null);
   const [routeData, setRouteData] = useState(null);
   const [taskGeometry, setTaskGeometry] = useState(null);
-  
-  useEffect(() => {
-    const checkIsAuthenticatedAdmin = async () => {
-      try {
-        const response = await fetch('http://127.0.0.1:8000/auth/users/me/', {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}` // Assuming you store the token in localStorage after login
-          }
-        });
-        if (response.ok) {
-          const data = await response.json();
-          setIsAdmin(data.is_superuser); // Assuming 'is_superuser' indicates admin status
-        } else {
-          setIsAdmin(false);
-        }
-      } catch (error) {
-        console.error('Error checking authentication status:', error);
-        setIsAdmin(false);
-      }
-    };
 
-    checkIsAuthenticatedAdmin();
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      checkIsAuthenticatedAdmin(token);
+    }
   }, []);
+
+  const checkIsAuthenticatedAdmin = async (token) => {
+    try {
+      const response = await fetch('http://127.0.0.1:8000/auth/users/me/', {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setIsDataLoaded(true); // Assuming isAdmin implies data loading
+      } else {
+        setIsDataLoaded(false);
+      }
+    } catch (error) {
+      console.error('Error checking authentication status:', error);
+      setIsDataLoaded(false);
+    }
+  };
 
   const handleRouteData = (data) => {
     setRouteData(data);
@@ -73,43 +75,42 @@ function App() {
 
   return (
     <div className="App">
-       <Navbar />
-      {isAdmin && (
+      <Navbar />
+      {isDataLoaded && (
         <React.Fragment>
-         
-          <Sidebar />
+          {localStorage.getItem('token') && <Sidebar />}
+          <Routes>
+            {localStorage.getItem('token') && <Route path="/" element={<Intro />} />}
+            {localStorage.getItem('token') && (
+              <Route
+                path="/Networkanalysis"
+                element={<Networkanalysis pipelineData={pipelineData} onRouteData={handleRouteData} SelectedCoordinate={selectedCoordinate} />}
+              />
+            )}
+            {localStorage.getItem('token') && (
+              <Route path="/task-splitting" element={<Task onViewMap={handleViewMap} />} />
+            )}
+            {localStorage.getItem('token') && <Route path="/Leakage" element={<Leakage />} />}
+            {localStorage.getItem('token') && (
+              <Route
+                path="/Edit-pipeline"
+                element={<Edit onMultistringClick={handleMultistringClick} />}
+              />
+            )}
+            {localStorage.getItem('token') && (
+              <Route path="/field-calculator" element={<FieldCalculator />} />
+            )}
+           
+          </Routes>
         </React.Fragment>
+       
       )}
       <Routes>
-      {isAdmin && (
-        <Route path="/" element={<Intro />} />
-      )}
-        {isAdmin && (
-          <Route
-            path="/Networkanalysis"
-            element={<Networkanalysis pipelineData={pipelineData} onRouteData={handleRouteData} SelectedCoordinate={selectedCoordinate} />}
-          />
-        )}
-        {isAdmin && (
-          <Route path="/task-splitting" element={<Task onViewMap={handleViewMap} />} />
-        )}
-        {isAdmin && (
-          <Route path="/Leakage" element={<Leakage />} />
-        )}
-        {isAdmin && (
-          <Route
-            path="/Edit-pipeline"
-            element={<Edit onMultistringClick={handleMultistringClick} />}
-          />
-        )}
-        {isAdmin && (
-          <Route path="/field-calculator" element={<FieldCalculator />} />
-        )}
-        <Route path="/" element={<ClientPage />} />
+      {!localStorage.getItem('token') && <Route path="/" element={<ClientPage />} />}
       </Routes>
-
-      <ApiDataFetcher onDataFetched={handleDataFetched} />
-      {isAdmin && isDataLoaded && (
+      
+      {localStorage.getItem('token') &&<ApiDataFetcher onDataFetched={handleDataFetched} />}
+      {localStorage.getItem('token') && isDataLoaded && (
         <OpenLayersMap
           pipelineData={pipelineData}
           storageUnitData={storageUnitData}

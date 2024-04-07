@@ -17,6 +17,7 @@ function ClientPage() {
     const [clientName, setClientName] = useState('');
     const [clientPhoneNumber, setClientPhoneNumber] = useState('');
     const [description, setDescription] = useState('');
+    const [issueType, setIssueType] = useState(''); // New state for selected issue type
     const [activeBaselayer, setActiveBaselayer] = useState('street');
     const mapContainer = useRef(null);
 
@@ -68,7 +69,7 @@ function ClientPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Form submitted:', { clientName, clientPhoneNumber, description, latitude, longitude });
+        console.log('Form submitted:', { clientName, clientPhoneNumber, description, latitude, longitude, issueType }); // Include issueType in the submitted data
     };
 
     const resetMap = () => {
@@ -146,9 +147,10 @@ function ClientPage() {
             <div className="map-container" ref={mapContainer}></div>
             {loading && <div className="loading-overlay">Loading...</div>}
             <form className="overlay-form" onSubmit={handleSubmit}>
-                <h2>Client Page</h2>
+            <h2>Water Issue Reporting</h2>
+
                 <div className="form-group">
-                    <label htmlFor="clientName">Client Name:</label>
+                    <label htmlFor="clientName">Name:</label>
                     <input
                         type="text"
                         id="clientName"
@@ -158,7 +160,7 @@ function ClientPage() {
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="clientPhoneNumber">Client Phone Number:</label>
+                    <label htmlFor="clientPhoneNumber">Phone Number:</label>
                     <input
                         type="text"
                         id="clientPhoneNumber"
@@ -168,13 +170,21 @@ function ClientPage() {
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="description">Description:</label>
+                    <label htmlFor="description">Description of issue:</label>
                     <textarea
                         id="description"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         required
                     ></textarea>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="issueType">Type of Issue:</label>
+                    <select id="issueType" value={issueType} onChange={(e) => setIssueType(e.target.value)} required>
+                        <option value="LEAKAGE">Leakage Detected Point</option>
+                        <option value="WATER_ISSUE">Water Supply Issue</option>
+                        <option value="PIPE_INSTALLATION">Requested New Location for Pipe Installation</option>
+                    </select>
                 </div>
                 <div className="form-group">
                     <label>Latitude:</label>

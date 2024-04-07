@@ -1,0 +1,121 @@
+.signin-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    width: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    z-index: 99999;
+    border-radius: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    animation: zoomIn 0.5s forwards;
+  }
+  
+  @keyframes zoomIn {
+    0% {
+      transform: translate(-50%, -50%) scale(0);
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+  
+  .signin-form {
+    width: 90%;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    height: 400px;
+    text-align: center;
+  }
+  
+  .signin-form .input-div {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .signin-input {
+    width: 80%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+  }
+  
+  .form-options {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+  }
+  
+  .signin-button {
+    padding: 10px;
+    background-color: #55b2b0;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .signin-button:hover {
+    background-color: #b1caca;
+  }
+  
+  .forgot-password {
+    background: none;
+    border: none;
+    color: #092d59;
+    cursor: pointer;
+  }
+  
+  .signup-options {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+  }
+  
+  p {
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: #888;
+  }
+  
+  .close-button:hover {
+    color: #555;
+  }
+  
+  @media (max-width: 973px) {
+    .signin-container {
+      width: 90%;
+    }
+  }
+  
