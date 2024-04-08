@@ -246,25 +246,32 @@ console.log(taskGeometry)
             },
           });
         }
-        // Add pipeline data as a linestring layer
-        if (pipelineData) {
-          map.addSource('pipeline-data', {
-            type: 'geojson',
-            data: pipelineData,
-          });
-  
-          map.addLayer({
-            id: 'pipeline-layer',
-            type: 'line',
-            source: 'pipeline-data',
-            paint: {
-              'line-color': 'blue', // Adjust color as needed
-              'line-opacity': 0.8,
-              'line-width': 2,
-            },
-          });
-        }
-  
+       // Add pipeline data as a linestring layer
+if (pipelineData) {
+  map.addSource('pipeline-data', {
+    type: 'geojson',
+    data: pipelineData,
+  });
+
+  map.addLayer({
+    id: 'pipeline-layer',
+    type: 'line',
+    source: 'pipeline-data',
+    paint: {
+      // Dynamically set line-color based on Leakage property
+      'line-color': [
+        'case',
+        ['==', ['get', 'leakage'], true], 'red', // If Leakage is true, set color to red
+        'blue' // Otherwise, set color to blue
+      ],
+      'line-opacity': 0.8,
+      'line-width': 2,
+      
+    },
+    
+  });
+}
+
         // Add storage unit data as a polygon layer
         if (storageUnitData) {
           map.addSource('storage-unit-data', {
@@ -332,7 +339,7 @@ console.log(taskGeometry)
        const properties = e.features[0].properties;
        console.log(properties)
      
-      const description = `Diameter: ${properties.diameter_m}<br>Material:${properties.material} Pipe<br>Pipe Length:${properties.length_m} meters`;
+      const description = `Diameter: ${properties.diameter_m}<br>Material:${properties.material} Pipe<br>Pipe Length:${properties.length_m} meters<br> Lekagae Found:${properties.leakage}`;
 
       // Ensure that if the map is zoomed out such that multiple copies of the feature are visible,
       
