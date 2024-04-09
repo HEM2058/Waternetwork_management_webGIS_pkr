@@ -17,7 +17,7 @@ function ClientPage() {
     const [clientName, setClientName] = useState('');
     const [clientPhoneNumber, setClientPhoneNumber] = useState('');
     const [description, setDescription] = useState('');
-    const [issueType, setIssueType] = useState(''); // New state for selected issue type
+    const [issueType, setIssueType] = useState('LEAKAGE'); // New state for selected issue type
     const [activeBaselayer, setActiveBaselayer] = useState('street');
     const mapContainer = useRef(null);
 
@@ -69,9 +69,39 @@ function ClientPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Form submitted:', { clientName, clientPhoneNumber, description, latitude, longitude, issueType }); // Include issueType in the submitted data
+        setLoading(true);
+        try {
+            const response = await axios.post('http://localhost:8000/api/issues-location/', {
+                client_name: clientName,
+                client_phone_number: clientPhoneNumber,
+                description: description,
+                geometry: {
+                    type: 'Point',
+                    coordinates: [parseFloat(longitude), parseFloat(latitude)],
+                    srid: 4326 // SRID for WGS 1984
+                },
+                issue_type: issueType,
+            });
+            console.log(response.data);
+            setLoading(false);
+            Swal.fire({
+                title: 'Success!',
+                text: 'Issue reported successfully.',
+                icon: 'success',
+                confirmButtonText: 'OK',
+            });
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            setLoading(false);
+            Swal.fire({
+                title: 'Error!',
+                text: 'Failed to report the issue. Please try again later.',
+                icon: 'error',
+                confirmButtonText: 'OK',
+            });
+        }
     };
-
+    
     const resetMap = () => {
         map.flyTo({
             center: [83.97517583929165, 28.214732103900108],

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Leakage.css';
 
 function getCurrentDate() {
@@ -8,37 +8,16 @@ function getCurrentDate() {
 }
 
 function Leakage() {
-  const [issues, setIssues] = useState([
-    {
-      id: 1,
-      latitude: 28.22750440274784,
-      longitude: 84.00043810012062,
-      issue_type: 'LEAKAGE',
-      client_name: 'Hem Raj Pandey',
-      client_phone_number: '9864766958',
-      description: 'The pipe Leakage has been detected near Mahakaleshor marga',
-    },
-    {
-      id: 2,
-      latitude: 28.222374309808316,
-      longitude: 83.97845115114251,
-      issue_type: 'PIPE_INSTALLATION',
-      client_name: 'Hem Raj Pandey',
-      client_phone_number: '9864766958',
-      description: "Please plan for pipeline installation at Pokhara Baglung highway's House.",
-    },
-    {
-      id: 3,
-      latitude: 28.223481692489173,
-      longitude: 83.98003831921926,
-      issue_type: 'WATER_ISSUE',
-      client_name: 'Hem Raj Pandey',
-      client_phone_number: '9864766958',
-      description: "Water is not coming at this location's home since yesterday.",
-    },
-  ]);
-
+  const [issues, setIssues] = useState([]);
   const [filter, setFilter] = useState('');
+
+  useEffect(() => {
+    // Fetch data from API
+    fetch('http://127.0.0.1:8000/api/issues-view/')
+      .then(response => response.json())
+      .then(data => setIssues(data))
+      .catch(error => console.error('Error fetching data:', error));
+  }, []); // Empty dependency array to fetch data only once on component mount
 
   const handleFilterChange = (event) => {
     setFilter(event.target.value);
@@ -47,6 +26,16 @@ function Leakage() {
   const filteredIssues = filter
     ? issues.filter((issue) => issue.issue_type === filter)
     : issues;
+
+  const handleResolved = (id) => {
+    // Logic to mark issue as resolved
+    console.log('Issue resolved:', id);
+  };
+
+  const handleViewOnMap = (latitude, longitude) => {
+    // Logic to handle viewing issue on map
+    console.log('View on map:', latitude, longitude);
+  };
 
   return (
     <div className="Leakage-container">
@@ -74,9 +63,11 @@ function Leakage() {
                 <p>
                   <strong>Client:</strong> {issue.client_name} ({issue.client_phone_number})
                 </p>
+               
               </div>
-              <div className="feature-header">
-                <span className="status-icon">{issue.issue_type}</span>
+              <div className="feature-actions">
+                <button onClick={() => handleResolved(issue.id)}>Resolved</button>
+                <button onClick={() => handleViewOnMap(issue.geometry.coordinates[1], issue.geometry.coordinates[0])}>View on Map</button>
               </div>
             </li>
           ))}

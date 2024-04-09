@@ -179,7 +179,7 @@ function OpenLayersMap({ pipelineData, storageUnitData, gateValveData, tubeWellD
   const location = useLocation(); // Use useLocation hook to get current path
   const currentPath = location.pathname; // Get the current path
   console.log(routeData)
-console.log(taskGeometry)
+console.log(pipelineData)
 
 
   useEffect(() => {
@@ -188,7 +188,7 @@ console.log(taskGeometry)
    setMap(null)
   
    }
-  },[style]);
+  },[pipelineData,style]);
 
 
   useEffect(() => {
@@ -387,7 +387,7 @@ if (pipelineData) {
         });
       });
     }
-  }, [map, pipelineData, storageUnitData, gateValveData, tubeWellData]);
+  }, [map, pipelineData, storageUnitData, gateValveData, tubeWellData, style]);
   useEffect(() => {
     if (map && routeData) {
       const coordinates = routeData.data.data[0].latlngs.map(point => [point[0], point[1]]); // Extracting coordinates from routeData

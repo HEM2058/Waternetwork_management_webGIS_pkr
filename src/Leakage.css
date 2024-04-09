@@ -1,3 +1,5 @@
+/* Updated CSS */
+
 .Leakage-container {
   width: 300px;
   height: calc(100vh - 70px);
@@ -10,9 +12,55 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Updated CSS for Filter Dropdown */
 .filters {
   margin-bottom: 20px;
+  position: relative;
 }
+
+.filters select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 10px 20px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  max-width: 200px;
+  box-sizing: border-box;
+}
+
+/* Custom arrow icon for select */
+.filters select::after {
+  content: "\25BC";  /* Downward arrow */
+  position: absolute;
+  top: calc(50% - 8px);
+  right: 15px;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+/* Hover effect */
+.filters select:hover {
+  border-color: #666;
+}
+
+/* Focus effect */
+.filters select:focus {
+  border-color: #333;
+  outline: none;
+}
+
+/* Option styles */
+.filters select option {
+  background-color: #fff;
+  color: #333;
+}
+
 
 .Leakage {
   height: calc(100vh - 200px);
@@ -50,4 +98,32 @@
 
 .calendar-icon {
   margin-right: 5px;
+}
+
+.feature-actions {
+  display: flex;
+  justify-content: flex-end; /* Align buttons to the end of the container */
+  margin-top: 10px; /* Add some space between content and buttons */
+}
+
+.feature-actions button {
+  background-color: #4caf50; /* Green for Resolved button */
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin-left: 5px; /* Add some space between buttons */
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.feature-actions button:last-child {
+  background-color: #2196f3; /* Blue for View on Map button */
+}
+
+.feature-actions button:hover {
+  opacity: 0.8;
 }
