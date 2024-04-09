@@ -32,15 +32,22 @@ function Task({ onViewMap }) {
   return (
     <div className="task-container">
       <h2>Task Manager</h2>
+      <div className='task-button'></div>
       <button className="add-task-button" onClick={handleAddTask}>
-        <i className="fas fa-plus"></i> Add Task
+      <i class="fas fa-plus-circle"></i> Add
       </button>
+      <button class="task-history-button">
+  <i class="fas fa-history"></i> History
+</button>
+
       <div className='tasks'>
         <div className="task-list">
           {tasks.map((task) => (
             <div key={task.id} className="task-item">
               <h3>{task.task_name}</h3>
               <p>Assigned to: {task.assigned_to}</p>
+              {/* <p className='deadline'>Deadline: {new Date(task.deadline).toLocaleDateString()}</p> */}
+              <p className='status'>Status: {task.status}</p>
               <div className='feature-actions'> 
               <button title='Cancel the task' className="archive-button"> <i class="fas fa-times"></i></button>
               <button title='View on map' className="view-map-button" onClick={() => handleViewMap(task.geometry)}>  <i class="fas fa-map-marker-alt"></i></button>

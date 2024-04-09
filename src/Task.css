@@ -12,20 +12,21 @@
 }
 
 /* Updated CSS for Add Task Button */
+.task-history-button,
 .add-task-button {
   margin: 10px;
-   appearance: none;
+  appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
   padding: 10px 20px;
   border: 2px solid #ccc;
   border-radius: 5px;
   background-color: #fff;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
   cursor: pointer;
   width: 100%;
-  max-width: 200px;
+  max-width: 110px;
   box-sizing: border-box;
 }
 
@@ -62,7 +63,8 @@
 .action-buttons {
   display: flex;
 }
-.view-map-button{
+
+.view-map-button {
   padding: 8px 16px;
   background-color: #007bff;
   color: white;
@@ -82,13 +84,34 @@
   transition: background-color 0.3s ease;
 }
 
-
-.view-map-button:hover{
+.view-map-button:hover {
   background-color: #0056b3;
 }
 
-
-
 .archive-button:hover {
   background-color: #347c34;
+}
+/* Updated CSS for Deadline */
+.task-item .deadline {
+ width: 50%;
+  top: 10px;
+  right: 10px;
+  padding: 5px 10px;
+  background-color: #e32f2f;
+  color: white;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+/* Updated CSS for Status */
+.task-item .status {
+  width: 50%;
+  bottom: 10px;
+  right: 10px;
+  padding: 5px 10px;
+  background-color: #ffc107;
+  color: #333;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  text-transform: capitalize; /* Convert status text to uppercase */
 }
