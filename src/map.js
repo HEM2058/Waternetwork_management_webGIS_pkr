@@ -169,7 +169,7 @@ function ButtonContainer({ map, resetFunction, exportMapImage, toggleBaseLayerPo
   );
 }
 
-function OpenLayersMap({ pipelineData, storageUnitData, gateValveData, tubeWellData, onMapClick, selectedMultistringGeometry, routeData,  taskGeometry}) {
+function OpenLayersMap({ pipelineData, storageUnitData, gateValveData, tubeWellData, onMapClick, selectedMultistringGeometry, routeData,  taskGeometry,issueGeometry}) {
   const [map, setMap] = useState(null);
   const [showFilterPopup, setShowFilterPopup] = useState(false);
   const [activeBaselayer, setActiveBaselayer] = useState('street');
@@ -523,8 +523,80 @@ if (pipelineData) {
     const dataURL = map.getCanvas().toDataURL('image/png');
     console.log('Exported Map Image:', dataURL);
   };
+// Issue view on map
+useEffect(() => {
+  if (map && issueGeometry) {
+    // Extract coordinates from the issueGeometry string
+    const regex = /POINT \(([^ ]+) ([^ ]+)\)/;
+    const match = issueGeometry.match(regex);
+     
+    if (match && match.length === 3) {
+      const longitude = parseFloat(match[1]);
+      const latitude = parseFloat(match[2]);
 
-  
+     // Check if the layer already exists and remove it
+      const existingLayer = map.getLayer('issue-geometry-layer');
+      if (existingLayer) {
+        map.removeLayer('issue-geometry-layer');
+        map.removeLayer('issue-label-layer'); // Remove label layer
+        map.removeSource('issue-geometry');
+      }
+
+      // Add GeoJSON source for the issueGeometry point
+      map.addSource('issue-geometry', {
+        type: 'geojson',
+        data: {
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [longitude, latitude],
+          },
+          properties: {
+            label: 'issue', // Set label property
+          },
+        },
+      });
+
+      // Add layer to display the point feature
+      map.addLayer({
+        id: 'issue-geometry-layer',
+        type: 'circle',
+        source: 'issue-geometry',
+        paint: {
+          'circle-color': 'red',
+          'circle-radius': [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
+            5, 1, // Radius at zoom level 5
+            10, 2, // Radius at zoom level 10
+            14, 4, // Radius at zoom level 14
+            22, 32, // Radius at zoom level 22
+          ],
+          'circle-opacity': 0.8,
+        },
+      });
+
+      // Add label to the circle
+      map.addLayer({
+        id: 'issue-label-layer',
+        type: 'symbol',
+        source: 'issue-geometry',
+        layout: {
+          'text-field': ['get', 'label'],
+          'text-size': 12,
+          'text-offset': [0, 0], // Offset label above the circle
+        },
+        paint: {
+          'text-color': 'white',
+        },
+      });
+
+      // Zoom to the location of the issueGeometry point
+      map.fitBounds([[longitude - 0.001, latitude - 0.001], [longitude + 0.001, latitude + 0.001]]);
+    }
+  }
+}, [map, issueGeometry]);
 
   const handleBaselayerToggle = (baselayer) => {
     setActiveBaselayer(baselayer);

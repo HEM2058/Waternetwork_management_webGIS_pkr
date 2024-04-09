@@ -22,6 +22,8 @@ function App() {
   const [selectedMultistringGeometry, setSelectedMultistringGeometry] = useState(null);
   const [routeData, setRouteData] = useState(null);
   const [taskGeometry, setTaskGeometry] = useState(null);
+  const [issueGeometry,setIssueGeometry] = useState(null);
+  console.log(issueGeometry)
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -72,6 +74,9 @@ function App() {
   const handleViewMap = (geometry) => {
     setTaskGeometry(geometry);
   };
+  const ViewIssuesOnMap = (geometry) =>{
+    setIssueGeometry(geometry)
+  }
 
   return (
     <div className="App">
@@ -90,7 +95,7 @@ function App() {
             {localStorage.getItem('token') && (
               <Route path="/task-splitting" element={<Task onViewMap={handleViewMap} />} />
             )}
-            {localStorage.getItem('token') && <Route path="/Leakage" element={<Leakage />} />}
+            {localStorage.getItem('token') && <Route path="/Leakage" element={< Leakage OnViewOnMap={ ViewIssuesOnMap}  />} />}
             {localStorage.getItem('token') && (
               <Route
                 path="/Edit-pipeline"
@@ -120,6 +125,7 @@ function App() {
           selectedMultistringGeometry={selectedMultistringGeometry}
           routeData={routeData}
           taskGeometry={taskGeometry}
+          issueGeometry={issueGeometry}
         />
       )}
     </div>

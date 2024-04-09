@@ -7,7 +7,7 @@ function getCurrentDate() {
   return currentDate.toLocaleDateString(undefined, options);
 }
 
-function Leakage() {
+function Leakage({ OnViewOnMap}) {
   const [issues, setIssues] = useState([]);
   const [filter, setFilter] = useState('');
 
@@ -32,9 +32,9 @@ function Leakage() {
     console.log('Issue resolved:', id);
   };
 
-  const handleViewOnMap = (latitude, longitude) => {
+  const handleViewOnMap = (geometry) => {
     // Logic to handle viewing issue on map
-    console.log('View on map:', latitude, longitude);
+    OnViewOnMap(geometry)
   };
 
   return (
@@ -67,7 +67,7 @@ function Leakage() {
               </div>
               <div className="feature-actions">
                 <button onClick={() => handleResolved(issue.id)}>Resolved</button>
-                <button onClick={() => handleViewOnMap(issue.geometry.coordinates[1], issue.geometry.coordinates[0])}>View on Map</button>
+                <button onClick={() => handleViewOnMap(issue.geometry)}>View on Map</button>
               </div>
             </li>
           ))}
