@@ -1,3 +1,4 @@
+/* Updated CSS for Task Container */
 .task-container {
   width: 300px;
   height: calc(100vh - 70px);
@@ -7,29 +8,45 @@
   left: 80px;
   background-color: white;
   z-index: 999;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Updated CSS for Add Task Button */
 .add-task-button {
-  display: flex;
-  align-items: center;
-  padding: 8px;
-  margin-bottom: 10px;
+  margin: 10px;
+   appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 10px 20px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  font-size: 16px;
+  font-weight: bold;
   cursor: pointer;
+  width: 100%;
+  max-width: 200px;
+  box-sizing: border-box;
 }
 
 .add-task-button i {
   margin-right: 8px;
 }
 
+/* Updated CSS for Task List */
 .tasks {
   height: calc(100vh - 210px);
   overflow-y: auto;
+  margin-top: 10px;
 }
 
+/* Updated CSS for Task Item */
 .task-item {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   margin-bottom: 10px;
-  padding: 10px;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #f0f0f0;
 }
 
 .task-item h3 {
@@ -41,18 +58,37 @@
   color: #777;
 }
 
-.view-more-button,
-.view-map-button {
-  margin-top: 10px;
-  padding: 5px 10px;
+/* Updated CSS for View More and Archive Buttons */
+.action-buttons {
+  display: flex;
+}
+.view-map-button{
+  padding: 8px 16px;
   background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.view-map-button {
-  margin-left: 10px;
-  background-color: #28a745;
+.archive-button {
+  padding: 8px 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+
+.view-map-button:hover{
+  background-color: #0056b3;
+}
+
+
+
+.archive-button:hover {
+  background-color: #347c34;
 }

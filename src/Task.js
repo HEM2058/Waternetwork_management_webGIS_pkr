@@ -41,8 +41,10 @@ function Task({ onViewMap }) {
             <div key={task.id} className="task-item">
               <h3>{task.task_name}</h3>
               <p>Assigned to: {task.assigned_to}</p>
-              <button className="view-more-button">View More</button>
-              <button className="view-map-button" onClick={() => handleViewMap(task.geometry)}>View on Map</button>
+              <div className='feature-actions'> 
+              <button title='Cancel the task' className="archive-button"> <i class="fas fa-times"></i></button>
+              <button title='View on map' className="view-map-button" onClick={() => handleViewMap(task.geometry)}>  <i class="fas fa-map-marker-alt"></i></button>
+              </div>
             </div>
           ))}
         </div>

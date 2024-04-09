@@ -66,8 +66,8 @@ function Leakage({ OnViewOnMap}) {
                
               </div>
               <div className="feature-actions">
-                <button onClick={() => handleResolved(issue.id)}>Resolved</button>
-                <button onClick={() => handleViewOnMap(issue.geometry)}>View on Map</button>
+                <button title='Resolve the issue' onClick={() => handleResolved(issue.id)}><i class="fas fa-check-circle"></i></button>
+                <button title='View on map' onClick={() => handleViewOnMap(issue.geometry)}>  <i class="fas fa-map-marker-alt"></i></button>
               </div>
             </li>
           ))}
