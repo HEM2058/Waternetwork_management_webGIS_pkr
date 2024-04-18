@@ -137,11 +137,11 @@
   max-width: 110px;
   box-sizing: border-box;
 }
-.active-manual {
-    background-color: #4CAF50; /* Green */
+.analysis-buttons .active-manual {
+    background-color: #b0a2a2;
   }
   
-  .active-auto {
-    background-color: #2196F3; /* Blue */
+  .analysis-buttons .active-auto {
+    background-color: #b0a2a2;
   }
   
