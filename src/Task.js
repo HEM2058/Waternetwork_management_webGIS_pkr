@@ -32,7 +32,7 @@ function Task({ onViewMap }) {
   return (
     <div className="task-container">
       <h2>Task Manager</h2>
-      <div className='task-button'></div>
+  
       <button className="add-task-button" onClick={handleAddTask}>
       <i class="fas fa-plus-circle"></i> Add
       </button>

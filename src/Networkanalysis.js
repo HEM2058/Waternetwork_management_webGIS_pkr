@@ -13,6 +13,8 @@ function NetworkAnalysis({ pipelineData, onRouteData, SelectedCoordinate }) {
   const [clickedTextArea, setClickedTextArea] = useState(null);
   const [elevationData, setElevationData] = useState(null); // State to store elevation data
   const [showElevationChart, setShowElevationChart] = useState(false); // State to track visibility of elevation chart
+  const [manualAnalysisVisible, setManualAnalysisVisible] = useState(true); // State to track visibility of manual analysis
+  const [automaticAnalysisVisible, setAutomaticAnalysisVisible] = useState(false); // State to track visibility of automatic analysis
 
   useEffect(() => {
     if (SelectedCoordinate && clickedTextArea) {
@@ -92,45 +94,74 @@ function NetworkAnalysis({ pipelineData, onRouteData, SelectedCoordinate }) {
     setShowElevationChart(false); // Close elevation chart
   };
 
+  const handleToggleManualAnalysis = () => {
+    setManualAnalysisVisible(true);
+    setAutomaticAnalysisVisible(false);
+  };
+
+  const handleToggleAutomaticAnalysis = () => {
+    setManualAnalysisVisible(false);
+    setAutomaticAnalysisVisible(true);
+  };
+
   return (
     <div className="network-analysis-container">
       <h2>Pipeline Route Analysis</h2>
-      <div className="network-analysis">
-        <div className="input-group">
-          <label>Enter Source Pipeline:</label>
-          <input
-            className="text-input"
-            type="text"
-            value={source}
-            onChange={(e) => setSource(e.target.value)}
-            onClick={() => handleTextAreaClick('source')}
-          />
-        </div>
-        <div className="input-group">
-          <label>Enter Destination:</label>
-          <input
-            className="text-input"
-            type="text"
-            value={destination}
-            onChange={(e) => setDestination(e.target.value)}
-            onClick={() => handleTextAreaClick('destination')}
-          />
-        </div>
-        <button className="find-route-button" onClick={handleApplyAnalysis}>Find Route</button>
-        {routeData && (
-          <div className="result">
-            <h3>Route Details</h3>
-            <p>Pipe Length Required: {routeData.data.data[0].distance} meters</p>
-            <button className="find-elevation-button" onClick={handleFindElevation}>Find Elevation</button>
-            {loadingElevation && <div className="preloader"></div>}
-            {showElevationChart && (
-              
-                <Elevation elevation_data={elevationData} onClose={handleCloseElevationChart} />
-               
-            )}
-          </div>
-        )}
+      <div className="analysis-buttons">
+        <button onClick={handleToggleManualAnalysis} className={manualAnalysisVisible ? 'active-manual' : ''}>Manual Feasibility Analysis</button>
+        <button onClick={handleToggleAutomaticAnalysis} className={automaticAnalysisVisible ? 'active-auto' : ''}>Auto Optimal Route Analysis</button>
       </div>
+      {manualAnalysisVisible && (
+        <div className="network-analysis">
+          <div className="input-group">
+            <label>Enter Source Pipeline:</label>
+            <input
+              className="text-input"
+              type="text"
+              value={source}
+              onChange={(e) => setSource(e.target.value)}
+              onClick={() => handleTextAreaClick('source')}
+            />
+          </div>
+          <div className="input-group">
+            <label>Enter Destination:</label>
+            <input
+              className="text-input"
+              type="text"
+              value={destination}
+              onChange={(e) => setDestination(e.target.value)}
+              onClick={() => handleTextAreaClick('destination')}
+            />
+          </div>
+          <button className="find-route-button" onClick={handleApplyAnalysis}>Find Route</button>
+          {routeData && (
+            <div className="result">
+              <h3>Route Details</h3>
+              <p>Pipe Length Required: {routeData.data.data[0].distance} meters</p>
+              <button className="find-elevation-button" onClick={handleFindElevation}>Find Elevation</button>
+              {loadingElevation && <div className="preloader"></div>}
+              {showElevationChart && (
+                <Elevation elevation_data={elevationData} onClose={handleCloseElevationChart} />
+              )}
+            </div>
+          )}
+        </div>
+      )}
+      {automaticAnalysisVisible && (
+        <div className="automatic-analysis">
+          <div className="input-group">
+            <label>Enter Destination:</label>
+            <input
+              className="text-input"
+              type="text"
+              value={destination}
+              onChange={(e) => setDestination(e.target.value)}
+              onClick={() => handleTextAreaClick('destination')}
+            />
+          </div>
+          <button className="find-route-button">Find Most Optimum Route</button>
+        </div>
+      )}
     </div>
   );
 }

@@ -4,49 +4,63 @@
     width: 100%;
     height: 90.5vh; /* You can adjust the height as needed */
 }
-
-/* Rest of your CSS styles */
 .overlay-form {
-    position: absolute;
-    top: 100px;
-    left: 20px;
-    z-index: 1;
-    padding: 20px;
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 10px;
+  position: absolute;
+  top: 80px;
+  left: 20px;
+  z-index: 1;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
 }
 
-.overlay-form label,
-.overlay-form select,
+.overlay-form h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.overlay-form label {
+  font-weight: bold;
+}
+
 .overlay-form input,
-.overlay-form textarea {
-    display: block;
-    margin-bottom: 10px;
-    width: 300px;
-    
+.overlay-form textarea,
+.overlay-form select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
 }
 
-.row {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
+.overlay-form textarea {
+  resize: vertical;
 }
 
 .overlay-form button {
-    background-color: #4caf50;
-    color: white;
-    padding: 8px;
-    cursor: pointer;
-    border-radius: 7px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.overlay-form button:hover {
+  background-color: #45a049;
 }
 
 .fa-info-circle {
-    position: absolute;
-    right: 25px;
-    font-size: 20px;
+  position: absolute;
+  right: 25px;
+  font-size: 20px;
+  top: 20px;
 }
-
 
 /* Media query for small screens */
 @media only screen and (max-width: 600px) {
