@@ -4,7 +4,8 @@ import './Elevation.css';
 
 function Elevation({ elevation_data, onClose }) {
   const chartContainer = useRef(null);
-
+  console.log(elevation_data)
+  console.log(elevation_data.elevation_data.length )
   useEffect(() => {
     if (elevation_data && elevation_data.elevation_data && elevation_data.elevation_data.length > 0) {
       const margin = { top: 20, right: 40, bottom: 50, left: 60 };
@@ -40,12 +41,12 @@ function Elevation({ elevation_data, onClose }) {
         .attr('stroke-width', 1.5)
         .attr('d', line);
 
-      svg.append('g')
+        svg.append('g')
         .attr('transform', `translate(0, ${height})`)
-        .call(d3.axisBottom(x).tickFormat((d, i) => `${i+1}`)) // Add x-axis label
+        .call(d3.axisBottom(x).ticks(elevation_data.elevation_data.length).tickFormat((d, i) => `${i+1}`)) // Adjust ticks and format
         .selectAll('text')
-        .attr('dy', '0.5em') // Add spacing between label and axis
-
+        .attr('dy', '0.5em'); // Add spacing between label and axis
+      
       svg.append('text')
         .attr('text-anchor', 'middle')
         .attr('transform', `translate(${width / 2}, ${height + margin.top + 20})`)

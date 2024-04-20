@@ -4,11 +4,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import Elevation from './Elevation'; // Import the Elevation component
 
-function NetworkAnalysis({ pipelineData, onRouteData, SelectedCoordinate }) {
+function NetworkAnalysis({ pipelineData, onRouteData, onOptimumRouteData, SelectedCoordinate }) {
   const [source, setSource] = useState('');
   const [destination, setDestination] = useState('');
   const [selectedMode, setSelectedMode] = useState('driving');
   const [routeData, setRouteData] = useState(null);
+  const [optimumRouteData, setoptimumRouteData] = useState(null);
   const [loadingElevation, setLoadingElevation] = useState(false);
   const [clickedTextArea, setClickedTextArea] = useState(null);
   const [elevationData, setElevationData] = useState(null); // State to store elevation data
@@ -104,6 +105,35 @@ function NetworkAnalysis({ pipelineData, onRouteData, SelectedCoordinate }) {
     setAutomaticAnalysisVisible(true);
   };
 
+  const handleFindMostOptimumRoute = async () => {
+    try {
+      if (destination.trim() === '') {
+        console.error('Please enter the destination.');
+        return;
+      }
+
+      const optimumRouteApiUrl = 'http://127.0.0.1:8000/api/OptimumRouteFinder/';
+      const optimumRouteResponse = await fetch(optimumRouteApiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ destination })
+      });
+
+      if (optimumRouteResponse.ok) {
+        const optimumRouteData = await optimumRouteResponse.json();
+        console.log(optimumRouteData)
+        setoptimumRouteData(optimumRouteData);
+        onOptimumRouteData(optimumRouteData);
+      } else {
+        console.error(`Error fetching optimum route data. Status: ${optimumRouteResponse.status}`);
+      }
+    } catch (error) {
+      console.error('Error in handleFindMostOptimumRoute:', error);
+    }
+  };
+
   return (
     <div className="network-analysis-container">
       <h2>Pipeline Route Analysis</h2>
@@ -159,7 +189,13 @@ function NetworkAnalysis({ pipelineData, onRouteData, SelectedCoordinate }) {
               onClick={() => handleTextAreaClick('destination')}
             />
           </div>
-          <button className="find-route-button">Find Most Optimum Route</button>
+          <button className="find-route-button" onClick={handleFindMostOptimumRoute}>Find Most Optimum Route</button>
+          {routeData && (
+            <div className="result">
+              <h3>Optimum Route Details</h3>
+              <p>Pipe Length Required: {routeData.distance} meters</p>
+            </div>
+          )}
         </div>
       )}
     </div>

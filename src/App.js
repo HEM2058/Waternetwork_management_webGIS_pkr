@@ -21,9 +21,10 @@ function App() {
   const [selectedCoordinate, setSelectedCoordinate] = useState(null);
   const [selectedMultistringGeometry, setSelectedMultistringGeometry] = useState(null);
   const [routeData, setRouteData] = useState(null);
+  const [optimumRouteData, setoptimumRouteData] = useState(null);
   const [taskGeometry, setTaskGeometry] = useState(null);
   const [issueGeometry,setIssueGeometry] = useState(null);
-  console.log(issueGeometry)
+  console.log(optimumRouteData)
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -54,6 +55,9 @@ function App() {
   const handleRouteData = (data) => {
     setRouteData(data);
   };
+  const handleOptimumRouteData =(data) => {
+    setoptimumRouteData(data)
+  }
 
   const handleDataFetched = ({ pipelineData, storageUnitData, gateValveData, tubeWellData }) => {
     setPipelineData(pipelineData);
@@ -89,7 +93,7 @@ function App() {
             {localStorage.getItem('token') && (
               <Route
                 path="/Networkanalysis"
-                element={<Networkanalysis pipelineData={pipelineData} onRouteData={handleRouteData} SelectedCoordinate={selectedCoordinate} />}
+                element={<Networkanalysis pipelineData={pipelineData} onRouteData={handleRouteData} onOptimumRouteData={handleOptimumRouteData} SelectedCoordinate={selectedCoordinate} />}
               />
             )}
             {localStorage.getItem('token') && (
@@ -124,6 +128,7 @@ function App() {
           onMapClick={handleMapClick}
           selectedMultistringGeometry={selectedMultistringGeometry}
           routeData={routeData}
+          optimumRouteData={optimumRouteData}
           taskGeometry={taskGeometry}
           issueGeometry={issueGeometry}
         />

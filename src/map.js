@@ -169,7 +169,7 @@ function ButtonContainer({ map, resetFunction, exportMapImage, toggleBaseLayerPo
   );
 }
 
-function OpenLayersMap({ pipelineData, storageUnitData, gateValveData, tubeWellData, onMapClick, selectedMultistringGeometry, routeData,  taskGeometry,issueGeometry}) {
+function OpenLayersMap({ pipelineData, storageUnitData, gateValveData, tubeWellData, onMapClick, selectedMultistringGeometry, routeData,optimumRouteData,  taskGeometry,issueGeometry}) {
   const [map, setMap] = useState(null);
   const [showFilterPopup, setShowFilterPopup] = useState(false);
   const [activeBaselayer, setActiveBaselayer] = useState('street');
@@ -460,6 +460,39 @@ if (pipelineData) {
     }
   }, [map, routeData]);
   
+  useEffect(() => {
+    if (map && optimumRouteData && optimumRouteData.optimum_route) {
+      const coordinates = optimumRouteData.optimum_route.map(point => [point[0], point[1]]);
+  
+      // Remove existing source and layer if they already exist
+      if (map.getSource('optimum-route')) {
+        map.removeLayer('optimum-route-layer');
+        map.removeSource('optimum-route');
+      }
+  
+      // Add optimum route data as a linestring layer
+      map.addSource('optimum-route', {
+        type: 'geojson',
+        data: {
+          type: 'Feature',
+          geometry: {
+            type: 'LineString',
+            coordinates: coordinates,
+          },
+        },
+      });
+  
+      map.addLayer({
+        id: 'optimum-route-layer',
+        type: 'line',
+        source: 'optimum-route',
+        paint: {
+          'line-color': 'yellow', // Adjust color as needed
+          'line-width': 5,
+        },
+      });
+    }
+  }, [map, optimumRouteData]);
   
   
   
