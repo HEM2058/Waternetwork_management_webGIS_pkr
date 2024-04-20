@@ -111,7 +111,9 @@ function NetworkAnalysis({ pipelineData, onRouteData, onOptimumRouteData, Select
         console.error('Please enter the destination.');
         return;
       }
-
+  
+      setLoadingElevation(true); // Set loading state to true
+  
       const optimumRouteApiUrl = 'http://127.0.0.1:8000/api/OptimumRouteFinder/';
       const optimumRouteResponse = await fetch(optimumRouteApiUrl, {
         method: 'POST',
@@ -120,7 +122,7 @@ function NetworkAnalysis({ pipelineData, onRouteData, onOptimumRouteData, Select
         },
         body: JSON.stringify({ destination })
       });
-
+  
       if (optimumRouteResponse.ok) {
         const optimumRouteData = await optimumRouteResponse.json();
         console.log(optimumRouteData)
@@ -131,75 +133,89 @@ function NetworkAnalysis({ pipelineData, onRouteData, onOptimumRouteData, Select
       }
     } catch (error) {
       console.error('Error in handleFindMostOptimumRoute:', error);
+    } finally {
+      setLoadingElevation(false); // Set loading state back to false once response is received
     }
   };
+  
+  
 
   return (
-    <div className="network-analysis-container">
-      <h2>Pipeline Route Analysis</h2>
-      <div className="analysis-buttons">
-        <button onClick={handleToggleManualAnalysis} className={manualAnalysisVisible ? 'active-manual' : ''}>Manual Feasibility Analysis</button>
-        <button onClick={handleToggleAutomaticAnalysis} className={automaticAnalysisVisible ? 'active-auto' : ''}>Auto Optimal Route Analysis</button>
+    <div>
+    {loadingElevation && (
+  <div className='preloading-msg'>
+    <p style={{ textAlign: 'center' }}>This will take a while. Please wait...</p>
+    <div className="preloader"></div>
+  </div>
+)}
+
+      <div className={`network-analysis-container ${loadingElevation ? 'loading' : ''}`}>
+        <h2>Pipeline Route Analysis</h2>
+        <div className="analysis-buttons">
+          <button onClick={handleToggleManualAnalysis} className={manualAnalysisVisible ? 'active-manual' : ''}>Manual Feasibility Analysis</button>
+          <button onClick={handleToggleAutomaticAnalysis} className={automaticAnalysisVisible ? 'active-auto' : ''}>Auto Optimal Route Analysis</button>
+        </div>
+        
+        {manualAnalysisVisible && (
+          <div className="network-analysis">
+            <div className="input-group">
+              <label>Origin Pipeline:</label>
+              <input
+                className="text-input"
+                type="text"
+                value={source}
+                onChange={(e) => setSource(e.target.value)}
+                onClick={() => handleTextAreaClick('source')}
+              />
+            </div>
+            <div className="input-group">
+              <label>Destination:</label>
+              <input
+                className="text-input"
+                type="text"
+                value={destination}
+                onChange={(e) => setDestination(e.target.value)}
+                onClick={() => handleTextAreaClick('destination')}
+              />
+            </div>
+            <button className="find-route-button" onClick={handleApplyAnalysis}>Find Route</button>
+            {routeData && (
+              <div className="result">
+                <h3>Route Details</h3>
+                <p>Pipe Length Required: {routeData.data.data[0].distance} meters</p>
+                <button className="find-elevation-button" onClick={handleFindElevation}>Find Elevation</button>
+                {showElevationChart && (
+                  <Elevation elevation_data={elevationData} onClose={handleCloseElevationChart} />
+                )}
+              </div>
+            )}
+          </div>
+        )}
+        {automaticAnalysisVisible && (
+          <div className="automatic-analysis">
+            <div className="input-group">
+              <label>Destination:</label>
+              <input
+                className="text-input"
+                type="text"
+                value={destination}
+                onChange={(e) => setDestination(e.target.value)}
+                onClick={() => handleTextAreaClick('destination')}
+              />
+            </div>
+            <button className="find-route-button" onClick={handleFindMostOptimumRoute}>Find Most Optimum Route</button>
+            {routeData && (
+              <div className="result">
+                <h3>Optimum Route Details</h3>
+                <p>Pipe Length Required: {routeData.distance} meters</p>
+              </div>
+            )}
+          </div>
+        )}
       </div>
-      {manualAnalysisVisible && (
-        <div className="network-analysis">
-          <div className="input-group">
-            <label>Enter Source Pipeline:</label>
-            <input
-              className="text-input"
-              type="text"
-              value={source}
-              onChange={(e) => setSource(e.target.value)}
-              onClick={() => handleTextAreaClick('source')}
-            />
-          </div>
-          <div className="input-group">
-            <label>Enter Destination:</label>
-            <input
-              className="text-input"
-              type="text"
-              value={destination}
-              onChange={(e) => setDestination(e.target.value)}
-              onClick={() => handleTextAreaClick('destination')}
-            />
-          </div>
-          <button className="find-route-button" onClick={handleApplyAnalysis}>Find Route</button>
-          {routeData && (
-            <div className="result">
-              <h3>Route Details</h3>
-              <p>Pipe Length Required: {routeData.data.data[0].distance} meters</p>
-              <button className="find-elevation-button" onClick={handleFindElevation}>Find Elevation</button>
-              {loadingElevation && <div className="preloader"></div>}
-              {showElevationChart && (
-                <Elevation elevation_data={elevationData} onClose={handleCloseElevationChart} />
-              )}
-            </div>
-          )}
-        </div>
-      )}
-      {automaticAnalysisVisible && (
-        <div className="automatic-analysis">
-          <div className="input-group">
-            <label>Enter Destination:</label>
-            <input
-              className="text-input"
-              type="text"
-              value={destination}
-              onChange={(e) => setDestination(e.target.value)}
-              onClick={() => handleTextAreaClick('destination')}
-            />
-          </div>
-          <button className="find-route-button" onClick={handleFindMostOptimumRoute}>Find Most Optimum Route</button>
-          {routeData && (
-            <div className="result">
-              <h3>Optimum Route Details</h3>
-              <p>Pipe Length Required: {routeData.distance} meters</p>
-            </div>
-          )}
-        </div>
-      )}
     </div>
   );
+  
 }
 
 export default NetworkAnalysis;

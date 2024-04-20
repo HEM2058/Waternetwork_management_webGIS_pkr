@@ -10,27 +10,75 @@
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
 }
+.preloading-msg {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 15%;
+    top: 50%;
+    transform: translate(-50%, -50%); /* Translate back by 50% of its own width and height */
+    z-index: 999999;
+}
 .preloader {
-    display: inline-block;
     width: 50px;
     height: 50px;
-    border: 3px solid rgba(0, 0, 0, 0.3);
     border-radius: 50%;
-    border-top-color: #3498db;
+    background-color: white; /* White background */
+    animation: rotate 2s linear infinite; /* Simple rotation animation */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    position: relative;
+}
+
+.preloader::before {
+    content: '';
     position: absolute;
-    left: 40%;
-    animation: spin 1s ease-in-out infinite; /* Apply animation */
-  }
-  
-  @keyframes spin {
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    animation: borderChange 2s linear infinite; /* Border color change animation */
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes borderChange {
     0% {
-      transform: rotate(0deg);
+        border-color: #ff6347; /* Tomato */
+    }
+    25% {
+        border-color: #ffd700; /* Gold */
+    }
+    50% {
+        border-color: #00ced1; /* Dark Turquoise */
+    }
+    75% {
+        border-color: #9370db; /* Medium Purple */
     }
     100% {
-      transform: rotate(360deg);
+        border-color: #ff6347; /* Tomato */
     }
-  }
-  
+}
+
+  .network-analysis-container.loading {
+    pointer-events: none; /* Disable pointer events while loading */
+}
+
+.network-analysis-container.loading > * {
+    opacity: 0; /* Set opacity of children to 0 */
+}
+
+
 .network-analysis {
     height: calc(100vh - 162px); 
     overflow-y: auto;
