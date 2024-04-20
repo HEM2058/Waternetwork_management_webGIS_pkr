@@ -75,7 +75,7 @@
 }
 
 .network-analysis-container.loading > * {
-    opacity: 0; /* Set opacity of children to 0 */
+    opacity: 0.05; /* Set opacity of children to 0 */
 }
 
 

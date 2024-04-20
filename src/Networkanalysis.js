@@ -105,6 +105,15 @@ function NetworkAnalysis({ pipelineData, onRouteData, onOptimumRouteData, Select
     setAutomaticAnalysisVisible(true);
   };
 
+  const transformElevationData = (data) => {
+    return data.map(({ latitude, longitude, elevation }) => ({
+      latitude: parseFloat(latitude),
+      longitude: parseFloat(longitude),
+      elevation: parseFloat(elevation)
+    }));
+  };
+  
+  // Inside handleFindMostOptimumRoute function
   const handleFindMostOptimumRoute = async () => {
     try {
       if (destination.trim() === '') {
@@ -125,9 +134,19 @@ function NetworkAnalysis({ pipelineData, onRouteData, onOptimumRouteData, Select
   
       if (optimumRouteResponse.ok) {
         const optimumRouteData = await optimumRouteResponse.json();
-        console.log(optimumRouteData)
+        console.log(optimumRouteData);
         setoptimumRouteData(optimumRouteData);
         onOptimumRouteData(optimumRouteData);
+  
+        // Transform elevation data and set it
+        const transformedElevationData = transformElevationData(optimumRouteData.elevation_data);
+        const elevationDataObject = {
+          elevation_data: transformedElevationData
+        };
+        setElevationData(elevationDataObject);
+  
+        // Show elevation chart
+        setShowElevationChart(true);
       } else {
         console.error(`Error fetching optimum route data. Status: ${optimumRouteResponse.status}`);
       }
@@ -208,8 +227,12 @@ function NetworkAnalysis({ pipelineData, onRouteData, onOptimumRouteData, Select
               <div className="result">
                 <h3>Optimum Route Details</h3>
                 <p>Pipe Length Required: {routeData.distance} meters</p>
+           
               </div>
             )}
+                 {showElevationChart && (
+                  <Elevation elevation_data={elevationData} onClose={handleCloseElevationChart} />
+                )}
           </div>
         )}
       </div>

@@ -487,7 +487,7 @@ if (pipelineData) {
         type: 'line',
         source: 'optimum-route',
         paint: {
-          'line-color': 'yellow', // Adjust color as needed
+          'line-color': 'green', // Adjust color as needed
           'line-width': 5,
         },
       });

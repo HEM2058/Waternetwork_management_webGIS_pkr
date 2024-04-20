@@ -43,30 +43,6 @@ function Sidebar() {
  
 </NavLink>
 
-      {/* <NavLink
-        to="/edit-pipeline"
-        className={`tool-icon ${location.pathname === '/edit-pipeline' ? 'active' : ''}`}
-        data-tooltip="Edit Pipeline"
-        activeClassName="selected"
-      >
-        <i className="fas fa-edit"></i>
-      </NavLink> */}
-      {/* <NavLink
-        to="/add-pipeline"
-        className={`tool-icon ${location.pathname === '/add-pipeline' ? 'active' : ''}`}
-        data-tooltip="Add Pipeline"
-        activeClassName="selected"
-      >
-        <i className="fas fa-plus-circle"></i>
-      </NavLink> */}
-      <NavLink
-        to="/field-calculator"
-        className={`tool-icon ${location.pathname === '/field-calculator' ? 'active' : ''}`}
-        data-tooltip="Field Calculator"
-        activeClassName="selected"
-      >
-        <i className="fas fa-calculator"></i>
-      </NavLink>
     </div>
   );
 }
